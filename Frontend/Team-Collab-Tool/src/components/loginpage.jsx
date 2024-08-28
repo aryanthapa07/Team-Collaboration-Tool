@@ -19,15 +19,8 @@ const LoginPage = () => {
   const onSubmit = async(data) => {
     await delay(2)
     console.log(data)
-    // const response=await axios.post("http://127.0.0.1:8000/login",{ "username": "aryan", "password": "Pass1234!" })
-    // console.log(response)
     navigate("/")
-    // if(data.Email!=="aryanthapa219@gmail.com"){
-    //   setError("myform",{message:"Invalid Credentials"})
-    // }
   }
-
-
   return (
     <div className="container mx-auto mt-10">
       <h1 className="text-3xl font-bold text-center mb-4">Login</h1>

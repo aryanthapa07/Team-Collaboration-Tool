@@ -1,27 +1,117 @@
-
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 const SignupPage = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    getValues,
+  } = useForm();
+
+  const delay = (d) => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve();
+      }, d * 1000);
+    });
+  };
+
+  const navigate = useNavigate();
+
+  const onSubmit = async (data) => {
+    await delay(2);
+    console.log(data);
+    navigate("/login");
+  };
+
   return (
     <div className="container mx-auto mt-10">
       <h1 className="text-3xl font-bold text-center mb-4">Signup</h1>
-      <form className="w-full max-w-md mx-auto">
+      <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-md mx-auto">
         <div className="mb-4">
-          <label className="block text-gray-700 font-bold mb-2" htmlFor="name">Name</label>
-          <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="name" type="text" placeholder="Name" />
+          <label className="block text-gray-700 font-bold mb-2" htmlFor="name">
+            Name
+          </label>
+          <input
+            {...register("name", { required: true })}
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="name"
+            type="text"
+            placeholder="Name"
+          />
+          {errors.name && <div className="text-red-700">*name field is required</div>}
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700 font-bold mb-2" htmlFor="email">Email</label>
-          <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" type="email" placeholder="Email" />
+          <label className="block text-gray-700 font-bold mb-2" htmlFor="email">
+            Email
+          </label>
+          <input
+            {...register("email", { required: true })}
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="email"
+            type="email"
+            placeholder="Email"
+          />
+          {errors.email && <div className="text-red-700">*Email field is required</div>}
         </div>
         <div className="mb-6">
-          <label className="block text-gray-700 font-bold mb-2" htmlFor="password">Password</label>
-          <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" placeholder="Password" />
+          <label className="block text-gray-700 font-bold mb-2" htmlFor="password">
+            Password
+          </label>
+          <input
+            {...register("password", { required: true, minLength: 8 })}
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="password"
+            type="password"
+            placeholder="Password"
+          />
+          {errors.password && (
+            <div className="text-red-700">
+              {errors.password.type === "required" && "*password field is required"}
+              {errors.password.type === "minLength" && "*Minimum length for password is 8"}
+            </div>
+          )}
+        </div>
+        <div className="mb-6">
+          <label className="block text-gray-700 font-bold mb-2" htmlFor="password2">
+            Confirm Password
+          </label>
+          <input
+            {...register("confirmpassword", {
+              required: true,
+              validate: (value) =>
+                value === getValues().password || "*Passwords do not match",
+            })}
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="password2"
+            type="password"
+            placeholder="Confirm Password"
+          />
+          {errors.confirmpassword && <div className="text-red-700">{errors.confirmpassword.message}</div>}
+        </div>
+        <div className="flex items-center mb-4">
+          <input
+            {...register("terms", { required: true })}
+            type="checkbox"
+            id="terms"
+            className="w-4 h-4 mr-2 text-blue-600 focus:ring-blue-500 ring-opacity-50"
+          />
+          <label htmlFor="terms" className="ml-2 text-gray-700">
+            I agree to the Terms and Conditions
+          </label>
+          {errors.terms && <div className="text-red-700">*Please accept the Terms and Conditions</div>}
         </div>
         <div className="flex items-center justify-between">
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="button">Signup</button>
-          <a className="inline-block align-baseline text-sm font-semibold text-indigo-500 hover:text-indigo-800" href="#">Already have an account? Login</a>
+          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit" disabled={isSubmitting}>
+            Signup
+          </button>
+          <a className="inline-block align-baseline text-sm font-semibold text-indigo-500 hover:text-indigo-800" href="#">
+            Already have an account? Login
+          </a>
         </div>
       </form>
+      {isSubmitting && <div className="text-center font-semibold">Loading...</div>}
     </div>
   );
 };
