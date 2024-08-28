@@ -11,7 +11,7 @@ const HomePage = () => {
                 <p className="text-lg mb-2 font-semibold text-center">Brings together everything in one place.</p>
             </div>
             <div className="image">
-                <img src="..\public\images\collab.png" alt="" className="size-52" />
+                <img src="\images\collab.png" alt="" className="size-52" />
             </div>
         </div>
         <div className="text-center">

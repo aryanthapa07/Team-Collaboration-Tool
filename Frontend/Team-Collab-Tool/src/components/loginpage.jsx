@@ -1,14 +1,16 @@
 import { useForm } from "react-hook-form"
 import { useNavigate } from "react-router-dom";
-// import axios from 'axios';
+import { useLoginUserMutation } from "../services/userAuthApi";
+import { useState } from "react";
 const LoginPage = () => {
+  const [serverError,setServerError]=useState()
   const {
     register,
     handleSubmit,
     formState: { errors,isSubmitting },
   } = useForm()
   const navigate=useNavigate();
-
+  const [LoginUser,] = useLoginUserMutation()
   const delay=(d)=>{
     return new Promise((resolve)=>{
       setTimeout(()=>{
@@ -18,8 +20,21 @@ const LoginPage = () => {
   }
   const onSubmit = async(data) => {
     await delay(2)
-    console.log(data)
-    navigate("/")
+    const actualData={
+      email:data.Email,
+      password:data.password
+    }
+    const res=await LoginUser(actualData)
+    if(res.error){
+      setServerError(res.error.data.errors)
+    }
+    if(res.data){
+      console.log(res.data)
+      navigate("/");
+    }
+    console.log(res)
+    // console.log("ad",actualData)
+    // console.log(data)
   }
   return (
     <div className="container mx-auto mt-10">
