@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form"
 import { useNavigate } from "react-router-dom";
 import { useLoginUserMutation } from "../services/userAuthApi";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 const LoginPage = () => {
   const [serverError,setServerError]=useState()
   const {
@@ -52,7 +53,7 @@ const LoginPage = () => {
         </div>
         <div className="flex items-center justify-between">
           <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"type="submit" disabled={isSubmitting}>Login</button>
-          <a className="inline-block align-baseline text-sm font-semibold text-indigo-500 hover:text-indigo-800" href="#">Forgot Password?</a>
+          <Link className="inline-block align-baseline text-sm font-semibold text-indigo-500 hover:text-indigo-800" to="/forgetpassword">Forgot Password?</Link>
         </div>
       </form>
       {isSubmitting && <div className="text-center font-semibold">Loading...</div>}

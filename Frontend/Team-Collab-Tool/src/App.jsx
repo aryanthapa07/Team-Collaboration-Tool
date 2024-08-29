@@ -3,7 +3,7 @@ import Sidebar from "./components/sidebar"
 import HomePage from "./components/homepage"
 import LoginPage from "./components/loginpage"
 import SignupPage from "./components/signuppage"
-// import SignupPage from "./components/signuppage"
+import Forgetpass from "./components/forgetpass"
 import { createBrowserRouter , RouterProvider } from "react-router-dom"
 function App() {
 
@@ -24,6 +24,10 @@ function App() {
     {
       path:"/signup",
       element:<><Header/><SignupPage/></>
+    },
+    {
+      path:"/forgetpassword",
+      element:<><Header/><Forgetpass/></>
     },
   ])
 
