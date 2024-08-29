@@ -13,19 +13,10 @@ const SignupPage = () => {
     getValues,
   } = useForm();
 
-  const delay = (d) => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve();
-      }, d * 1000);
-    });
-  };
-
   const navigate = useNavigate();
 
   const [registerUser] = useRegisterUserMutation()
   const onSubmit = async (data) => {
-    await delay(2);
     const actualData={
       name: data.name,
       email: data.email,
@@ -42,9 +33,6 @@ const SignupPage = () => {
       storeToken(res.data.token)
       navigate("/login");
     }
-    // console.log(res);
-    // console.log("data",data);
-    // console.log("actualdata",actualData);
   };
 
   return (

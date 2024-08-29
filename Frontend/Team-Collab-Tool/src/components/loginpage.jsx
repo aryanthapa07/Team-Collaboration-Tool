@@ -28,17 +28,14 @@ const LoginPage = () => {
       storeToken(res.data.token)
       navigate("/dashboard");
     }
-    // console.log(res)
-    // console.log("ad",actualData)
-    // console.log(data)
   }
   return (
     <div className="container mx-auto mt-10">
       <h1 className="text-3xl font-bold text-center mb-4">Login</h1>
       <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-md mx-auto">
         <div className="mb-4">
-          <label className="block text-gray-700 font-bold mb-2" htmlFor="email">Email</label>
-          <input  {...register("Email",{ required: true })} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="email" placeholder="Email" name="Email" autoComplete="Email" id="email"/>
+          <label className="block text-gray-700 font-bold mb-2" htmlFor="Email">Email</label>
+          <input  {...register("Email",{ required: true })} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="email" placeholder="Email" name="Email" autoComplete="Email" id="Email"/>
           {errors.Email && <div className="text-red-700">*Email field is required</div>}
         </div>
         <div className="mb-6">
@@ -48,7 +45,7 @@ const LoginPage = () => {
         </div>
         <div className="flex items-center justify-between">
           <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"type="submit" disabled={isSubmitting}>Login</button>
-          <Link className="inline-block align-baseline text-sm font-semibold text-indigo-500 hover:text-indigo-800" to="/forgetpassword">Forgot Password?</Link>
+          <Link className="inline-block align-baseline text-sm font-semibold text-indigo-500 hover:text-indigo-800" to="/reset-password">Forgot Password?</Link>
         </div>
         {serverError.non_field_errors ? <div className="text-red-700 " >{serverError.non_field_errors[0]}</div> : ''}
       </form>

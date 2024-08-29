@@ -28,7 +28,7 @@ function App() {
       element:<><Header/><SignupPage/></>
     },
     {
-      path:"/forgetpassword",
+      path:"/reset-password",
       element:<><Header/><Forgetpass/></>
     },
     {
