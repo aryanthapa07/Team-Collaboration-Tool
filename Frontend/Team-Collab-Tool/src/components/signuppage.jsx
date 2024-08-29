@@ -4,7 +4,7 @@ import { useRegisterUserMutation } from "../services/userAuthApi";
 import { useState } from "react";
 import { storeToken } from "../services/LocalStorageService";
 const SignupPage = () => {
-  const [serverError,setServerError]=useState()
+  const [serverError,setServerError]=useState({})
 
   const {
     register,

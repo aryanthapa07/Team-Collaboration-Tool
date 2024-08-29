@@ -7,18 +7,17 @@ import { useState } from "react";
 import TaskBar from "./taskbar";
 import { LuFileCode2 } from "react-icons/lu";
 import { MdOutlineLogout } from "react-icons/md";
-import { removeToken } from "../services/LocalStorageService";
+import {  removeToken } from "../services/LocalStorageService";
 import { useNavigate } from 'react-router-dom';
-
 function Dashboard() {
     const [showTaskBar, setShowTaskBar] = useState(false);
-    const handleTaskbar=()=>{
-        setShowTaskBar(!showTaskBar)
-    }
     const handleLogout=()=>{
         console.log("logout clicked")
         removeToken()
         navigate('/login')
+    }
+    const handleTaskbar=()=>{
+        setShowTaskBar(!showTaskBar)
     }
     const navigate = useNavigate()
     return (
