@@ -128,11 +128,11 @@ const SignupPage = () => {
           {errors.tc && <div className="text-red-700">*Please accept the Terms and Conditions</div>}
         </div>
         <div className="flex items-center justify-between">
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit" disabled={isSubmitting}>
-            Signup
-          </button>
           <button onClick={loginnavigate} className="inline-block align-baseline text-sm font-semibold text-indigo-500 hover:text-indigo-800">
             Already have an account? Login
+          </button>
+          <button className="bg-[#12aef5] hover:opacity-80 text-white font-bold py-2 px-4 rounded" type="submit" disabled={isSubmitting}>
+            Signup
           </button>
         </div>
       </form>

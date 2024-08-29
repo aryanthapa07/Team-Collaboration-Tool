@@ -13,6 +13,9 @@ const LoginPage = () => {
   } = useForm()
   const navigate=useNavigate();
   const [LoginUser,] = useLoginUserMutation()
+  const registernavigate=()=>{
+    navigate("/signup")
+  }
   const onSubmit = async(data) => {
     const actualData={
       email:data.Email,
@@ -44,8 +47,13 @@ const LoginPage = () => {
           {errors.password && <div className="text-red-700">{errors.password.message}</div>}
         </div>
         <div className="flex items-center justify-between">
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"type="submit" disabled={isSubmitting}>Login</button>
+          <div className="flex flex-col gap-2">
+          <button onClick={registernavigate} type="button" className="inline-block align-baseline text-sm font-semibold text-indigo-500 hover:text-indigo-800">
+            New to CollabSpace? Register
+          </button>
           <Link className="inline-block align-baseline text-sm font-semibold text-indigo-500 hover:text-indigo-800" to="/reset-password">Forgot Password?</Link>
+          </div>
+          <button className="bg-[#12aef5] hover:opacity-80 text-white font-bold py-2 px-4 rounded"type="submit" disabled={isSubmitting}>Login</button>
         </div>
         {serverError.non_field_errors ? <div className="text-red-700 " >{serverError.non_field_errors[0]}</div> : ''}
       </form>
