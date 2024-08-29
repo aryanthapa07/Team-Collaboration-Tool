@@ -3,9 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { useRegisterUserMutation } from "../services/userAuthApi";
 import { useState } from "react";
 import { storeToken } from "../services/LocalStorageService";
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 const SignupPage = () => {
-  const [serverError,setServerError]=useState({})
-
+  const [serverError,setServerError] = useState({})
+  const [showPassword,setShowPassword] = useState(false)
+  const [showConfirmPassword,setShowConfirmPassword] = useState(false)
   const {
     register,
     handleSubmit,
@@ -13,9 +15,19 @@ const SignupPage = () => {
     getValues,
   } = useForm();
 
+  const togglepasswordview=()=>{
+    setShowPassword(!showPassword);
+  }
+  const toggleconfirmpassword=()=>{
+    setShowConfirmPassword(!showConfirmPassword)
+  }
+
   const navigate = useNavigate();
 
   const [registerUser] = useRegisterUserMutation()
+  const loginnavigate=()=>{
+    navigate("/login")
+  }
   const onSubmit = async (data) => {
     const actualData={
       name: data.name,
@@ -65,7 +77,7 @@ const SignupPage = () => {
           />
           {errors.name && <div className="text-red-700">*name field is required</div>}
         </div>
-        <div className="mb-6">
+        <div className="mb-6 relative">
           <label className="block text-gray-700 font-bold mb-2" htmlFor="password">
             Password
           </label>
@@ -73,9 +85,10 @@ const SignupPage = () => {
             {...register("password", { required: true, minLength: 8 })}
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="password"
-            type="password"
+            type={showPassword ? 'text':'password'}
             placeholder="Password"
           />
+          <button className="absolute right-2 bottom-2.5 " onClick={togglepasswordview} type="button">{showPassword?<FaEye/>:<FaEyeSlash/>}</button>
           {errors.password && (
             <div className="text-red-700">
               {errors.password.type === "required" && "*password field is required"}
@@ -83,7 +96,7 @@ const SignupPage = () => {
             </div>
           )}
         </div>
-        <div className="mb-6">
+        <div className="mb-6 relative">
           <label className="block text-gray-700 font-bold mb-2" htmlFor="password2">
             Confirm Password
           </label>
@@ -95,9 +108,10 @@ const SignupPage = () => {
             })}
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="password2"
-            type="password"
+            type={showConfirmPassword ? 'text':'password'}
             placeholder="Confirm Password"
           />
+          <button className="absolute right-2 bottom-2.5" onClick={toggleconfirmpassword} type="button">{showConfirmPassword?<FaEye/>:<FaEyeSlash/>}</button>
           {errors.password2 && <div className="text-red-700">{errors.password2.message}</div>}
         </div>
         <div className="flex items-center mb-4">
@@ -117,7 +131,7 @@ const SignupPage = () => {
           <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit" disabled={isSubmitting}>
             Signup
           </button>
-          <button onClick={navigate("/login")} className="inline-block align-baseline text-sm font-semibold text-indigo-500 hover:text-indigo-800" href="#">
+          <button onClick={loginnavigate} className="inline-block align-baseline text-sm font-semibold text-indigo-500 hover:text-indigo-800">
             Already have an account? Login
           </button>
         </div>
