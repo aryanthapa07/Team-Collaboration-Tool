@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useRegisterUserMutation } from "../services/userAuthApi";
 import { useState } from "react";
+import { storeToken } from "../services/LocalStorageService";
 const SignupPage = () => {
   const [serverError,setServerError]=useState()
 
@@ -38,6 +39,7 @@ const SignupPage = () => {
     }
     if(res.data){
       console.log(res.data)
+      storeToken(res.data.token)
       navigate("/login");
     }
     // console.log(res);

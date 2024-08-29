@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useLoginUserMutation } from "../services/userAuthApi";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { storeToken } from "../services/LocalStorageService";
 const LoginPage = () => {
   const [serverError,setServerError]=useState()
   const {
@@ -31,6 +32,7 @@ const LoginPage = () => {
     }
     if(res.data){
       console.log(res.data)
+      storeToken(res.data.token)
       navigate("/");
     }
     console.log(res)
