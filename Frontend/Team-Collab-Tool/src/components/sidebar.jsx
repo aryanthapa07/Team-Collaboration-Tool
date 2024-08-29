@@ -20,7 +20,6 @@ const Sidebar = () => {
         <button className="rounded-xl mx-1 my-4 flex gap-1" id="createbutton"><GoGoal className="my-1"/> <h3>Goals</h3></button>
         <button className="rounded-xl mx-1 my-4 flex gap-1" id="createbutton"><RiTeamLine className="my-1"/> <h3>My Teams</h3></button>
         <button className="rounded-xl mx-1 my-4 flex gap-1" id="createbutton"><LuFileCode2 className="my-1"/> <h3>My Projects</h3></button>
-
     </div>
   )
 }

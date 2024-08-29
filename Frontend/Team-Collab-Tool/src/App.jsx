@@ -4,6 +4,8 @@ import HomePage from "./components/homepage"
 import LoginPage from "./components/loginpage"
 import SignupPage from "./components/signuppage"
 import Forgetpass from "./components/forgetpass"
+import Dashboard from "./components/dashboard"
+import Dashboardheader from "./components/dashboardheader"
 import { createBrowserRouter , RouterProvider } from "react-router-dom"
 function App() {
 
@@ -28,6 +30,10 @@ function App() {
     {
       path:"/forgetpassword",
       element:<><Header/><Forgetpass/></>
+    },
+    {
+      path:"/Dashboard",
+      element:<><Dashboardheader/><Dashboard/><HomePage/></>
     },
   ])
 

@@ -33,7 +33,7 @@ const LoginPage = () => {
     if(res.data){
       console.log(res.data)
       storeToken(res.data.token)
-      navigate("/");
+      navigate("/dashboard");
     }
     console.log(res)
     // console.log("ad",actualData)
