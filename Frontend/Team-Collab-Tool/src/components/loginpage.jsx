@@ -4,13 +4,19 @@ import { useLoginUserMutation } from "../services/userAuthApi";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { storeToken } from "../services/LocalStorageService";
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 const LoginPage = () => {
   const [serverError,setServerError]=useState({})
+  const [showPassword,setShowPassword] = useState(false)
   const {
     register,
     handleSubmit,
     formState: { errors,isSubmitting },
   } = useForm()
+
+  const togglepassword=()=>{
+    setShowPassword(!showPassword);
+  }
   const navigate=useNavigate();
   const [LoginUser,] = useLoginUserMutation()
   const registernavigate=()=>{
@@ -41,9 +47,10 @@ const LoginPage = () => {
           <input  {...register("Email",{ required: true })} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="email" placeholder="Email" name="Email" autoComplete="Email" id="Email"/>
           {errors.Email && <div className="text-red-700">*Email field is required</div>}
         </div>
-        <div className="mb-6">
+        <div className="mb-6 relative">
           <label className="block text-gray-700 font-bold mb-2" htmlFor="password" autoComplete="password">Password</label>
-          <input {...register("password",{ required: {value:true,message:"*password field is required"} })}className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="password" placeholder="Password" name="password" id="password"/>
+          <input {...register("password",{ required: {value:true,message:"*password field is required"} })} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type={showPassword ? 'text':'password'} placeholder="Password" name="password" id="password"/>
+          <button className="absolute right-2 bottom-2.5 " onClick={togglepassword} type="button">{showPassword?<FaEye/>:<FaEyeSlash/>}</button>
           {errors.password && <div className="text-red-700">{errors.password.message}</div>}
         </div>
         <div className="flex items-center justify-between">
