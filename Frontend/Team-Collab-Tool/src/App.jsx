@@ -1,39 +1,38 @@
-import Startpage from "./pages/Startpage"
-import Login from "./pages/Login"
-import Registrationpage from "./pages/Registrationpage"
-import Resetpassword from "./pages/resetpassword"
-import Loggedinpage from "./pages/Loggedinpage"
-import { createBrowserRouter , RouterProvider } from "react-router-dom"
+import Startpage from "./pages/Startpage";
+import Login from "./pages/Login";
+import Registrationpage from "./pages/Registrationpage";
+import Resetpassword from "./pages/resetpassword";
+import Loggedinpage from "./pages/Loggedinpage";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 function App() {
-
-  const router=createBrowserRouter([
+  const router = createBrowserRouter([
     {
-      path:"/",
-      element:<Startpage/>
+      path: "/",
+      element: <Startpage />,
     },
     {
-      path:"/login",
-      element:<Login/>
+      path: "/login",
+      element: <Login />,
     },
     {
-      path:"/signup",
-      element:<Registrationpage/>
+      path: "/signup",
+      element: <Registrationpage />,
     },
     {
-      path:"/reset-password",
-      element:<Resetpassword/>
+      path: "/reset-password",
+      element: <Resetpassword />,
     },
     {
-      path:"/dashboard",
-      element:<Loggedinpage/>
+      path: "/dashboard",
+      element: <Loggedinpage />,
     },
-  ])
+  ]);
 
   return (
     <>
-    <RouterProvider router={router}/>
+      <RouterProvider router={router} />
     </>
-  )
+  );
 }
 
-export default App
+export default App;

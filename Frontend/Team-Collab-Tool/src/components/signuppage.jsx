@@ -49,7 +49,7 @@ const SignupPage = () => {
 
   return (
     <div className="container mx-auto mt-10">
-      <h1 className="text-3xl font-bold text-center mb-4">Signup</h1>
+      <h1 className="text-3xl font-bold text-center mb-4">Register</h1>
       <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-md mx-auto">
         <div className="mb-4">
           <label className="block text-gray-700 font-bold mb-2" htmlFor="email">
@@ -132,7 +132,7 @@ const SignupPage = () => {
             Already have an account? Login
           </button>
           <button className="bg-[#12aef5] hover:opacity-80 text-white font-bold py-2 px-4 rounded" type="submit" disabled={isSubmitting}>
-            Signup
+            Register
           </button>
         </div>
       </form>

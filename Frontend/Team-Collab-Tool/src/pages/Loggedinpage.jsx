@@ -2,6 +2,7 @@
 import Dashboard from "../components/dashboard"
 import Dashboardheader from "../components/dashboardheader"
 import HomePage from "../components/homepage"
+// renders the page after user logs in
 function Loggedinpage() {
   return (
     <main className="relative bg-gray-100 ">

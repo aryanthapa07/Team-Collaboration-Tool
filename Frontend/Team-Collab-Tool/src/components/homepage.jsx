@@ -1,5 +1,4 @@
 // import React from 'react';
-
 const HomePage = () => {
   return (
     <div className="flex size-full flex-col items-center justify-center gap-2 px-4">
@@ -14,7 +13,6 @@ const HomePage = () => {
                 <img src="\images\collab.png" alt="" className="size-64" />
             </div>
         </div>
-        
             <div className="buttons flex justify-center gap-4">
                 <button className="bg-[#12aef5] hover:opacity-80 text-white font-bold py-2 px-4 rounded">My Teams</button>
                 <button className="bg-[#12aef5] hover:opacity-80 text-white font-bold py-2 px-4 rounded">My Projects</button> 
