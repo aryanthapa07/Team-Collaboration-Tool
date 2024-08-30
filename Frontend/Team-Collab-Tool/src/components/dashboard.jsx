@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import { MdOutlineLogout } from "react-icons/md";
 const Dashboard = () => {
   const [showTaskBar, setShowTaskBar] = useState(false);
-  const [collapseSidebar, setCollapseSidebar] = useState(false);
+  const [collapseSidebar, setCollapseSidebar] = useState(true);
   const handleTaskbar = () => {
     setShowTaskBar(!showTaskBar);
   };
@@ -56,8 +56,6 @@ const navigate = useNavigate()
         />
       </svg>}
       </button>
-       
-
       <button className="rounded-lg pl-4 flex gap-4  mt-4 text-xl hover:bg-[#12aef5] hover:text-white px-4 py-2">
         <IoHomeOutline className="my-1" /> <h3 className={`${collapseSidebar && "hidden"}`}>Home</h3>
       </button>
@@ -73,7 +71,7 @@ const navigate = useNavigate()
       <button className="rounded-lg pl-4 flex gap-4 text-xl hover:bg-[#12aef5] hover:text-white px-4 py-2">
         <LuFileCode2 className="my-1" /> <h3 className={`${collapseSidebar && "hidden"}`}>My Projects</h3>
       </button>
-      <button onClick={handleLogout} className="rounded-lg pl-4 flex gap-4 text-xl hover:bg-[#12aef5] hover:text-white px-4 py-2">
+      <button onClick={handleLogout} className="text-white rounded-lg pl-4 flex gap-4 text-xl bg-[#12aef5] hover:px-4 py-2 hover:opacity-80" >
         <MdOutlineLogout className="my-1" /> <h3 className={`${collapseSidebar && "hidden"}`}>Logout</h3>
       </button>
 

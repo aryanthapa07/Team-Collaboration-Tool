@@ -7,7 +7,7 @@ import TaskBar from "./taskbar";
 import { LuFileCode2 } from "react-icons/lu";
 const Sidebar = () => {
   const [showTaskBar, setShowTaskBar] = useState(false);
-  const [collapseSidebar, setCollapseSidebar] = useState(false);
+  const [collapseSidebar, setCollapseSidebar] = useState(true);
   const handleTaskbar = () => {
     setShowTaskBar(!showTaskBar);
   };

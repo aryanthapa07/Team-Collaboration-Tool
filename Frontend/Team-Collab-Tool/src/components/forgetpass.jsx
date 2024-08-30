@@ -3,11 +3,20 @@ import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { useResetUserPasswordMutation } from "../services/userAuthApi"
 import { useNavigate } from "react-router-dom"
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 function Forgetpass() {
     const [server_error, setServerError] = useState({})
     const [server_msg, setServerMsg] = useState({})
     const navigate = useNavigate()
+    const [showPassword,setShowPassword] = useState(false)
+    const [showConfirmPassword,setShowConfirmPassword] = useState(false)
     const[resetUserPassword]=useResetUserPasswordMutation()
+    const togglepasswordview=()=>{
+      setShowPassword(!showPassword);
+    }
+    const toggleconfirmpassword=()=>{
+      setShowConfirmPassword(!showConfirmPassword)
+    }
     const {
         register,
         handleSubmit,
@@ -44,14 +53,16 @@ function Forgetpass() {
             <input {...register("Email",{ required: true })} type="email" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Email" name="Email" autoComplete="Email" id="Email"/>
             {errors.Email && <div className="text-red-700">*Email field is required</div>}
         </div>
-        <div className="mb-4">
+        <div className="mb-4 relative">
             <label className="block text-gray-700 font-bold mb-2" htmlFor="password">New Password</label>
-            <input {...register("password",{ required: {value:true,message:"*password field is required"} })} type="password" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="New Password" name="password" id="password"/>
+            <input {...register("password",{ required: {value:true,message:"*password field is required"} })} type={showPassword ? 'text':'password'} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="New Password" name="password" id="password"/>
+            <button className="absolute right-2 bottom-2.5 " onClick={togglepasswordview} type="button">{showPassword?<FaEye/>:<FaEyeSlash/>}</button>
             {errors.password && <div className="text-red-700">{errors.password.message}</div>}
         </div>
-        <div className="mb-4">
+        <div className="mb-4 relative">
             <label className="block text-gray-700 font-bold mb-2" htmlFor="password2">Confirm Password</label>
-            <input {...register("password2",{ required: {value:true,message:"*password field is required"} })} type="password" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Confirm Password" name="password2" id="password2"/>
+            <input {...register("password2",{ required: {value:true,message:"*password field is required"} })} type={showConfirmPassword ? 'text':'password'} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Confirm Password" name="password2" id="password2"/>
+            <button className="absolute right-2 bottom-2.5" onClick={toggleconfirmpassword} type="button">{showConfirmPassword?<FaEye/>:<FaEyeSlash/>}</button>
             {errors.password2 && <div className="text-red-700">{errors.password.message}</div>}
         </div>
         <div className="flex items-center justify-between">

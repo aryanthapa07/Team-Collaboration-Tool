@@ -58,7 +58,6 @@ const Header = () => {
         </button>
         {toggleMenu && (
           <div className="md:hidden absolute border border-gray-300 top-8 right-6 bg-white flex flex-col items-start justify-start w-[264px] px-4 py-6 rounded-lg">
-
               <button className="w-full rounded-lg pl-4 flex gap-4 text-xl hover:bg-[#12aef5] hover:text-white px-4 py-2">
                 <IoHomeOutline className="my-1" /> <h3 className="">Home</h3>
               </button>
