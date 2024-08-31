@@ -68,7 +68,7 @@ const SignupPage = () => {
             placeholder="Email"
           />
           {server_error.email ? (
-            <span style={{ fontSize: 12, color: "red" }}>
+            <span className="text-red-700 text-[12px]">
               {server_error.email[0]}
             </span>
           ) : (
@@ -87,7 +87,7 @@ const SignupPage = () => {
             placeholder="Name"
           />
           {server_error.name ? (
-            <span style={{ fontSize: 12, color: "red" }}>
+            <span className="text-red-700 text-[12px]">
               {server_error.name[0]}
             </span>
           ) : (
@@ -120,7 +120,7 @@ const SignupPage = () => {
             {showPassword ? <FaEye /> : <FaEyeSlash />}
           </button>
           {server_error.password ? (
-            <span style={{ fontSize: 12, color: "red" }}>
+            <span className="text-red-700 text-[12px]">
               {server_error.password[0]}
             </span>
           ) : (
@@ -153,7 +153,7 @@ const SignupPage = () => {
             {showConfirmPassword ? <FaEye /> : <FaEyeSlash />}
           </button>
           {server_error.password2 ? (
-            <span style={{ fontSize: 12, color: "red" }}>
+            <span className="text-red-700 text-[12px]">
               {server_error.password2[0]}
             </span>
           ) : (
@@ -175,7 +175,7 @@ const SignupPage = () => {
             </label>
           </div>
           {server_error.tc ? (
-            <span style={{ fontSize: 12, color: "red" }}>
+            <span className="text-red-700 text-[12px]">
               {server_error.tc[0]}
             </span>
           ) : (
