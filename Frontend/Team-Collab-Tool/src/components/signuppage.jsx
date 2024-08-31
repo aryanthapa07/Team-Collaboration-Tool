@@ -1,18 +1,19 @@
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useRegisterUserMutation } from "../services/userAuthApi";
 import { useState } from "react";
 import { storeToken } from "../services/LocalStorageService";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import CircularProgress from "@mui/joy/CircularProgress";
+import { Alert } from "@mui/material";
 const SignupPage = () => {
-  const [serverError, setServerError] = useState({});
+  const [server_error, setServerError] = useState({});
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
-    getValues,
+    formState: { isSubmitting },
   } = useForm();
 
   const togglepasswordview = () => {
@@ -29,19 +30,20 @@ const SignupPage = () => {
     navigate("/login");
   };
   const onSubmit = async (data) => {
+    console.log("data sent from frontend", data);
     const actualData = {
       name: data.name,
       email: data.email,
       password: data.password,
       password2: data.password2,
-      tc: data.tc,
+      tc: data.tc ? data.tc : undefined,
     };
     const res = await registerUser(actualData);
+    console.log("response from backend", res);
     if (res.error) {
       setServerError(res.error.data.errors);
     }
     if (res.data) {
-      console.log(res.data);
       storeToken(res.data.token);
       navigate("/login");
     }
@@ -59,14 +61,18 @@ const SignupPage = () => {
             Email
           </label>
           <input
-            {...register("email", { required: true })}
+            {...register("email")}
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="email"
             type="email"
             placeholder="Email"
           />
-          {errors.email && (
-            <div className="text-red-700">*Email field is required</div>
+          {server_error.email ? (
+            <span style={{ fontSize: 12, color: "red" }}>
+              {server_error.email[0]}
+            </span>
+          ) : (
+            ""
           )}
         </div>
         <div className="mb-4">
@@ -74,14 +80,18 @@ const SignupPage = () => {
             Name
           </label>
           <input
-            {...register("name", { required: true })}
+            {...register("name")}
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="name"
             type="text"
             placeholder="Name"
           />
-          {errors.name && (
-            <div className="text-red-700">*name field is required</div>
+          {server_error.name ? (
+            <span style={{ fontSize: 12, color: "red" }}>
+              {server_error.name[0]}
+            </span>
+          ) : (
+            ""
           )}
         </div>
         <div className="mb-6 relative">
@@ -92,26 +102,29 @@ const SignupPage = () => {
             Password
           </label>
           <input
-            {...register("password", { required: true, minLength: 8 })}
+            {...register("password")}
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="password"
             type={showPassword ? "text" : "password"}
             placeholder="Password"
           />
           <button
-            className="absolute right-2 bottom-2.5 "
+            className={
+              server_error.password
+                ? "absolute right-2 bottom-8"
+                : "absolute right-2 bottom-2.5"
+            }
             onClick={togglepasswordview}
             type="button"
           >
             {showPassword ? <FaEye /> : <FaEyeSlash />}
           </button>
-          {errors.password && (
-            <div className="text-red-700">
-              {errors.password.type === "required" &&
-                "*password field is required"}
-              {errors.password.type === "minLength" &&
-                "*Minimum length for password is 8"}
-            </div>
+          {server_error.password ? (
+            <span style={{ fontSize: 12, color: "red" }}>
+              {server_error.password[0]}
+            </span>
+          ) : (
+            ""
           )}
         </div>
         <div className="mb-6 relative">
@@ -122,62 +135,77 @@ const SignupPage = () => {
             Confirm Password
           </label>
           <input
-            {...register("password2", {
-              required: true,
-              validate: (value) =>
-                value === getValues().password || "*Passwords do not match",
-            })}
+            {...register("password2")}
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="password2"
             type={showConfirmPassword ? "text" : "password"}
             placeholder="Confirm Password"
           />
           <button
-            className="absolute right-2 bottom-2.5"
+            className={
+              server_error.password2
+                ? "absolute right-2 bottom-8"
+                : "absolute right-2 bottom-2.5"
+            }
             onClick={toggleconfirmpassword}
             type="button"
           >
             {showConfirmPassword ? <FaEye /> : <FaEyeSlash />}
           </button>
-          {errors.password2 && (
-            <div className="text-red-700">{errors.password2.message}</div>
+          {server_error.password2 ? (
+            <span style={{ fontSize: 12, color: "red" }}>
+              {server_error.password2[0]}
+            </span>
+          ) : (
+            ""
           )}
         </div>
-        <div className="flex items-center mb-4">
-          <input
-            {...register("tc", { required: true })}
-            type="checkbox"
-            id="tc"
-            className="w-4 h-4 mr-2 text-blue-600 focus:ring-blue-500 ring-opacity-50"
-            value={true}
-          />
-          <label htmlFor="tc" className="ml-2 text-gray-700">
-            I agree to the Terms and Conditions
-          </label>
-          {errors.tc && (
-            <div className="text-red-700">
-              *Please accept the Terms and Conditions
-            </div>
+        <div className="flex flex-col justify-start mb-4 gap-1">
+          <div className="flex items-center">
+            <input
+              {...register("tc")}
+              type="checkbox"
+              id="tc"
+              className="w-4 h-4 mr-2 text-blue-600 focus:ring-blue-500 ring-opacity-50"
+              value={true}
+            />
+            <label htmlFor="tc" className="ml-2 text-gray-700">
+              I agree to the{" "}
+              <Link className="hover:text-[#12aef5]">Terms and Conditions</Link>
+            </label>
+          </div>
+          {server_error.tc ? (
+            <span style={{ fontSize: 12, color: "red" }}>
+              {server_error.tc[0]}
+            </span>
+          ) : (
+            ""
           )}
         </div>
         <div className="flex items-center justify-between">
           <button
             onClick={loginnavigate}
-            className="inline-block align-baseline text-sm font-semibold text-indigo-500 hover:text-indigo-800"
+            className="inline-block align-baseline text-sm font-semibold text-[#12aef5] hover:opacity-80"
           >
             Already have an account? Login
           </button>
           <button
             className="bg-[#12aef5] hover:opacity-80 text-white font-bold py-2 px-4 rounded"
             type="submit"
-            disabled={isSubmitting}
           >
             Register
           </button>
         </div>
+        {server_error.non_field_errors ? (
+          <Alert severity="error" className="mt-2">{server_error.non_field_errors[0]}</Alert>
+        ) : (
+          ""
+        )}
       </form>
       {isSubmitting && (
-        <div className="text-center font-semibold">Loading...</div>
+        <div className="text-center font-semibold">
+          <CircularProgress variant="solid" />
+        </div>
       )}
     </div>
   );

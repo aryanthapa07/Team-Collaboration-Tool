@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { useResetUserPasswordMutation } from "../services/userAuthApi";
 import { useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { Alert } from "@mui/material";
 function Forgetpass() {
   const [server_error, setServerError] = useState({});
   const [server_msg, setServerMsg] = useState({});
@@ -134,12 +135,16 @@ function Forgetpass() {
           </button>
         </div>
         {server_error.non_field_errors ? (
-          <div className="text-red-700">{server_error.non_field_errors[0]}</div>
+          <Alert severity="error" className="mt-3">
+            {server_error.non_field_errors[0]}
+          </Alert>
         ) : (
           ""
         )}
         {server_msg.msg ? (
-          <div className="text-green-700">{server_msg.msg}</div>
+          <Alert severity="success" className="mt-3">
+            {server_msg.msg}
+          </Alert>
         ) : (
           ""
         )}

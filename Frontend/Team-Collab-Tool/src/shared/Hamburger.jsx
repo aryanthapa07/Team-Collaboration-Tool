@@ -64,7 +64,7 @@ function Hamburger() {
                 Login
               </button>
             </Link>
-            <Link to="/register">
+            <Link to="/signup">
               <button className="hover:opacity-80 transition-all duration-400 text-white cursor-pointer bg-[#12aef5] w-full px-4 py-2 rounded-md text-lg">
                 Register
               </button>

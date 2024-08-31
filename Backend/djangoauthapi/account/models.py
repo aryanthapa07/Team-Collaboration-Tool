@@ -42,7 +42,7 @@ class User(AbstractBaseUser):
         unique=True,
     )
     name = models.CharField(max_length=200)
-    tc=models.BooleanField()
+    tc=models.BooleanField() #tc=terms and conditions
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
     created_at= models.DateTimeField(auto_now_add=True)
@@ -55,7 +55,7 @@ class User(AbstractBaseUser):
 
     def __str__(self):
         return self.email
-
+    # perm = permission
     def has_perm(self, perm, obj=None):
         "Does the user have a specific permission?"
         # Simplest possible answer: Yes, always

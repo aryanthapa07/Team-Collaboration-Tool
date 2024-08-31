@@ -5,6 +5,8 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { storeToken } from "../services/LocalStorageService";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import CircularProgress from '@mui/joy/CircularProgress';
+import { Alert } from "@mui/material";
 const LoginPage = () => {
   const [serverError, setServerError] = useState({});
   const [showPassword, setShowPassword] = useState(false);
@@ -116,13 +118,13 @@ const LoginPage = () => {
           </button>
         </div>
         {serverError.non_field_errors ? (
-          <div className="text-red-700 ">{serverError.non_field_errors[0]}</div>
+          <Alert severity="error" className="mt-3">{serverError.non_field_errors[0]}</Alert>
         ) : (
           ""
         )}
       </form>
       {isSubmitting && (
-        <div className="text-center font-semibold">Loading...</div>
+        <div className="text-center font-semibold"><CircularProgress variant="solid" /></div>
       )}
     </div>
   );
