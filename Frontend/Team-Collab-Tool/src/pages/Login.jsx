@@ -1,14 +1,14 @@
 // import React from 'react'
-import Header from "../components/header"
-import LoginPage from "../components/loginpage"
+import Header from "../components/header";
+import LoginPage from "../components/loginpage";
 // renders the content for the login page
 function Login() {
-    return (
+  return (
     <div className="pt-20">
-        <Header/>
-        <LoginPage/>
+      <Header />
+      <LoginPage />
     </div>
-  )
+  );
 }
 
-export default Login
+export default Login;

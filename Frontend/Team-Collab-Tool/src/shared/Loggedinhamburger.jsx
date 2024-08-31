@@ -12,6 +12,9 @@ import { useEffect } from "react";
 import { useState } from "react";
 import TaskBar from "../components/taskbar";
 import { useNavigate } from "react-router-dom";
+import Hamburgericon from "../icons/Hamburgericon";
+import Hamburgercloseicon from "../icons/Hamburgerclose";
+import Createplusicon from "../icons/createplusicon";
 
 // renders the after login hamburger for the user
 function Loggedinhamburger() {
@@ -40,7 +43,6 @@ function Loggedinhamburger() {
     setShowTaskBar(!showTaskBar);
   };
   const handleLogout = () => {
-    console.log("logout clicked");
     removeToken();
     navigate("/login");
   };
@@ -48,37 +50,7 @@ function Loggedinhamburger() {
   return (
     <>
       <button className="md:hidden mr-4" onClick={handleToggleMenu}>
-        {toggleMenu ? (
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="size-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M6 18 18 6M6 6l12 12"
-            />
-          </svg>
-        ) : (
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="size-9"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-            />
-          </svg>
-        )}
+        {toggleMenu ? <Hamburgercloseicon /> : <Hamburgericon />}
       </button>
       {toggleMenu && (
         <div className="md:hidden absolute border border-gray-300 top-8 right-6 bg-white flex flex-col items-start justify-start w-[264px] px-4 py-6 rounded-lg">
@@ -86,19 +58,21 @@ function Loggedinhamburger() {
             Hi {userData.name}
           </h1>
           <button className="w-full rounded-lg pl-4 flex gap-4 text-xl hover:bg-[#12aef5] hover:text-white px-4 py-2">
-            <IoHomeOutline className="my-1" /> <h3 className="">Home</h3>
+            <IoHomeOutline className="my-1" /> <span className="">Home</span>
           </button>
           <button className="w-full rounded-lg pl-4 flex gap-4 text-xl hover:bg-[#12aef5] hover:text-white px-4 py-2">
-            <MdOutlineTaskAlt className="my-1" /> <h3 className="">My Tasks</h3>
+            <MdOutlineTaskAlt className="my-1" />{" "}
+            <span className="">My Tasks</span>
           </button>
           <button className="w-full rounded-lg pl-4 flex gap-4 text-xl hover:bg-[#12aef5] hover:text-white px-4 py-2">
-            <GoGoal className="my-1" /> <h3 className="">Goals</h3>
+            <GoGoal className="my-1" /> <span className="">Goals</span>
           </button>
           <button className="w-full rounded-lg pl-4 flex gap-4 text-xl hover:bg-[#12aef5] hover:text-white px-4 py-2">
-            <RiTeamLine className="my-1" /> <h3 className="">My Teams</h3>
+            <RiTeamLine className="my-1" /> <span className="">My Teams</span>
           </button>
           <button className="w-full rounded-lg pl-4 flex gap-4 text-xl hover:bg-[#12aef5] hover:text-white px-4 py-2">
-            <LuFileCode2 className="my-1" /> <h3 className="">My Projects</h3>
+            <LuFileCode2 className="my-1" />{" "}
+            <span className="">My Projects</span>
           </button>
 
           <button
@@ -110,20 +84,7 @@ function Loggedinhamburger() {
             onClick={handleTaskbar}
           >
             <span className="text-lg">Create</span>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="size-5"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M12 4.5v15m7.5-7.5h-15"
-              />
-            </svg>
+            <Createplusicon />
           </button>
           {showTaskBar && <TaskBar />}
 

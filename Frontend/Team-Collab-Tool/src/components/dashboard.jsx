@@ -21,7 +21,6 @@ const Dashboard = () => {
     setCollapseSidebar((prev) => !prev);
   };
   const handleLogout = () => {
-    console.log("logout clicked");
     removeToken();
     navigate("/login");
   };

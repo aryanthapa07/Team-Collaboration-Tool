@@ -1,15 +1,15 @@
 // import React from 'react'
-import Header from "../components/header"
-import SignupPage from "../components/signuppage"
+import Header from "../components/header";
+import SignupPage from "../components/signuppage";
 
 // renders the signup/user registration page
 function Registrationpage() {
-    return (
+  return (
     <div className="pt-20">
-        <Header/>
-        <SignupPage/>
+      <Header />
+      <SignupPage />
     </div>
-  )
+  );
 }
 
-export default Registrationpage
+export default Registrationpage;
