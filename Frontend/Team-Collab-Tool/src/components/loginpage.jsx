@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { storeToken } from "../services/LocalStorageService";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import CircularProgress from '@mui/joy/CircularProgress';
+import CircularProgress from "@mui/joy/CircularProgress";
 import { Alert } from "@mui/material";
 const LoginPage = () => {
   const [serverError, setServerError] = useState({});
@@ -13,7 +13,7 @@ const LoginPage = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { isSubmitting },
   } = useForm();
 
   const togglepassword = () => {
@@ -25,17 +25,19 @@ const LoginPage = () => {
     navigate("/signup");
   };
   const onSubmit = async (data) => {
+    console.log("data from frontend", data);
     const actualData = {
       email: data.Email,
       password: data.password,
     };
     const res = await LoginUser(actualData);
     if (res.error) {
+      console.log("inside res.error", res);
       setServerError(res.error.data.errors);
       console.log(res.error);
     }
     if (res.data) {
-      console.log(res.data);
+      console.log("inside res.data", res.data);
       storeToken(res.data.token);
       navigate("/dashboard");
     }
@@ -52,7 +54,7 @@ const LoginPage = () => {
             Email
           </label>
           <input
-            {...register("Email", { required: true })}
+            {...register("Email")}
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             type="email"
             placeholder="Email"
@@ -60,8 +62,12 @@ const LoginPage = () => {
             autoComplete="Email"
             id="Email"
           />
-          {errors.Email && (
-            <div className="text-red-700">*Email field is required</div>
+          {serverError.email ? (
+            <span className="text-red-700 text-[12px]">
+              {serverError.email[0]}
+            </span>
+          ) : (
+            ""
           )}
         </div>
         <div className="mb-6 relative">
@@ -73,9 +79,7 @@ const LoginPage = () => {
             Password
           </label>
           <input
-            {...register("password", {
-              required: { value: true, message: "*password field is required" },
-            })}
+            {...register("password")}
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             type={showPassword ? "text" : "password"}
             placeholder="Password"
@@ -83,14 +87,22 @@ const LoginPage = () => {
             id="password"
           />
           <button
-            className="absolute right-2 bottom-2.5 "
+            className={
+              serverError.password
+                ? "absolute right-2 bottom-8 "
+                : "absolute right-2 bottom-2.5"
+            }
             onClick={togglepassword}
             type="button"
           >
             {showPassword ? <FaEye /> : <FaEyeSlash />}
           </button>
-          {errors.password && (
-            <div className="text-red-700">{errors.password.message}</div>
+          {serverError.password ? (
+            <span className="text-red-700 text-[12px]">
+              {serverError.password[0]}
+            </span>
+          ) : (
+            ""
           )}
         </div>
         <div className="flex flex-col justify-between gap-2">
@@ -118,13 +130,17 @@ const LoginPage = () => {
           </button>
         </div>
         {serverError.non_field_errors ? (
-          <Alert severity="error" className="mt-3">{serverError.non_field_errors[0]}</Alert>
+          <Alert severity="error" className="mt-3">
+            {serverError.non_field_errors[0]}
+          </Alert>
         ) : (
           ""
         )}
       </form>
       {isSubmitting && (
-        <div className="text-center font-semibold"><CircularProgress variant="solid" /></div>
+        <div className="text-center font-semibold">
+          <CircularProgress variant="solid" />
+        </div>
       )}
     </div>
   );
