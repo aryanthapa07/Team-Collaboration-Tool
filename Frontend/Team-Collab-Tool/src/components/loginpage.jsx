@@ -116,7 +116,7 @@ const LoginPage = () => {
             </button>
             <Link
               className="inline-block align-baseline text-sm font-semibold text-indigo-500 hover:text-indigo-800"
-              to="/reset-password"
+              to="/reset-password-email"
             >
               Forgot Password?
             </Link>

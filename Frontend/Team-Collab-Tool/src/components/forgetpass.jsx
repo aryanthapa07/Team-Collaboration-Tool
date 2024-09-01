@@ -1,53 +1,42 @@
 // import React from 'react'
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useResetUserPasswordMutation } from "../services/userAuthApi";
-import { useNavigate } from "react-router-dom";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useSendPasswordResetEmailMutation } from "../services/userAuthApi";
 import { Alert } from "@mui/material";
+import CircularProgress from "@mui/joy/CircularProgress";
 function Forgetpass() {
   const [server_error, setServerError] = useState({});
   const [server_msg, setServerMsg] = useState({});
-  const navigate = useNavigate();
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [resetUserPassword] = useResetUserPasswordMutation();
-  const togglepasswordview = () => {
-    setShowPassword(!showPassword);
-  };
-  const toggleconfirmpassword = () => {
-    setShowConfirmPassword(!showConfirmPassword);
-  };
+  const [sendPasswordResetEmail] = useSendPasswordResetEmailMutation();
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { isSubmitting },
   } = useForm();
   const onSubmit = async (data) => {
-    console.log(data);
+    console.log("data from frontend", data);
     const actualData = {
       email: data.Email,
-      password: data.password,
-      password2: data.password2,
     };
-    const res = await resetUserPassword(actualData);
+    const res = await sendPasswordResetEmail(actualData);
     if (res.error) {
+      console.log("inside res.error", res);
       setServerMsg({});
       setServerError(res.error.data.errors);
       console.log(res.error);
     }
     if (res.data) {
+      console.log("inside res.data", res);
       setServerError({});
       setServerMsg(res.data);
       document.getElementById("password-reset-form").reset();
-      setTimeout(() => {
-        navigate("/login");
-      }, 2000);
     }
   };
   return (
     <div className="container mx-auto mt-10">
-      <h1 className="text-center font-bold text-3xl mb-4">Reset Password</h1>
+      <h1 className="text-center font-bold text-3xl mb-4">
+        Send Reset Password Link
+      </h1>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="w-full max-w-md mx-auto"
@@ -66,72 +55,21 @@ function Forgetpass() {
             autoComplete="Email"
             id="Email"
           />
-          {errors.Email && (
-            <div className="text-red-700">*Email field is required</div>
-          )}
-        </div>
-        <div className="mb-4 relative">
-          <label
-            className="block text-gray-700 font-bold mb-2"
-            htmlFor="password"
-          >
-            New Password
-          </label>
-          <input
-            {...register("password", {
-              required: { value: true, message: "*password field is required" },
-            })}
-            type={showPassword ? "text" : "password"}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            placeholder="New Password"
-            name="password"
-            id="password"
-          />
-          <button
-            className="absolute right-2 bottom-2.5 "
-            onClick={togglepasswordview}
-            type="button"
-          >
-            {showPassword ? <FaEye /> : <FaEyeSlash />}
-          </button>
-          {errors.password && (
-            <div className="text-red-700">{errors.password.message}</div>
-          )}
-        </div>
-        <div className="mb-4 relative">
-          <label
-            className="block text-gray-700 font-bold mb-2"
-            htmlFor="password2"
-          >
-            Confirm Password
-          </label>
-          <input
-            {...register("password2", {
-              required: { value: true, message: "*password field is required" },
-            })}
-            type={showConfirmPassword ? "text" : "password"}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            placeholder="Confirm Password"
-            name="password2"
-            id="password2"
-          />
-          <button
-            className="absolute right-2 bottom-2.5"
-            onClick={toggleconfirmpassword}
-            type="button"
-          >
-            {showConfirmPassword ? <FaEye /> : <FaEyeSlash />}
-          </button>
-          {errors.password2 && (
-            <div className="text-red-700">{errors.password.message}</div>
+          {server_error.email ? (
+            <span className="text-red-700 text-[12px]">
+              {server_error.email[0]}
+            </span>
+          ) : (
+            ""
           )}
         </div>
         <div className="flex items-center justify-between">
           <button
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
             type="submit"
+            disabled={isSubmitting}
           >
-            Save
+            Send
           </button>
         </div>
         {server_error.non_field_errors ? (
@@ -149,6 +87,11 @@ function Forgetpass() {
           ""
         )}
       </form>
+      {isSubmitting && (
+        <div className="text-center font-semibold">
+          <CircularProgress variant="solid" />
+        </div>
+      )}
     </div>
   );
 }

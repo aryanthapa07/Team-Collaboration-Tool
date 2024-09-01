@@ -39,12 +39,24 @@ export const userAuthApi = createApi({
         };
       },
     }),
-    resetUserPassword: builder.mutation({
-      query: (actualData) => {
+    sendPasswordResetEmail: builder.mutation({
+      query: (user) => {
         return {
-          url: "reset-password/",
+          url: "send-reset-password-email/",
           method: "POST",
-          body: actualData,
+          body: user,
+          headers: {
+            "Content-type": "application/json",
+          },
+        };
+      },
+    }),
+    resetUserPassword: builder.mutation({
+      query: ({ actualdata, id, token }) => {
+        return {
+          url: `/reset-password/${id}/${token}/`,
+          method: "POST",
+          body: actualdata,
           headers: {
             "Content-type": "application/json",
           },
@@ -58,5 +70,6 @@ export const {
   useRegisterUserMutation,
   useLoginUserMutation,
   useGetLoggedUserQuery,
+  useSendPasswordResetEmailMutation,
   useResetUserPasswordMutation,
 } = userAuthApi;
