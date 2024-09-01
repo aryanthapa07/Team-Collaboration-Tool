@@ -123,33 +123,33 @@ class UserPasswordResetSerializer(serializers.Serializer):
 
     def validate(self, attrs):
         try:
-            password = attrs.get('password')
-            password2 = attrs.get('password2')
-            uid = self.context.get('uid')
-            token = self.context.get('token')
-            id = smart_str(urlsafe_base64_decode(uid))
-            user = User.objects.get(id=id)
-            if len(password)<8:
-              raise serializers.ValidationError("Password must be atleast 8 characters long")
-            # validating presence of atleast one uppercase letter 
-            if not re.search(r'[A-Z]',password):
-              raise serializers.ValidationError("Password must contain atleast one uppercase letter")
-            # validating presence of atleast one lowercase letter 
-            if not re.search(r'[a-z]',password):
-              raise serializers.ValidationError("Password must contain atleast one lowercase letter")
-            # validating presence of atleast one digit  
-            if not re.search(r'\d', password):
-              raise serializers.ValidationError("Password must contain at least one digit")
-            # validating presence of atleast one special character  
-            if not re.search(r'[!@#$%^&*(),.?":{}|<>]', password):
-              raise serializers.ValidationError("Password must contain at least one special character")
-            if password != password2:
-                raise serializers.ValidationError("Password and Confirm Password doesn't match")
-            if not PasswordResetTokenGenerator().check_token(user, token):
-                raise serializers.ValidationError("Token is not valid or has expired")
-            user.set_password(password)
-            user.save()
-            return attrs
+          password = attrs.get('password')
+          password2 = attrs.get('password2')
+          uid = self.context.get('uid')
+          token = self.context.get('token')
+          id = smart_str(urlsafe_base64_decode(uid))
+          user = User.objects.get(id=id)
+          if len(password)<8:
+            raise serializers.ValidationError("Password must be atleast 8 characters long")
+          # validating presence of atleast one uppercase letter 
+          if not re.search(r'[A-Z]',password):
+            raise serializers.ValidationError("Password must contain atleast one uppercase letter")
+          # validating presence of atleast one lowercase letter 
+          if not re.search(r'[a-z]',password):
+            raise serializers.ValidationError("Password must contain atleast one lowercase letter")
+          # validating presence of atleast one digit  
+          if not re.search(r'\d', password):
+            raise serializers.ValidationError("Password must contain at least one digit")
+          # validating presence of atleast one special character  
+          if not re.search(r'[!@#$%^&*(),.?":{}|<>]', password):
+            raise serializers.ValidationError("Password must contain at least one special character")
+          if password != password2:
+              raise serializers.ValidationError("Password and Confirm Password doesn't match")
+          if not PasswordResetTokenGenerator().check_token(user, token):
+              raise serializers.ValidationError("Token is not valid or has expired")
+          user.set_password(password)
+          user.save()
+          return attrs
         except DjangoUnicodeDecodeError as identifier:
           PasswordResetTokenGenerator().check_token(user, token)
           raise serializers.ValidationError('Token is not Valid or Expired')
