@@ -4,6 +4,7 @@ from django.utils.encoding import smart_str, force_bytes, DjangoUnicodeDecodeErr
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from account.utils import Util
+import re
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
   # We are writing this because we need confirm password field in our Registration Request
@@ -15,10 +16,25 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
       'password':{'write_only':True}
     }
 
-  # Validating Password and Confirm Password while Registration
   def validate(self, attrs):
     password = attrs.get('password')
+    # validating password length
+    if len(password)<8:
+      raise serializers.ValidationError("Password must be atleast 8 characters long")
+    # validating presence of atleast one uppercase letter 
+    if not re.search(r'[A-Z]',password):
+      raise serializers.ValidationError("Password must contain atleast one uppercase letter")
+    # validating presence of atleast one lowercase letter 
+    if not re.search(r'[a-z]',password):
+      raise serializers.ValidationError("Password must contain atleast one lowercase letter")
+    # validating presence of atleast one digit  
+    if not re.search(r'\d', password):
+      raise serializers.ValidationError("Password must contain at least one digit")
+    # validating presence of atleast one special character  
+    if not re.search(r'[!@#$%^&*(),.?":{}|<>]', password):
+      raise serializers.ValidationError("Password must contain at least one special character")
     password2 = attrs.get('password2')
+    # Validating Password and Confirm Password while Registration
     if password != password2:
       raise serializers.ValidationError("Password and Confirm Password doesn't match")
     return attrs
