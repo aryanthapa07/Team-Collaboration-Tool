@@ -43,6 +43,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
   def create(self, validate_data):
     return User.objects.create_user(**validate_data)
 
+# user login serializer
 class UserLoginSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(max_length=255)
     password = serializers.CharField(style={'input_type': 'password'}, write_only=True)
@@ -65,11 +66,13 @@ class UserLoginSerializer(serializers.ModelSerializer):
         attrs['user'] = user
         return attrs
 
+# user profile serializer
 class UserProfileSerializer(serializers.ModelSerializer):
   class Meta:
     model = User
     fields = ['id', 'email', 'name']
 
+# change password serializer
 class UserChangePasswordSerializer(serializers.Serializer):
   password = serializers.CharField(max_length=255, style={'input_type':'password'}, write_only=True)
   password2 = serializers.CharField(max_length=255, style={'input_type':'password'}, write_only=True)
@@ -85,26 +88,68 @@ class UserChangePasswordSerializer(serializers.Serializer):
     user.set_password(password)
     user.save()
     return attrs
+# send password reset email serializer
+class SendPasswordResetEmailSerializer(serializers.Serializer):
+    email = serializers.EmailField(max_length=255)
 
+    class Meta:
+        fields = ['email']
+
+    def validate(self, attrs):
+        email = attrs.get('email')
+        if User.objects.filter(email=email).exists():
+            user = User.objects.get(email=email)
+            uid = urlsafe_base64_encode(force_bytes(user.id))
+            token = PasswordResetTokenGenerator().make_token(user)
+            reset_link = f'http://localhost:5173//reset-password/{uid}/{token}/'
+            body = f'Click the following link to reset your password: {reset_link}'
+            data = {
+                'subject': 'Reset Your Password',
+                'body': body,
+                'to_email': user.email
+            }
+            Util.send_email(data)
+        else:
+            raise serializers.ValidationError("User with this email doesn't exist")
+        return attrs
+
+# password reset serializer
 class UserPasswordResetSerializer(serializers.Serializer):
-  email=serializers.EmailField(max_length=255)
-  password = serializers.CharField(max_length=255, style={'input_type':'password'}, write_only=True)
-  password2 = serializers.CharField(max_length=255, style={'input_type':'password'}, write_only=True)
-  class Meta:
-    fields = ['email','password', 'password2']
+    password = serializers.CharField(max_length=255, style={'input_type':'password'}, write_only=True)
+    password2 = serializers.CharField(max_length=255, style={'input_type':'password'}, write_only=True)
 
-  def validate(self, attrs):
-    email = attrs.get('email')
-    password = attrs.get('password')
-    password2 = attrs.get('password2')
-    try:
-      # Check if user exists
-      User.objects.get(email=email)
-      if password != password2:
-        raise serializers.ValidationError("Password and Confirm Password doesn't match")
-    except User.DoesNotExist:
-      raise serializers.ValidationError("User with this email doesn't exist")
-    user = User.objects.get(email=email)
-    user.set_password(password)
-    user.save()
-    return attrs
+    class Meta:
+        fields = ['password', 'password2']
+
+    def validate(self, attrs):
+        try:
+            password = attrs.get('password')
+            password2 = attrs.get('password2')
+            uid = self.context.get('uid')
+            token = self.context.get('token')
+            id = smart_str(urlsafe_base64_decode(uid))
+            user = User.objects.get(id=id)
+            if len(password)<8:
+              raise serializers.ValidationError("Password must be atleast 8 characters long")
+            # validating presence of atleast one uppercase letter 
+            if not re.search(r'[A-Z]',password):
+              raise serializers.ValidationError("Password must contain atleast one uppercase letter")
+            # validating presence of atleast one lowercase letter 
+            if not re.search(r'[a-z]',password):
+              raise serializers.ValidationError("Password must contain atleast one lowercase letter")
+            # validating presence of atleast one digit  
+            if not re.search(r'\d', password):
+              raise serializers.ValidationError("Password must contain at least one digit")
+            # validating presence of atleast one special character  
+            if not re.search(r'[!@#$%^&*(),.?":{}|<>]', password):
+              raise serializers.ValidationError("Password must contain at least one special character")
+            if password != password2:
+                raise serializers.ValidationError("Password and Confirm Password doesn't match")
+            if not PasswordResetTokenGenerator().check_token(user, token):
+                raise serializers.ValidationError("Token is not valid or has expired")
+            user.set_password(password)
+            user.save()
+            return attrs
+        except DjangoUnicodeDecodeError as identifier:
+          PasswordResetTokenGenerator().check_token(user, token)
+          raise serializers.ValidationError('Token is not Valid or Expired')
