@@ -5,7 +5,8 @@ import { useState } from "react";
 import { storeToken } from "../services/LocalStorageService";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import CircularProgress from "@mui/joy/CircularProgress";
-import { Alert } from "@mui/material";
+import { toast } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 const SignupPage = () => {
   const [server_error, setServerError] = useState({});
   const [showPassword, setShowPassword] = useState(false);
@@ -42,15 +43,33 @@ const SignupPage = () => {
     console.log("response from backend", res);
     if (res.error) {
       setServerError(res.error.data.errors);
+      if (res.error.data.errors.non_field_errors) {
+        toast.error(res.error.data.errors.non_field_errors[0], {
+          duration: 3000, // Toast will be visible for 3 seconds
+        });
+      }
+      if (
+        res.error.data.errors.email == "user with this Email already exists."
+      ) {
+        toast.error(res.error.data.errors.email, {
+          duration: 3000, // Toast will be visible for 3 seconds
+        });
+      }
     }
     if (res.data) {
-      storeToken(res.data.token);
-      navigate("/login");
+      toast.success(res.data.msg, {
+        duration: 2000, // Toast will be visible for 2 seconds
+      });
+      setTimeout(() => {
+        storeToken(res.data.token);
+        navigate("/login");
+      }, 2000);
     }
   };
 
   return (
     <div className="container mx-auto mt-10">
+      <Toaster position="top-center" reverseOrder={false} />
       <h1 className="text-3xl font-bold text-center mb-4">Register</h1>
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -71,7 +90,7 @@ const SignupPage = () => {
             type="email"
             placeholder="Email"
           />
-          {server_error.email ? (
+          {server_error.email == "This field may not be blank." ? (
             <span className="text-red-700 text-[12px]">
               {server_error.email[0]}
             </span>
@@ -213,13 +232,6 @@ const SignupPage = () => {
             Register
           </button>
         </div>
-        {server_error.non_field_errors ? (
-          <Alert severity="error" className="mt-2">
-            {server_error.non_field_errors[0]}
-          </Alert>
-        ) : (
-          ""
-        )}
       </form>
       {isSubmitting && (
         <div className="text-center font-semibold">

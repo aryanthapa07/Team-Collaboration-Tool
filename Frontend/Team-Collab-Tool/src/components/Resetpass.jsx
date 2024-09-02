@@ -4,10 +4,10 @@ import { useForm } from "react-hook-form";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
 import { useResetUserPasswordMutation } from "../services/userAuthApi";
-import { Alert } from "@mui/material";
+import { toast } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 function Resetpass() {
   const [server_error, setServerError] = useState({});
-  const [server_msg, setServerMsg] = useState({});
   const [resetUserPassword] = useResetUserPasswordMutation();
   const { id, token } = useParams();
   const [showPassword, setShowPassword] = useState(false);
@@ -33,13 +33,19 @@ function Resetpass() {
     const res = await resetUserPassword({ actualdata, id, token });
     if (res.error) {
       console.log("inside res.error", res);
-      setServerMsg({});
+      if (res.error.data.errors.non_field_errors) {
+        toast.error(res.error.data.errors.non_field_errors[0], {
+          duration: 3000, // Toast will be visible for 3 seconds
+        });
+      }
       setServerError(res.error.data.errors);
     }
     if (res.data) {
       console.log("inside res.data", res);
+      toast.success(res.data.msg, {
+        duration: 2000, // Toast will be visible for 2 seconds
+      });
       setServerError({});
-      setServerMsg(res.data);
       document.getElementById("password-reset-form").reset();
       setTimeout(() => {
         navigate("/login");
@@ -48,6 +54,7 @@ function Resetpass() {
   };
   return (
     <div className="container mx-auto mt-10">
+      <Toaster position="top-center" reverseOrder={false} />
       <h1 className="text-center font-bold text-3xl mb-4">Reset Password</h1>
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -139,20 +146,6 @@ function Resetpass() {
             Reset
           </button>
         </div>
-        {server_error.non_field_errors ? (
-          <Alert severity="error" className="mt-3">
-            {server_error.non_field_errors[0]}
-          </Alert>
-        ) : (
-          ""
-        )}
-        {server_msg.msg ? (
-          <Alert severity="success" className="mt-3">
-            {server_msg.msg}
-          </Alert>
-        ) : (
-          ""
-        )}
       </form>
     </div>
   );

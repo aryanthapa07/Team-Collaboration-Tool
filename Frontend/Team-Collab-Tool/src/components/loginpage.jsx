@@ -6,7 +6,9 @@ import { Link } from "react-router-dom";
 import { storeToken } from "../services/LocalStorageService";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import CircularProgress from "@mui/joy/CircularProgress";
-import { Alert } from "@mui/material";
+import { toast } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
+
 const LoginPage = () => {
   const [serverError, setServerError] = useState({});
   const [showPassword, setShowPassword] = useState(false);
@@ -34,16 +36,27 @@ const LoginPage = () => {
     if (res.error) {
       console.log("inside res.error", res);
       setServerError(res.error.data.errors);
+      if (res.error.data.errors.non_field_errors) {
+        toast.error(res.error.data.errors.non_field_errors[0], {
+          duration: 3000, // Toast will be visible for 3 seconds
+        });
+      }
       console.log(res.error);
     }
     if (res.data) {
       console.log("inside res.data", res.data);
-      storeToken(res.data.token);
-      navigate("/dashboard");
+      toast.success(res.data.msg, {
+        duration: 2000, // Toast will be visible for 2 seconds
+      });
+      setTimeout(() => {
+        storeToken(res.data.token);
+        navigate("/dashboard");
+      }, 2000);
     }
   };
   return (
     <div className="container mx-auto mt-10">
+      <Toaster position="top-center" reverseOrder={false} />
       <h1 className="text-3xl font-bold text-center mb-4">Login</h1>
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -137,13 +150,6 @@ const LoginPage = () => {
             Login
           </button>
         </div>
-        {serverError.non_field_errors ? (
-          <Alert severity="error" className="mt-3">
-            {serverError.non_field_errors[0]}
-          </Alert>
-        ) : (
-          ""
-        )}
       </form>
       {isSubmitting && (
         <div className="text-center font-semibold">

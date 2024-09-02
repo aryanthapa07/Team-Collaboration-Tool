@@ -2,11 +2,11 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSendPasswordResetEmailMutation } from "../services/userAuthApi";
-import { Alert } from "@mui/material";
+import { toast } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 import CircularProgress from "@mui/joy/CircularProgress";
 function Forgetpass() {
   const [server_error, setServerError] = useState({});
-  const [server_msg, setServerMsg] = useState({});
   const [sendPasswordResetEmail] = useSendPasswordResetEmailMutation();
   const {
     register,
@@ -21,19 +21,26 @@ function Forgetpass() {
     const res = await sendPasswordResetEmail(actualData);
     if (res.error) {
       console.log("inside res.error", res);
-      setServerMsg({});
       setServerError(res.error.data.errors);
+      if (res.error.data.errors.non_field_errors) {
+        toast.error(res.error.data.errors.non_field_errors[0], {
+          duration: 4000, // Toast will be visible for 4 seconds
+        });
+      }
       console.log(res.error);
     }
     if (res.data) {
       console.log("inside res.data", res);
+      toast.success(res.data.msg, {
+        duration: 4000, // Toast will be visible for 4 seconds
+      });
       setServerError({});
-      setServerMsg(res.data);
       document.getElementById("password-reset-form").reset();
     }
   };
   return (
     <div className="container mx-auto mt-10">
+      <Toaster position="top-center" reverseOrder={false} />
       <h1 className="text-center font-bold text-3xl mb-4">
         Send Reset Password Link
       </h1>
@@ -76,20 +83,6 @@ function Forgetpass() {
             Send
           </button>
         </div>
-        {server_error.non_field_errors ? (
-          <Alert severity="error" className="mt-3">
-            {server_error.non_field_errors[0]}
-          </Alert>
-        ) : (
-          ""
-        )}
-        {server_msg.msg ? (
-          <Alert severity="success" className="mt-3">
-            {server_msg.msg}
-          </Alert>
-        ) : (
-          ""
-        )}
       </form>
       {isSubmitting && (
         <div className="text-center font-semibold">
