@@ -7,7 +7,9 @@ const Header = () => {
       <Logo />
       <div className="relative">
         <Hamburger />
-        <Authbuttons />
+        <div className="hidden md:flex gap-4 px-7">
+          <Authbuttons />
+        </div>
       </div>
     </div>
   );

@@ -1,13 +1,13 @@
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useRegisterUserMutation } from "../services/userAuthApi";
 import { useState } from "react";
 import { storeToken } from "../services/LocalStorageService";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
 import CircularProgress from "@mui/joy/CircularProgress";
 import { toast } from "react-hot-toast";
 import { Toaster } from "react-hot-toast";
-import { Tooltip } from "react-tooltip";
+import InputField from "../shared/InputField";
+import CheckboxField from "../shared/CheckBoxField";
 const SignupPage = () => {
   const [server_error, setServerError] = useState({});
   const [showPassword, setShowPassword] = useState(false);
@@ -76,128 +76,54 @@ const SignupPage = () => {
         onSubmit={handleSubmit(onSubmit)}
         className="w-full max-w-md mx-auto"
       >
-        <div className="mb-4">
-          <label className="block text-gray-700 font-bold mb-2" htmlFor="email">
-            Email
-          </label>
-          <input
-            {...register("email")}
-            className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
-              server_error.email ? "border-red-500" : ""
-            }`}
-            id="email"
-            type="email"
-            placeholder="Email"
-            data-tooltip-id="email-tooltip"
-            data-tooltip-content={
-              server_error.email == "This field may not be blank."
-                ? server_error.email[0]
-                : ""
-            }
-          />
-          <Tooltip id="email-tooltip" />
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 font-bold mb-2" htmlFor="name">
-            Name
-          </label>
-          <input
-            {...register("name")}
-            className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
-              server_error.name ? "border-red-500" : ""
-            }`}
-            id="name"
-            type="text"
-            placeholder="Name"
-            data-tooltip-id="name-tooltip"
-            data-tooltip-content={server_error.name ? server_error.name[0] : ""}
-          />
-          <Tooltip id="name-tooltip" />
-        </div>
-        <div className="mb-6 relative">
-          <label
-            className="block text-gray-700 font-bold mb-2"
-            htmlFor="password"
-          >
-            Password
-          </label>
-          <input
-            {...register("password")}
-            className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
-              server_error.password ? "border-red-500" : ""
-            }`}
-            id="password"
-            type={showPassword ? "text" : "password"}
-            placeholder="Password"
-            data-tooltip-id="password-tooltip"
-            data-tooltip-content={
-              server_error.password ? server_error.password[0] : ""
-            }
-          />
-          <button
-            className="absolute right-2 bottom-2.5"
-            onClick={togglepasswordview}
-            type="button"
-          >
-            {showPassword ? <FaEye /> : <FaEyeSlash />}
-          </button>
-          <Tooltip id="password-tooltip" />
-        </div>
-        <div className="mb-6 relative">
-          <label
-            className="block text-gray-700 font-bold mb-2"
-            htmlFor="password2"
-          >
-            Confirm Password
-          </label>
-          <input
-            {...register("password2")}
-            className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
-              server_error.password2 ? "border-red-500" : ""
-            }`}
-            id="password2"
-            type={showConfirmPassword ? "text" : "password"}
-            placeholder="Confirm Password"
-            data-tooltip-id="password2-tooltip"
-            data-tooltip-content={
-              server_error.password2 ? server_error.password2[0] : ""
-            }
-          />
-          <button
-            className="absolute right-2 bottom-2.5"
-            onClick={toggleconfirmpassword}
-            type="button"
-          >
-            {showConfirmPassword ? <FaEye /> : <FaEyeSlash />}
-          </button>
-          <Tooltip id="password2-tooltip" />
-        </div>
-        <div className="flex flex-col justify-start mb-4 gap-1">
-          {/* tc =>terms and conditions */}
-          <div className="flex items-center">
-            <input
-              {...register("tc")}
-              type="checkbox"
-              id="tc"
-              className={`w-4 h-4 mr-2 text-blue-600 ring-opacity-50 focus:outline-none focus:shadow-outline`}
-              value={true}
-              data-tooltip-id="tc-tooltip"
-              data-tooltip-content={
-                server_error.tc ? "Accept the terms and conditions" : ""
-              }
-            />
-            <label
-              htmlFor="tc"
-              className={`ml-2  ${
-                server_error.tc ? "text-red-500" : "text-gray-700"
-              }`}
-            >
-              I agree to the{" "}
-              <Link className="hover:text-[#12aef5]">Terms and Conditions</Link>
-            </label>
-          </div>
-          <Tooltip id="tc-tooltip" />
-        </div>
+        <InputField
+          label="Email"
+          type="email"
+          name="email"
+          register={register}
+          error={server_error.email}
+          tooltipId="email-tooltip"
+          placeholder="Email"
+        />
+        <InputField
+          label="Name"
+          type="text"
+          name="name"
+          register={register}
+          error={server_error.name}
+          tooltipId="name-tooltip"
+          placeholder="Name"
+        />
+        <InputField
+          label="Password"
+          type="password"
+          name="password"
+          register={register}
+          error={server_error.password}
+          tooltipId="password-tooltip"
+          placeholder="Password"
+          showPassword={showPassword}
+          togglePassword={togglepasswordview}
+        />
+        <InputField
+          label="Confirm Password"
+          type="password"
+          name="password2"
+          register={register}
+          error={server_error.password2}
+          tooltipId="password2-tooltip"
+          placeholder="Confirm Password"
+          showPassword={showConfirmPassword}
+          togglePassword={toggleconfirmpassword}
+        />
+        <CheckboxField
+          id="tc"
+          register={register}
+          serverError={server_error.tc}
+          label="I agree to the"
+          linkText="Terms and Conditions"
+          linkUrl="/terms-and-conditions"
+        />
         <div className="flex items-center justify-between">
           <button
             onClick={loginnavigate}

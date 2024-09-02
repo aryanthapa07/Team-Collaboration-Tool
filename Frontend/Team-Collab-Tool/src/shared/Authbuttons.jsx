@@ -1,20 +1,17 @@
 // import React from 'react'
 import { Link } from "react-router-dom";
-// renders login and signup buttons
+import AuthButton from "../buttons/AuthButton";
+// renders login and signup buttons wrapped inside Link to navigate to respective pages
 function Authbuttons() {
   return (
-    <div className="hidden md:flex gap-4 px-7">
+    <>
       <Link to="/login">
-        <button className="hover:opacity-80 transition-all duration-400 text-white cursor-pointer bg-[#12aef5] px-4 py-2 rounded-md text-lg">
-          Login
-        </button>
+        <AuthButton text="Login" />
       </Link>
       <Link to="/signup">
-        <button className="hover:opacity-80 transition-all duration-400 text-white cursor-pointer bg-[#12aef5] px-4 py-2 rounded-md text-lg">
-          Register
-        </button>
+        <AuthButton text="Register" />
       </Link>
-    </div>
+    </>
   );
 }
 

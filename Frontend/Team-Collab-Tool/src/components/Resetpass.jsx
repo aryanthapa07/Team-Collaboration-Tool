@@ -1,12 +1,11 @@
 // import React from 'react'
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
 import { useResetUserPasswordMutation } from "../services/userAuthApi";
 import { toast } from "react-hot-toast";
 import { Toaster } from "react-hot-toast";
-import { Tooltip } from "react-tooltip";
+import InputField from "../shared/InputField";
 function Resetpass() {
   const [server_error, setServerError] = useState({});
   const [resetUserPassword] = useResetUserPasswordMutation();
@@ -62,66 +61,28 @@ function Resetpass() {
         className="w-full max-w-md mx-auto"
         id="password-reset-form"
       >
-        <div className="mb-4 relative">
-          <label
-            className="block text-gray-700 font-bold mb-2"
-            htmlFor="password"
-          >
-            New Password
-          </label>
-          <input
-            {...register("password")}
-            type={showPassword ? "text" : "password"}
-            className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
-              server_error.password ? "border-red-500" : ""
-            }`}
-            placeholder="New Password"
-            name="password"
-            id="password"
-            data-tooltip-id="password-tooltip"
-            data-tooltip-content={
-              server_error.password ? server_error.password[0] : ""
-            }
-          />
-          <button
-            className="absolute right-2 bottom-2.5"
-            onClick={togglepasswordview}
-            type="button"
-          >
-            {showPassword ? <FaEye /> : <FaEyeSlash />}
-          </button>
-          <Tooltip id="password-tooltip" />
-        </div>
-        <div className="mb-4 relative">
-          <label
-            className="block text-gray-700 font-bold mb-2"
-            htmlFor="password2"
-          >
-            Confirm Password
-          </label>
-          <input
-            {...register("password2")}
-            type={showConfirmPassword ? "text" : "password"}
-            className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
-              server_error.password2 ? "border-red-500" : ""
-            }`}
-            placeholder="Confirm Password"
-            name="password2"
-            id="password2"
-            data-tooltip-id="password2-tooltip"
-            data-tooltip-content={
-              server_error.password2 ? server_error.password2[0] : ""
-            }
-          />
-          <button
-            className="absolute right-2 bottom-2.5"
-            onClick={toggleconfirmpassword}
-            type="button"
-          >
-            {showConfirmPassword ? <FaEye /> : <FaEyeSlash />}
-          </button>
-          <Tooltip id="password2-tooltip" />
-        </div>
+        <InputField
+          label="New Password"
+          type="password"
+          name="password"
+          register={register}
+          error={server_error.password}
+          tooltipId="password-tooltip"
+          placeholder="New Password"
+          showPassword={showPassword}
+          togglePassword={togglepasswordview}
+        />
+        <InputField
+          label="Confirm Password"
+          type="password"
+          name="password2"
+          register={register}
+          error={server_error.password2}
+          tooltipId="password2-tooltip"
+          placeholder="Confirm Password"
+          showPassword={showConfirmPassword}
+          togglePassword={toggleconfirmpassword}
+        />
         <div className="flex items-center justify-between">
           <button
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"

@@ -3,11 +3,13 @@ import { MdOutlineTaskAlt } from "react-icons/md";
 import { GoGoal } from "react-icons/go";
 import { RiTeamLine } from "react-icons/ri";
 import { useState } from "react";
-import TaskBar from "./taskbar";
 import { LuFileCode2 } from "react-icons/lu";
 import Opensidebar from "../icons/Opensidebar";
 import Closesidebar from "../icons/Closesidebar";
 import Createplusicon from "../icons/createplusicon";
+import ToggleSidebarButton from "../buttons/ToggleSidebarButton";
+import Sidebarbutton from "../buttons/Sidebarbutton";
+import CreateButton from "../buttons/CreateButton";
 const Sidebar = () => {
   const [showTaskBar, setShowTaskBar] = useState(false);
   const [collapseSidebar, setCollapseSidebar] = useState(true);
@@ -23,50 +25,45 @@ const Sidebar = () => {
         collapseSidebar ? "max-w-fit" : "max-w-[264px]"
       } shadow-md`}
     >
-      <button
+      <ToggleSidebarButton
         onClick={handleCollapse}
-        className="absolute bottom-[50%] -right-5 bg-[#12aef5] text-white rounded-full p-2 hover:scale-110"
-      >
-        {collapseSidebar ? <Opensidebar /> : <Closesidebar />}
-      </button>
+        collapseSidebar={collapseSidebar}
+        OpenIcon={Opensidebar}
+        CloseIcon={Closesidebar}
+      />
 
-      <button className="rounded-lg pl-4 flex gap-4  mt-4 text-xl hover:bg-[#12aef5] hover:text-white px-4 py-2">
-        <IoHomeOutline className="my-1" />
-        <span className={`${collapseSidebar && "hidden"}`}>Home</span>
-      </button>
-      <button className="rounded-lg pl-4 flex gap-4 text-xl hover:bg-[#12aef5] hover:text-white px-4 py-2">
-        <MdOutlineTaskAlt className="my-1" />
-        <span className={`${collapseSidebar && "hidden"}`}>My Tasks</span>
-      </button>
-      <button className="rounded-lg pl-4 flex gap-4 text-xl hover:bg-[#12aef5] hover:text-white px-4 py-2">
-        <GoGoal className="my-1" />
-        <span className={`${collapseSidebar && "hidden"}`}>Goals</span>
-      </button>
-      <button className="rounded-lg pl-4 flex gap-4 text-xl hover:bg-[#12aef5] hover:text-white px-4 py-2">
-        <RiTeamLine className="my-1" />
-        <span className={`${collapseSidebar && "hidden"}`}>My Teams</span>
-      </button>
-      <button className="rounded-lg pl-4 flex gap-4 text-xl hover:bg-[#12aef5] hover:text-white px-4 py-2">
-        <LuFileCode2 className="my-1" />
-        <span className={`${collapseSidebar && "hidden"}`}>My Projects</span>
-      </button>
-
-      {!collapseSidebar && (
-        <div className="flex flex-col gap-2.5 items-center justify-center">
-          <button
-            className={`border border-gray-400 py-2.5 ${
-              showTaskBar
-                ? "bg-[#12aef5] text-white"
-                : "hover:bg-[#12aef5] hover:text-white"
-            } rounded-xl mx-auto w-[85%] mt-4 flex items-center justify-center gap-1`}
-            onClick={handleTaskbar}
-          >
-            <span className="text-lg">Create</span>
-            <Createplusicon />
-          </button>
-          {showTaskBar && <TaskBar />}
-        </div>
-      )}
+      <Sidebarbutton
+        icon={IoHomeOutline}
+        label="Home"
+        collapseSidebar={collapseSidebar}
+      />
+      <Sidebarbutton
+        icon={MdOutlineTaskAlt}
+        label="My Tasks"
+        collapseSidebar={collapseSidebar}
+      />
+      <Sidebarbutton
+        icon={GoGoal}
+        label="Goals"
+        collapseSidebar={collapseSidebar}
+      />
+      <Sidebarbutton
+        icon={RiTeamLine}
+        label="My Teams"
+        collapseSidebar={collapseSidebar}
+      />
+      <Sidebarbutton
+        icon={LuFileCode2}
+        label="My Projects"
+        collapseSidebar={collapseSidebar}
+      />
+      <CreateButton
+        onClick={handleTaskbar}
+        collapseSidebar={collapseSidebar}
+        showTaskBar={showTaskBar}
+        Icon={Createplusicon}
+        label="Create"
+      />
     </div>
   );
 };

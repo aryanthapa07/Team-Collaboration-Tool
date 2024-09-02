@@ -4,12 +4,10 @@ import { useLoginUserMutation } from "../services/userAuthApi";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { storeToken } from "../services/LocalStorageService";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
-import CircularProgress from "@mui/joy/CircularProgress";
 import { toast } from "react-hot-toast";
 import { Toaster } from "react-hot-toast";
-import { Tooltip } from "react-tooltip";
-
+import InputField from "../shared/InputField";
+import ProgressBar from "../shared/ProgressBar";
 const LoginPage = () => {
   const [serverError, setServerError] = useState({});
   const [showPassword, setShowPassword] = useState(false);
@@ -63,56 +61,26 @@ const LoginPage = () => {
         onSubmit={handleSubmit(onSubmit)}
         className="w-full max-w-md mx-auto"
       >
-        <div className="mb-4">
-          <label className="block text-gray-700 font-bold mb-2" htmlFor="Email">
-            Email
-          </label>
-          <input
-            {...register("Email")}
-            className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
-              serverError.email ? "border-red-500 " : ""
-            }`}
-            type="email"
-            placeholder="Email"
-            name="Email"
-            autoComplete="Email"
-            id="Email"
-            data-tooltip-id="email-tooltip"
-            data-tooltip-content={serverError.email ? serverError.email[0] : ""} // Add tooltip
-          />
-          <Tooltip id="email-tooltip" />
-        </div>
-        <div className="mb-6 relative">
-          <label
-            className="block text-gray-700 font-bold mb-2"
-            htmlFor="password"
-            autoComplete="password"
-          >
-            Password
-          </label>
-          <input
-            {...register("password")}
-            className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
-              serverError.password ? "border-red-500 " : ""
-            }`}
-            type={showPassword ? "text" : "password"}
-            placeholder="Password"
-            name="password"
-            id="password"
-            data-tooltip-id="password-tooltip"
-            data-tooltip-content={
-              serverError.password ? serverError.password[0] : ""
-            }
-          />
-          <button
-            className="absolute right-2 bottom-2.5"
-            onClick={togglepassword}
-            type="button"
-          >
-            {showPassword ? <FaEye /> : <FaEyeSlash />}
-          </button>
-          <Tooltip id="password-tooltip" />
-        </div>
+        <InputField
+          label="Email"
+          type="email"
+          name="Email"
+          register={register}
+          error={serverError.email}
+          tooltipId="email-tooltip"
+          placeholder="Email"
+        />
+        <InputField
+          label="Password"
+          type="password"
+          name="password"
+          register={register}
+          error={serverError.password}
+          tooltipId="password-tooltip"
+          placeholder="Password"
+          showPassword={showPassword}
+          togglePassword={togglepassword}
+        />
         <div className="flex flex-col justify-between gap-2">
           <div className="flex justify-between">
             <button
@@ -138,11 +106,7 @@ const LoginPage = () => {
           </button>
         </div>
       </form>
-      {isSubmitting && (
-        <div className="text-center font-semibold">
-          <CircularProgress variant="solid" />
-        </div>
-      )}
+      {isSubmitting && <ProgressBar />}
     </div>
   );
 };
