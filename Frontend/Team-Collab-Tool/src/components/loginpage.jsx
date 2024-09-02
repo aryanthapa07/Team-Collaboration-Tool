@@ -8,6 +8,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import CircularProgress from "@mui/joy/CircularProgress";
 import { toast } from "react-hot-toast";
 import { Toaster } from "react-hot-toast";
+import { Tooltip } from "react-tooltip";
 
 const LoginPage = () => {
   const [serverError, setServerError] = useState({});
@@ -78,14 +79,10 @@ const LoginPage = () => {
             name="Email"
             autoComplete="Email"
             id="Email"
+            data-tooltip-id="email-tooltip"
+            data-tooltip-content={serverError.email ? serverError.email[0] : ""} // Add tooltip
           />
-          {serverError.email ? (
-            <span className="text-red-700 text-[12px]">
-              {serverError.email[0]}
-            </span>
-          ) : (
-            ""
-          )}
+          <Tooltip id="email-tooltip" />
         </div>
         <div className="mb-6 relative">
           <label
@@ -106,25 +103,19 @@ const LoginPage = () => {
             placeholder="Password"
             name="password"
             id="password"
+            data-tooltip-id="password-tooltip"
+            data-tooltip-content={
+              serverError.password ? serverError.password[0] : ""
+            }
           />
           <button
-            className={
-              serverError.password
-                ? "absolute right-2 bottom-8 "
-                : "absolute right-2 bottom-2.5"
-            }
+            className="absolute right-2 bottom-2.5"
             onClick={togglepassword}
             type="button"
           >
             {showPassword ? <FaEye /> : <FaEyeSlash />}
           </button>
-          {serverError.password ? (
-            <span className="text-red-700 text-[12px]">
-              {serverError.password[0]}
-            </span>
-          ) : (
-            ""
-          )}
+          <Tooltip id="password-tooltip" />
         </div>
         <div className="flex flex-col justify-between gap-2">
           <div className="flex justify-between">

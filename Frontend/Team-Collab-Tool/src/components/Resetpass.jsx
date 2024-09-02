@@ -6,6 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useResetUserPasswordMutation } from "../services/userAuthApi";
 import { toast } from "react-hot-toast";
 import { Toaster } from "react-hot-toast";
+import { Tooltip } from "react-tooltip";
 function Resetpass() {
   const [server_error, setServerError] = useState({});
   const [resetUserPassword] = useResetUserPasswordMutation();
@@ -79,25 +80,17 @@ function Resetpass() {
             placeholder="New Password"
             name="password"
             id="password"
+            data-tooltip-id="password-tooltip"
+            data-tooltip-content={server_error.password?server_error.password[0]:""}
           />
           <button
-            className={
-              server_error.password
-                ? "absolute right-2 bottom-8"
-                : "absolute right-2 bottom-2.5"
-            }
+            className="absolute right-2 bottom-2.5"
             onClick={togglepasswordview}
             type="button"
           >
             {showPassword ? <FaEye /> : <FaEyeSlash />}
           </button>
-          {server_error.password ? (
-            <span className="text-red-700 text-[12px]">
-              {server_error.password[0]}
-            </span>
-          ) : (
-            ""
-          )}
+          <Tooltip id="password-tooltip"/>
         </div>
         <div className="mb-4 relative">
           <label
@@ -117,25 +110,17 @@ function Resetpass() {
             placeholder="Confirm Password"
             name="password2"
             id="password2"
+            data-tooltip-id="password2-tooltip"
+            data-tooltip-content={server_error.password2?server_error.password2[0]:""}
           />
           <button
-            className={
-              server_error.password2
-                ? "absolute right-2 bottom-8"
-                : "absolute right-2 bottom-2.5"
-            }
+            className="absolute right-2 bottom-2.5"
             onClick={toggleconfirmpassword}
             type="button"
           >
             {showConfirmPassword ? <FaEye /> : <FaEyeSlash />}
           </button>
-          {server_error.password2 ? (
-            <span className="text-red-700 text-[12px]">
-              {server_error.password2[0]}
-            </span>
-          ) : (
-            ""
-          )}
+          <Tooltip id="password2-tooltip"/>
         </div>
         <div className="flex items-center justify-between">
           <button

@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { useSendPasswordResetEmailMutation } from "../services/userAuthApi";
 import { toast } from "react-hot-toast";
 import { Toaster } from "react-hot-toast";
+import { Tooltip } from "react-tooltip";
 import CircularProgress from "@mui/joy/CircularProgress";
 function Forgetpass() {
   const [server_error, setServerError] = useState({});
@@ -65,14 +66,10 @@ function Forgetpass() {
             name="Email"
             autoComplete="Email"
             id="Email"
+            data-tooltip-id="email-tooltip"
+            data-tooltip-content={server_error.email? server_error.email[0]:""}
           />
-          {server_error.email ? (
-            <span className="text-red-700 text-[12px]">
-              {server_error.email[0]}
-            </span>
-          ) : (
-            ""
-          )}
+          <Tooltip id="email-tooltip"/>
         </div>
         <div className="flex items-center justify-between">
           <button

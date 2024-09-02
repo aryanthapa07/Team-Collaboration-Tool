@@ -7,6 +7,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import CircularProgress from "@mui/joy/CircularProgress";
 import { toast } from "react-hot-toast";
 import { Toaster } from "react-hot-toast";
+import { Tooltip } from "react-tooltip";
 const SignupPage = () => {
   const [server_error, setServerError] = useState({});
   const [showPassword, setShowPassword] = useState(false);
@@ -89,14 +90,10 @@ const SignupPage = () => {
             id="email"
             type="email"
             placeholder="Email"
+            data-tooltip-id="email-tooltip"
+            data-tooltip-content={server_error.email == "This field may not be blank." ? server_error.email[0] : ""}
           />
-          {server_error.email == "This field may not be blank." ? (
-            <span className="text-red-700 text-[12px]">
-              {server_error.email[0]}
-            </span>
-          ) : (
-            ""
-          )}
+          <Tooltip id="email-tooltip"/>
         </div>
         <div className="mb-4">
           <label className="block text-gray-700 font-bold mb-2" htmlFor="name">
@@ -112,14 +109,10 @@ const SignupPage = () => {
             id="name"
             type="text"
             placeholder="Name"
+            data-tooltip-id="name-tooltip"
+            data-tooltip-content={server_error.name?server_error.name[0]:""}
           />
-          {server_error.name ? (
-            <span className="text-red-700 text-[12px]">
-              {server_error.name[0]}
-            </span>
-          ) : (
-            ""
-          )}
+          <Tooltip id="name-tooltip"/>
         </div>
         <div className="mb-6 relative">
           <label
@@ -138,25 +131,17 @@ const SignupPage = () => {
             id="password"
             type={showPassword ? "text" : "password"}
             placeholder="Password"
+            data-tooltip-id="password-tooltip"
+            data-tooltip-content={server_error.password?server_error.password[0]:""}
           />
           <button
-            className={
-              server_error.password
-                ? "absolute right-2 bottom-8"
-                : "absolute right-2 bottom-2.5"
-            }
+            className="absolute right-2 bottom-2.5"
             onClick={togglepasswordview}
             type="button"
           >
             {showPassword ? <FaEye /> : <FaEyeSlash />}
           </button>
-          {server_error.password ? (
-            <span className="text-red-700 text-[12px]">
-              {server_error.password[0]}
-            </span>
-          ) : (
-            ""
-          )}
+          <Tooltip id="password-tooltip"/>
         </div>
         <div className="mb-6 relative">
           <label
@@ -175,47 +160,36 @@ const SignupPage = () => {
             id="password2"
             type={showConfirmPassword ? "text" : "password"}
             placeholder="Confirm Password"
+            data-tooltip-id="password2-tooltip"
+            data-tooltip-content={server_error.password2?server_error.password2[0]:""}
           />
           <button
-            className={
-              server_error.password2
-                ? "absolute right-2 bottom-8"
-                : "absolute right-2 bottom-2.5"
-            }
+            className="absolute right-2 bottom-2.5"
             onClick={toggleconfirmpassword}
             type="button"
           >
             {showConfirmPassword ? <FaEye /> : <FaEyeSlash />}
           </button>
-          {server_error.password2 ? (
-            <span className="text-red-700 text-[12px]">
-              {server_error.password2[0]}
-            </span>
-          ) : (
-            ""
-          )}
+          <Tooltip id="password2-tooltip"/>
         </div>
         <div className="flex flex-col justify-start mb-4 gap-1">
+          {/* tc =>terms and conditions */}
           <div className="flex items-center">
             <input
               {...register("tc")}
               type="checkbox"
               id="tc"
-              className="w-4 h-4 mr-2 text-blue-600 focus:ring-blue-500 ring-opacity-50"
+              className={`w-4 h-4 mr-2 text-blue-600 ring-opacity-50 focus:outline-none focus:shadow-outline`}
               value={true}
+              data-tooltip-id="tc-tooltip"
+              data-tooltip-content={server_error.tc?"Accept the terms and conditions":""}
             />
-            <label htmlFor="tc" className="ml-2 text-gray-700">
+            <label htmlFor="tc" className={`ml-2  ${server_error.tc ? "text-red-500" : "text-gray-700"}`}>
               I agree to the{" "}
               <Link className="hover:text-[#12aef5]">Terms and Conditions</Link>
             </label>
           </div>
-          {server_error.tc ? (
-            <span className="text-red-700 text-[12px]">
-              {server_error.tc[0]}
-            </span>
-          ) : (
-            ""
-          )}
+          <Tooltip id="tc-tooltip"/>
         </div>
         <div className="flex items-center justify-between">
           <button
