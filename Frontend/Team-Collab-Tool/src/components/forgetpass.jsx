@@ -57,10 +57,8 @@ function Forgetpass() {
           <input
             {...register("Email")}
             type="email"
-            className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:ring-2 ${
-              server_error.email
-                ? "border-red-500 focus:ring-red-500 focus:border-red-500"
-                : "focus:ring-blue-500 focus:border-blue-500"
+            className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+              server_error.email ? "border-red-500" : ""
             }`}
             placeholder="Email"
             name="Email"

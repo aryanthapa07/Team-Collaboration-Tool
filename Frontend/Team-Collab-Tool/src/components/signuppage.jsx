@@ -82,18 +82,20 @@ const SignupPage = () => {
           </label>
           <input
             {...register("email")}
-            className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:ring-2 ${
-              server_error.email
-                ? "border-red-500 focus:ring-red-500 focus:border-red-500"
-                : "focus:ring-blue-500 focus:border-blue-500"
+            className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+              server_error.email ? "border-red-500" : ""
             }`}
             id="email"
             type="email"
             placeholder="Email"
             data-tooltip-id="email-tooltip"
-            data-tooltip-content={server_error.email == "This field may not be blank." ? server_error.email[0] : ""}
+            data-tooltip-content={
+              server_error.email == "This field may not be blank."
+                ? server_error.email[0]
+                : ""
+            }
           />
-          <Tooltip id="email-tooltip"/>
+          <Tooltip id="email-tooltip" />
         </div>
         <div className="mb-4">
           <label className="block text-gray-700 font-bold mb-2" htmlFor="name">
@@ -101,18 +103,16 @@ const SignupPage = () => {
           </label>
           <input
             {...register("name")}
-            className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:ring-2 ${
-              server_error.name
-                ? "border-red-500 focus:ring-red-500 focus:border-red-500"
-                : "focus:ring-blue-500 focus:border-blue-500"
+            className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+              server_error.name ? "border-red-500" : ""
             }`}
             id="name"
             type="text"
             placeholder="Name"
             data-tooltip-id="name-tooltip"
-            data-tooltip-content={server_error.name?server_error.name[0]:""}
+            data-tooltip-content={server_error.name ? server_error.name[0] : ""}
           />
-          <Tooltip id="name-tooltip"/>
+          <Tooltip id="name-tooltip" />
         </div>
         <div className="mb-6 relative">
           <label
@@ -123,16 +123,16 @@ const SignupPage = () => {
           </label>
           <input
             {...register("password")}
-            className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:ring-2 ${
-              server_error.password
-                ? "border-red-500 focus:ring-red-500 focus:border-red-500"
-                : "focus:ring-blue-500 focus:border-blue-500"
+            className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+              server_error.password ? "border-red-500" : ""
             }`}
             id="password"
             type={showPassword ? "text" : "password"}
             placeholder="Password"
             data-tooltip-id="password-tooltip"
-            data-tooltip-content={server_error.password?server_error.password[0]:""}
+            data-tooltip-content={
+              server_error.password ? server_error.password[0] : ""
+            }
           />
           <button
             className="absolute right-2 bottom-2.5"
@@ -141,7 +141,7 @@ const SignupPage = () => {
           >
             {showPassword ? <FaEye /> : <FaEyeSlash />}
           </button>
-          <Tooltip id="password-tooltip"/>
+          <Tooltip id="password-tooltip" />
         </div>
         <div className="mb-6 relative">
           <label
@@ -152,16 +152,16 @@ const SignupPage = () => {
           </label>
           <input
             {...register("password2")}
-            className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:ring-2 ${
-              server_error.password2
-                ? "border-red-500 focus:ring-red-500 focus:border-red-500"
-                : "focus:ring-blue-500 focus:border-blue-500"
+            className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+              server_error.password2 ? "border-red-500" : ""
             }`}
             id="password2"
             type={showConfirmPassword ? "text" : "password"}
             placeholder="Confirm Password"
             data-tooltip-id="password2-tooltip"
-            data-tooltip-content={server_error.password2?server_error.password2[0]:""}
+            data-tooltip-content={
+              server_error.password2 ? server_error.password2[0] : ""
+            }
           />
           <button
             className="absolute right-2 bottom-2.5"
@@ -170,7 +170,7 @@ const SignupPage = () => {
           >
             {showConfirmPassword ? <FaEye /> : <FaEyeSlash />}
           </button>
-          <Tooltip id="password2-tooltip"/>
+          <Tooltip id="password2-tooltip" />
         </div>
         <div className="flex flex-col justify-start mb-4 gap-1">
           {/* tc =>terms and conditions */}
@@ -182,14 +182,21 @@ const SignupPage = () => {
               className={`w-4 h-4 mr-2 text-blue-600 ring-opacity-50 focus:outline-none focus:shadow-outline`}
               value={true}
               data-tooltip-id="tc-tooltip"
-              data-tooltip-content={server_error.tc?"Accept the terms and conditions":""}
+              data-tooltip-content={
+                server_error.tc ? "Accept the terms and conditions" : ""
+              }
             />
-            <label htmlFor="tc" className={`ml-2  ${server_error.tc ? "text-red-500" : "text-gray-700"}`}>
+            <label
+              htmlFor="tc"
+              className={`ml-2  ${
+                server_error.tc ? "text-red-500" : "text-gray-700"
+              }`}
+            >
               I agree to the{" "}
               <Link className="hover:text-[#12aef5]">Terms and Conditions</Link>
             </label>
           </div>
-          <Tooltip id="tc-tooltip"/>
+          <Tooltip id="tc-tooltip" />
         </div>
         <div className="flex items-center justify-between">
           <button
