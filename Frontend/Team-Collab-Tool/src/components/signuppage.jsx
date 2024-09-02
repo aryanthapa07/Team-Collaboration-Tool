@@ -62,7 +62,11 @@ const SignupPage = () => {
           </label>
           <input
             {...register("email")}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:ring-2 ${
+              server_error.email
+                ? "border-red-500 focus:ring-red-500 focus:border-red-500"
+                : "focus:ring-blue-500 focus:border-blue-500"
+            }`}
             id="email"
             type="email"
             placeholder="Email"
@@ -81,7 +85,11 @@ const SignupPage = () => {
           </label>
           <input
             {...register("name")}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:ring-2 ${
+              server_error.name
+                ? "border-red-500 focus:ring-red-500 focus:border-red-500"
+                : "focus:ring-blue-500 focus:border-blue-500"
+            }`}
             id="name"
             type="text"
             placeholder="Name"
@@ -103,7 +111,11 @@ const SignupPage = () => {
           </label>
           <input
             {...register("password")}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:ring-2 ${
+              server_error.password
+                ? "border-red-500 focus:ring-red-500 focus:border-red-500"
+                : "focus:ring-blue-500 focus:border-blue-500"
+            }`}
             id="password"
             type={showPassword ? "text" : "password"}
             placeholder="Password"
@@ -136,7 +148,11 @@ const SignupPage = () => {
           </label>
           <input
             {...register("password2")}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:ring-2 ${
+              server_error.password2
+                ? "border-red-500 focus:ring-red-500 focus:border-red-500"
+                : "focus:ring-blue-500 focus:border-blue-500"
+            }`}
             id="password2"
             type={showConfirmPassword ? "text" : "password"}
             placeholder="Confirm Password"
@@ -198,7 +214,9 @@ const SignupPage = () => {
           </button>
         </div>
         {server_error.non_field_errors ? (
-          <Alert severity="error" className="mt-2">{server_error.non_field_errors[0]}</Alert>
+          <Alert severity="error" className="mt-2">
+            {server_error.non_field_errors[0]}
+          </Alert>
         ) : (
           ""
         )}
