@@ -65,9 +65,11 @@ function Forgetpass() {
             autoComplete="Email"
             id="Email"
             data-tooltip-id="email-tooltip"
-            data-tooltip-content={server_error.email? server_error.email[0]:""}
+            data-tooltip-content={
+              server_error.email ? server_error.email[0] : ""
+            }
           />
-          <Tooltip id="email-tooltip"/>
+          <Tooltip id="email-tooltip" />
         </div>
         <div className="flex items-center justify-between">
           <button

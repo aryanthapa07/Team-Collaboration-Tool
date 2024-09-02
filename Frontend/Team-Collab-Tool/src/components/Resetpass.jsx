@@ -79,7 +79,9 @@ function Resetpass() {
             name="password"
             id="password"
             data-tooltip-id="password-tooltip"
-            data-tooltip-content={server_error.password?server_error.password[0]:""}
+            data-tooltip-content={
+              server_error.password ? server_error.password[0] : ""
+            }
           />
           <button
             className="absolute right-2 bottom-2.5"
@@ -88,7 +90,7 @@ function Resetpass() {
           >
             {showPassword ? <FaEye /> : <FaEyeSlash />}
           </button>
-          <Tooltip id="password-tooltip"/>
+          <Tooltip id="password-tooltip" />
         </div>
         <div className="mb-4 relative">
           <label
@@ -107,7 +109,9 @@ function Resetpass() {
             name="password2"
             id="password2"
             data-tooltip-id="password2-tooltip"
-            data-tooltip-content={server_error.password2?server_error.password2[0]:""}
+            data-tooltip-content={
+              server_error.password2 ? server_error.password2[0] : ""
+            }
           />
           <button
             className="absolute right-2 bottom-2.5"
@@ -116,7 +120,7 @@ function Resetpass() {
           >
             {showConfirmPassword ? <FaEye /> : <FaEyeSlash />}
           </button>
-          <Tooltip id="password2-tooltip"/>
+          <Tooltip id="password2-tooltip" />
         </div>
         <div className="flex items-center justify-between">
           <button
