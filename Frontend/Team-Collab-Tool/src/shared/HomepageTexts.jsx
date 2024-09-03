@@ -1,4 +1,3 @@
-// import React from "react";
 const HomepageTexts = () => {
   return (
     <div className="container flex flex-wrap items-center justify-center md:-mt-14">

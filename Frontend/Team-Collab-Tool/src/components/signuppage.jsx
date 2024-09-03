@@ -4,8 +4,7 @@ import { useRegisterUserMutation } from "../services/userAuthApi";
 import { useState } from "react";
 import { storeToken } from "../services/LocalStorageService";
 import CircularProgress from "@mui/joy/CircularProgress";
-import { toast } from "react-hot-toast";
-import { Toaster } from "react-hot-toast";
+import { toast,Toaster } from "react-hot-toast";
 import InputField from "../shared/InputField";
 import CheckboxField from "../shared/CheckBoxField";
 const SignupPage = () => {

@@ -1,4 +1,3 @@
-// import React from 'react';
 import Bluebutton from "../buttons/Bluebutton";
 import HomepageTexts from "../shared/HomepageTexts";
 import { useNavigate } from "react-router-dom";

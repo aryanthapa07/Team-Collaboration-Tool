@@ -5,6 +5,8 @@ import Resetpassword from "./pages/Resetpasswordemail";
 import Loggedinpage from "./pages/Loggedinpage";
 import Resetpasswordpage from "./pages/Resetpasswordpage";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import WorkspacePage from "./pages/WorkspacePage";
+import PrivateRoute from "./pages/PrivateRoute";
 function App() {
   const router = createBrowserRouter([
     {
@@ -25,18 +27,22 @@ function App() {
     },
     {
       path: "/dashboard",
-      element: <Loggedinpage />,
+      element: <PrivateRoute element={<Loggedinpage />} />,
     },
     {
       path: "/reset-password/:id/:token",
       element: <Resetpasswordpage />,
     },
+    {
+      path: "/workspaces",
+      element: <WorkspacePage />,
+    },
   ]);
 
   return (
-    <>
+    <div>
       <RouterProvider router={router} />
-    </>
+    </div>
   );
 }
 
