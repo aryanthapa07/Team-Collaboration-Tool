@@ -3,6 +3,7 @@ import { getToken } from "../services/LocalStorageService";
 import { useGetLoggedUserQuery } from "../services/userAuthApi";
 
 function Greetings() {
+  // getting the access token of the user to show user data dynamically in the hamburger
   const { access_token } = getToken();
   const { data, isSuccess } = useGetLoggedUserQuery(access_token);
   const [userData, setUserData] = useState({ email: "", name: "" });

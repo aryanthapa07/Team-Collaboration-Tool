@@ -56,7 +56,7 @@ const Dashboard = () => {
       />
       <Sidebarbutton
         icon={RiTeamLine}
-        label="My Teams"
+        label="My Workspace"
         collapseSidebar={collapseSidebar}
       />
       <Sidebarbutton

@@ -48,7 +48,7 @@ function Resetpass() {
       setServerError({});
       document.getElementById("password-reset-form").reset();
       setTimeout(() => {
-        navigate("/login");
+        navigate("/dashboard");
       }, 2000);
     }
   };

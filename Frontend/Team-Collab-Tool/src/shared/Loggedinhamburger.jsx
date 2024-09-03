@@ -17,8 +17,8 @@ import AuthButton from "../buttons/AuthButton";
 import Greetings from "./Greetings";
 // renders the after login hamburger for the user
 function Loggedinhamburger() {
-  // getting the access token of the user to show user data dynamically in the hamburger
   const [toggleMenu, setToggleMenu] = useState(false);
+  //state for showing taskbar on clicking create+ button in sidebar
   const [showTaskBar, setShowTaskBar] = useState(false);
   const handleToggleMenu = () => {
     setToggleMenu((prev) => !prev);
@@ -42,7 +42,7 @@ function Loggedinhamburger() {
           <HamburgerButton Icon={IoHomeOutline} label="Home" />
           <HamburgerButton Icon={MdOutlineTaskAlt} label="My Tasks" />
           <HamburgerButton Icon={GoGoal} label="Goals" />
-          <HamburgerButton Icon={RiTeamLine} label="My Teams" />
+          <HamburgerButton Icon={RiTeamLine} label="My Workspace" />
           <HamburgerButton Icon={LuFileCode2} label="My Projects" />
           <CreatebuttonHamburger
             isActive={showTaskBar}

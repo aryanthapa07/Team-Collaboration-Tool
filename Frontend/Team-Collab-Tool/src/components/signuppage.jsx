@@ -63,7 +63,7 @@ const SignupPage = () => {
       });
       setTimeout(() => {
         storeToken(res.data.token);
-        navigate("/login");
+        navigate("/dashboard");
       }, 2000);
     }
   };

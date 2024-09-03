@@ -1,7 +1,7 @@
 // import React from 'react'
 import Dashboard from "../components/dashboard";
 import Dashboardheader from "../components/dashboardheader";
-import HomePage from "../components/homepage";
+import LoggedinHomepage from "../components/LoggedinHomepage";
 // renders the page after user logs in
 function Loggedinpage() {
   return (
@@ -11,7 +11,7 @@ function Loggedinpage() {
         <Dashboard />
         <section className="flex min-h-screen flex-1 flex-col pt-20">
           <div className="w-full h-full relative">
-            <HomePage />
+            <LoggedinHomepage />
           </div>
         </section>
       </div>

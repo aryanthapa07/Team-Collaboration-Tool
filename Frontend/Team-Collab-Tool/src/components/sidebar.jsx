@@ -10,14 +10,15 @@ import Createplusicon from "../icons/createplusicon";
 import ToggleSidebarButton from "../buttons/ToggleSidebarButton";
 import Sidebarbutton from "../buttons/Sidebarbutton";
 import CreateButton from "../buttons/CreateButton";
+import { useNavigate } from "react-router-dom";
 const Sidebar = () => {
-  const [showTaskBar, setShowTaskBar] = useState(false);
   const [collapseSidebar, setCollapseSidebar] = useState(true);
-  const handleTaskbar = () => {
-    setShowTaskBar(!showTaskBar);
-  };
   const handleCollapse = () => {
     setCollapseSidebar((prev) => !prev);
+  };
+  const navigate = useNavigate();
+  const handleOnclick = () => {
+    navigate("/login");
   };
   return (
     <div
@@ -36,31 +37,35 @@ const Sidebar = () => {
         icon={IoHomeOutline}
         label="Home"
         collapseSidebar={collapseSidebar}
+        onClick={handleOnclick}
       />
       <Sidebarbutton
         icon={MdOutlineTaskAlt}
         label="My Tasks"
         collapseSidebar={collapseSidebar}
+        onClick={handleOnclick}
       />
       <Sidebarbutton
         icon={GoGoal}
         label="Goals"
         collapseSidebar={collapseSidebar}
+        onClick={handleOnclick}
       />
       <Sidebarbutton
         icon={RiTeamLine}
-        label="My Teams"
+        label="My Workspace"
         collapseSidebar={collapseSidebar}
+        onClick={handleOnclick}
       />
       <Sidebarbutton
         icon={LuFileCode2}
         label="My Projects"
         collapseSidebar={collapseSidebar}
+        onClick={handleOnclick}
       />
       <CreateButton
-        onClick={handleTaskbar}
+        onClick={handleOnclick}
         collapseSidebar={collapseSidebar}
-        showTaskBar={showTaskBar}
         Icon={Createplusicon}
         label="Create"
       />
