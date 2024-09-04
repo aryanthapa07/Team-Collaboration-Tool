@@ -35,7 +35,7 @@ function App() {
     },
     {
       path: "/workspaces",
-      element: <WorkspacePage />,
+      element: <PrivateRoute element={<WorkspacePage />} />,
     },
   ]);
 

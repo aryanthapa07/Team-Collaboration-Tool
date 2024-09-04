@@ -27,6 +27,12 @@ const Dashboard = () => {
     removeToken();
     navigate("/login");
   };
+  const workspaceNavigate = () => {
+    navigate("/workspaces");
+  };
+  const homepagenavigate=()=>{
+    navigate("/dashboard")
+  }
   return (
     <div
       className={`relative bg-white left-0 top-0 flex h-screen flex-col justify-start gap-5 p-6 pt-24 w-full max-md:hidden ${
@@ -43,6 +49,7 @@ const Dashboard = () => {
         icon={IoHomeOutline}
         label="Home"
         collapseSidebar={collapseSidebar}
+        onClick={homepagenavigate}
       />
       <Sidebarbutton
         icon={MdOutlineTaskAlt}
@@ -58,6 +65,7 @@ const Dashboard = () => {
         icon={RiTeamLine}
         label="My Workspace"
         collapseSidebar={collapseSidebar}
+        onClick={workspaceNavigate}
       />
       <Sidebarbutton
         icon={LuFileCode2}

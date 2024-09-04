@@ -25,18 +25,16 @@ const WorkspaceCard = ({ workspace, onActionComplete }) => {
   };
 
   return (
-    <div className="bg-white shadow-md rounded-lg p-4 mb-4">
+    <div className="bg-white shadow-md rounded-lg p-3 mb-3 hover:cursor-pointer ">
       <h3 className="text-xl font-bold mb-2">{workspace.name}</h3>
-      <p className="text-gray-600 mb-2">
-        Created At: {new Date(workspace.created_at).toLocaleDateString()}
-      </p>
+      <p className="text-gray-600 mb-2">Workspace ID:{workspace.id}</p>
       <p className="text-gray-600 mb-2">Owner ID: {workspace.owner}</p>
       <p className="text-gray-600 mb-4">
-        Members: {workspace.members.join(", ")}
+        Members ID: {workspace.members.join(", ")}
       </p>
       <div className="flex justify-end space-x-2">
         <button
-          className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
+          className="bg-[#12aef5] hover:opacity-80 text-white px-4 py-2 rounded"
           onClick={handleEdit}
         >
           Edit

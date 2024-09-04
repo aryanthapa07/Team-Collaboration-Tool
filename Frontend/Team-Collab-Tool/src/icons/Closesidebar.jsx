@@ -9,7 +9,7 @@ function Closesidebar() {
         viewBox="0 0 24 24"
         strokeWidth={1.5}
         stroke="currentColor"
-        className="size-6"
+        className="w-[1rem] h-[1rem]"
       >
         <path
           strokeLinecap="round"

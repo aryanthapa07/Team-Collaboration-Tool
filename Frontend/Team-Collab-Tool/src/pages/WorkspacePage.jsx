@@ -1,12 +1,12 @@
 import WorkspaceManager from "../components/WorkspaceManager";
-import Header from "../components/header";
-import Sidebar from "../components/sidebar";
+import Dashboard from "../components/dashboard";
+import Dashboardheader from "../components/dashboardheader";
 const WorkspacePage = () => {
   return (
     <main className="relative bg-gray-100 ">
-      <Header />
+      <Dashboardheader />
       <div className="flex">
-        <Sidebar />
+        <Dashboard />
         <section className="flex min-h-screen flex-1 flex-col pt-20">
           <div className="w-full h-full relative">
             <WorkspaceManager />
