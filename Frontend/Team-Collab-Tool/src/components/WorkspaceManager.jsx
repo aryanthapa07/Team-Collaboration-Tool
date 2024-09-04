@@ -22,7 +22,9 @@ const WorkspaceManager = () => {
   return (
     <div className="size-full gap-2 px-4">
       <div>
-        <h2 className="text-3xl font-bold text-center mb-4 text-gray-600 pt-3">Your Workspace</h2>
+        <h2 className="text-3xl font-bold text-center mb-4 text-gray-600 pt-3">
+          Your Workspace
+        </h2>
       </div>
       <div className="mb-4">
         <button

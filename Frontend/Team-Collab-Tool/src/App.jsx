@@ -6,6 +6,7 @@ import Loggedinpage from "./pages/Loggedinpage";
 import Resetpasswordpage from "./pages/Resetpasswordpage";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import WorkspacePage from "./pages/WorkspacePage";
+import ProjectsPage from "./pages/ProjectsPage";
 import PrivateRoute from "./pages/PrivateRoute";
 function App() {
   const router = createBrowserRouter([
@@ -36,6 +37,10 @@ function App() {
     {
       path: "/workspaces",
       element: <PrivateRoute element={<WorkspacePage />} />,
+    },
+    {
+      path: "/projects",
+      element: <PrivateRoute element={<ProjectsPage />} />,
     },
   ]);
 

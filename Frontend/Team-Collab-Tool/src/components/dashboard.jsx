@@ -33,6 +33,9 @@ const Dashboard = () => {
   const homepagenavigate=()=>{
     navigate("/dashboard")
   }
+  const projectNavigate=()=>{
+    navigate("/projects")
+  }
   return (
     <div
       className={`relative bg-white left-0 top-0 flex h-screen flex-col justify-start gap-5 p-6 pt-24 w-full max-md:hidden ${
@@ -71,6 +74,7 @@ const Dashboard = () => {
         icon={LuFileCode2}
         label="My Projects"
         collapseSidebar={collapseSidebar}
+        onClick={projectNavigate}
       />
       <Logoutbutton onClick={handleLogout} collapseSidebar={collapseSidebar} />
       <CreateButton

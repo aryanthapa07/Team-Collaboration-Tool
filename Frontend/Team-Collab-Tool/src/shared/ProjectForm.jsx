@@ -1,24 +1,27 @@
+// projectform.jsx
 import { useForm } from "react-hook-form";
 import {
-  useCreateWorkspaceMutation,
-  useUpdateWorkspaceMutation,
-} from "../services/WorkspaceApi";
+  useCreateProjectMutation,
+  useUpdateProjectMutation,
+} from "../services/ProjectsApi";
 import { useState, useEffect } from "react";
 import { Tooltip } from "react-tooltip";
 import { toast, Toaster } from "react-hot-toast";
 
-const WorkspaceForm = ({ onClose, initialData }) => {
+const ProjectForm = ({ onClose, initialData }) => {
   const { register, handleSubmit, setValue } = useForm({
     defaultValues: initialData || {},
   });
 
-  const [createWorkspace] = useCreateWorkspaceMutation();
-  const [updateWorkspace] = useUpdateWorkspaceMutation();
+  const [createProject] = useCreateProjectMutation();
+  const [updateProject] = useUpdateProjectMutation();
   const [server_error, setServerError] = useState({});
 
   useEffect(() => {
-    if (initialData && initialData.members) {
-      setValue("members", initialData.members.join(", "));
+    if (initialData) {
+      setValue("name", initialData.name);
+      setValue("description", initialData.description);
+      setValue("workspace", initialData.workspace);
     }
   }, [initialData, setValue]);
 
@@ -26,25 +29,23 @@ const WorkspaceForm = ({ onClose, initialData }) => {
     const actualData = {
       name: data.name,
       description: data.description,
-      owner: data.owner ? Number(data.owner) : "",
-      members:
-        typeof data.members === "string"
-          ? data.members.split(",").map(Number)
-          : [],
+      workspace: parseInt(data.workspace), // Ensure workspace ID is an integer
     };
 
     let res;
     if (initialData) {
-      res = await updateWorkspace({ id: initialData.id, ...actualData });
+      res = await updateProject({ id: initialData.id, ...actualData });
     } else {
-      res = await createWorkspace(actualData);
+      res = await createProject(actualData);
     }
 
     if (res.error) {
+      console.log("inside res.error", res);
       setServerError(res.error.data);
     }
     if (res.data) {
-      toast.success("Workspace " + (initialData ? "Updated" : "Created"));
+      console.log("inside res.data", res);
+      toast.success("Project " + (initialData ? "Updated" : "Created"));
       setTimeout(() => {
         onClose();
       }, 1000);
@@ -56,7 +57,7 @@ const WorkspaceForm = ({ onClose, initialData }) => {
       <Toaster position="top-center" reverseOrder={false} />
       <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full">
         <h2 className="text-2xl font-bold mb-4">
-          {initialData ? "Edit Workspace" : "Add New Workspace"}
+          {initialData ? "Edit Project" : "Add New Project"}
         </h2>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
@@ -68,11 +69,11 @@ const WorkspaceForm = ({ onClose, initialData }) => {
             </label>
             <input
               id="name"
+              type="text"
               {...register("name")}
               className={`mt-1 block w-full border ${
                 server_error.name ? "border-red-500" : "border-gray-300"
               } rounded-md shadow-sm p-2`}
-              type="text"
               data-tooltip-id="name-tooltip"
               data-tooltip-content={
                 server_error.name ? server_error.name[0] : ""
@@ -95,45 +96,24 @@ const WorkspaceForm = ({ onClose, initialData }) => {
           </div>
           <div>
             <label
-              htmlFor="owner"
+              htmlFor="workspace"
               className="block text-sm font-medium text-gray-700"
             >
-              Owner
+              Workspace ID
             </label>
             <input
-              id="owner"
-              {...register("owner")}
+              id="workspace"
+              {...register("workspace")}
               className={`mt-1 block w-full border ${
-                server_error.owner ? "border-red-500" : "border-gray-300"
-              } rounded-md shadow-sm p-2`}
-              type="text"
-              data-tooltip-id="owner-tooltip"
+                server_error.workspace ? "border-red-500" : "border-gray-300"
+              } rounded-md shadow-sm p-2 `}
+              type="number"
+              data-tooltip-id="workspace-tooltip"
               data-tooltip-content={
-                server_error.owner ? server_error.owner[0] : ""
+                server_error.workspace ? server_error.workspace[0] : ""
               }
             />
-            <Tooltip id="owner-tooltip" />
-          </div>
-          <div>
-            <label
-              htmlFor="members"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Members
-            </label>
-            <input
-              id="members"
-              {...register("members")}
-              className={`mt-1 block w-full border ${
-                server_error.members ? "border-red-500" : "border-gray-300"
-              } rounded-md shadow-sm p-2`}
-              type="text"
-              data-tooltip-id="member-tooltip"
-              data-tooltip-content={
-                server_error.members ? server_error.members[0] : ""
-              }
-            />
-            <Tooltip id="member-tooltip" />
+            <Tooltip id="workspace-tooltip" />
           </div>
           <div className="flex justify-end space-x-4">
             <button
@@ -156,4 +136,4 @@ const WorkspaceForm = ({ onClose, initialData }) => {
   );
 };
 
-export default WorkspaceForm;
+export default ProjectForm;
