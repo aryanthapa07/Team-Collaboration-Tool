@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'account',
     'workspace',
+    'drf_api_logger',
 ]
 
 MIDDLEWARE = [
@@ -55,9 +56,12 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'drf_api_logger.middleware.api_logger_middleware.APILoggerMiddleware',
 ]
 
 ROOT_URLCONF = 'djangoauthapi.urls'
+
+DRF_API_LOGGER_DATABASE = True
 
 TEMPLATES = [
     {
