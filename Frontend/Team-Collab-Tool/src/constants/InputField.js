@@ -10,10 +10,6 @@ export const inputFields = [
     id: "description",
   },
   {
-    title: "Owner",
-    id: "owner",
-  },
-  {
     title: "Members",
     id: "members",
   },

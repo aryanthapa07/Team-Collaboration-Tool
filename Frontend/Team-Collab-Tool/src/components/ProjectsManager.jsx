@@ -1,12 +1,19 @@
 // projectsmanager.jsx
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useFetchProjectsQuery } from "../services/ProjectsApi";
 import ProjectCard from "../shared/ProjectCard";
 import ProjectForm from "../shared/ProjectForm";
+import { getToken } from "../services/LocalStorageService";
 
 const ProjectsManager = () => {
+  const { access_token } = getToken();
   const { data: projects, error, isLoading, refetch } = useFetchProjectsQuery();
   const [showForm, setShowForm] = useState(false);
+  useEffect(() => {
+    if (access_token) {
+      refetch(); // Refetch projects when access_token changes
+    }
+  }, [access_token, refetch]);
 
   const handleCloseForm = () => {
     setShowForm(false);

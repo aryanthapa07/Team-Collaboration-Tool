@@ -7,7 +7,6 @@ import { useState, useEffect } from "react";
 import { Tooltip } from "react-tooltip";
 import { toast, Toaster } from "react-hot-toast";
 import { inputFields } from "../constants/InputField";
-
 const WorkspaceForm = ({ onClose, initialData }) => {
   const { register, handleSubmit, setValue } = useForm({
     defaultValues: initialData || {},
@@ -27,7 +26,6 @@ const WorkspaceForm = ({ onClose, initialData }) => {
     const actualData = {
       name: data.name,
       description: data.description,
-      owner: data.owner ? Number(data.owner) : "",
       members:
         typeof data.members === "string"
           ? data.members.split(",").map(Number)

@@ -1,16 +1,23 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useFetchWorkspacesQuery } from "../services/WorkspaceApi";
 import WorkspaceCard from "../shared/WorkspaceCard";
 import WorkspaceForm from "../shared/WorkspaceForm";
+import { getToken } from "../services/LocalStorageService";
 const WorkspaceManager = () => {
+  const { access_token } = getToken();
+  const [showForm, setShowForm] = useState(false);
   const {
     data: workspaces,
     error,
     isLoading,
     refetch,
   } = useFetchWorkspacesQuery();
-  const [showForm, setShowForm] = useState(false);
 
+  useEffect(() => {
+    if (access_token) {
+      refetch(); // Refetch workspaces when access_token changes
+    }
+  }, [access_token, refetch]);
   const handleCloseForm = () => {
     setShowForm(false);
     refetch(); // Re-fetch workspaces when the form is closed after an action

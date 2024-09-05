@@ -5,6 +5,7 @@ class WorkspaceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Workspace
         fields='__all__'
+        extra_kwargs = {"owner": {"read_only": True}}
         
 class ProjectSerializer(serializers.ModelSerializer):
     class Meta:

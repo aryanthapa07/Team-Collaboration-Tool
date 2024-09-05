@@ -31,7 +31,7 @@ const ProjectForm = ({ onClose, initialData }) => {
     const actualData = {
       name: data.name,
       description: data.description,
-      workspace: parseInt(data.workspace), // Ensure workspace ID is an integer
+      workspace: data.workspace, // Ensure workspace ID is an integer
     };
 
     let res;

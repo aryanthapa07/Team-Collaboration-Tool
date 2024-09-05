@@ -1,15 +1,24 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { getToken } from "./LocalStorageService"; 
 
 export const workspaceApi = createApi({
   reducerPath: "workspaceApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://127.0.0.1:8000/workspaces/" }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: "http://127.0.0.1:8000/workspaces/",
+    prepareHeaders: (headers) => {
+      const { access_token } = getToken();
+      if (access_token) {
+        headers.set("authorization", `Bearer ${access_token}`);
+      }
+      return headers;
+    },
+  }),
   endpoints: (builder) => ({
     createWorkspace: builder.mutation({
       query: (workspace) => ({
         url: "/",
         method: "POST",
         body: workspace,
-        headers: { "Content-type": "application/json" },
       }),
     }),
     fetchWorkspaces: builder.query({
@@ -23,7 +32,6 @@ export const workspaceApi = createApi({
         url: `/${id}/`,
         method: "PUT",
         body: workspace,
-        headers: { "Content-type": "application/json" },
       }),
     }),
     deleteWorkspace: builder.mutation({
