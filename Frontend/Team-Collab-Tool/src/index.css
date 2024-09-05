@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+    .workspaceformLabel{
+        @apply block text-sm font-medium text-gray-700;
+    }
+    .bluebutton{
+        @apply bg-[#12aef5] hover:opacity-80 text-white px-4 py-2 font-bold rounded;
+    }
+    .graybutton{
+        @apply bg-gray-300 hover:bg-gray-400 text-black px-4 py-2 font-bold rounded;
+    }
+    .workspacetextarea{
+        @apply mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2
+    }
+}
