@@ -8,6 +8,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import WorkspacePage from "./pages/WorkspacePage";
 import ProjectsPage from "./pages/ProjectsPage";
 import PrivateRoute from "./pages/PrivateRoute";
+import TermsandCondition from "./pages/TermsandCondition";
 function App() {
   const router = createBrowserRouter([
     {
@@ -41,6 +42,10 @@ function App() {
     {
       path: "/projects",
       element: <PrivateRoute element={<ProjectsPage />} />,
+    },
+    {
+      path: "/terms-and-conditions",
+      element: <TermsandCondition/>,
     },
   ]);
 
