@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
-import { useResetUserPasswordMutation } from "../services/userAuthApi";
+import { useResetUserPasswordMutation } from "../services/UserAuthApi";
 import { toast } from "react-hot-toast";
 import { Toaster } from "react-hot-toast";
 import InputField from "../shared/InputField";

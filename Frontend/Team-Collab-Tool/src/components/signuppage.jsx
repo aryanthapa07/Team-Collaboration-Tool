@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { useRegisterUserMutation } from "../services/userAuthApi";
+import { useRegisterUserMutation } from "../services/UserAuthApi";
 import { useState } from "react";
 import { storeToken } from "../services/LocalStorageService";
 import CircularProgress from "@mui/joy/CircularProgress";

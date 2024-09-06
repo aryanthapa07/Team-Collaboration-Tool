@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getToken } from "../services/LocalStorageService";
-import { useGetLoggedUserQuery } from "../services/userAuthApi";
+import { useGetLoggedUserQuery } from "../services/UserAuthApi";
 
 function Greetings() {
   // getting the access token of the user to show user data dynamically in the hamburger

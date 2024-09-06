@@ -1,6 +1,6 @@
 // import React from 'react'
-import Header from "../components/header";
-import SignupPage from "../components/signuppage";
+import Header from "../components/Header";
+import SignupPage from "../components/SignupPage";
 
 // renders the signup/user registration page
 function Registrationpage() {

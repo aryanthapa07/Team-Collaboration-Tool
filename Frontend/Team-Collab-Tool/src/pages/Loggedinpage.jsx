@@ -1,6 +1,6 @@
 // import React from 'react'
-import Dashboard from "../components/dashboard";
-import Dashboardheader from "../components/dashboardheader";
+import Dashboard from "../components/Dashboard";
+import Dashboardheader from "../components/DashboardHeader";
 import LoggedinHomepage from "../components/LoggedinHomepage";
 // renders the page after user logs in
 function Loggedinpage() {

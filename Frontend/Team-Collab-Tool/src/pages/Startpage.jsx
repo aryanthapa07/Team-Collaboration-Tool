@@ -1,7 +1,7 @@
 // import React from 'react'
-import Header from "../components/header";
-import Sidebar from "../components/sidebar";
-import HomePage from "../components/homepage";
+import Header from "../components/Header";
+import Sidebar from "../components/Sidebar";
+import HomePage from "../components/Homepage";
 // renders the content for the start page
 function Startpage() {
   return (

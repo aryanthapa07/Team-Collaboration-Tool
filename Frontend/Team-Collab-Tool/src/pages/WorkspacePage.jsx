@@ -1,6 +1,6 @@
 import WorkspaceManager from "../components/WorkspaceManager";
-import Dashboard from "../components/dashboard";
-import Dashboardheader from "../components/dashboardheader";
+import Dashboard from "../components/Dashboard";
+import Dashboardheader from "../components/DashboardHeader";
 const WorkspacePage = () => {
   return (
     <main className="relative bg-gray-100 ">

@@ -1,7 +1,7 @@
 // import React from 'react'
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useSendPasswordResetEmailMutation } from "../services/userAuthApi";
+import { useSendPasswordResetEmailMutation } from "../services/UserAuthApi";
 import { toast } from "react-hot-toast";
 import { Toaster } from "react-hot-toast";
 import InputField from "../shared/InputField";

@@ -1,5 +1,5 @@
 // import React from 'react'
-import Header from "../components/header";
+import Header from "../components/Header";
 import LoginPage from "../components/loginpage";
 // renders the content for the login page
 function Login() {

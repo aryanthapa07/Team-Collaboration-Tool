@@ -6,7 +6,7 @@ import { RiTeamLine } from "react-icons/ri";
 import { LuFileCode2 } from "react-icons/lu";
 import { removeToken } from "../services/LocalStorageService";
 import { useState } from "react";
-import TaskBar from "../components/taskbar";
+import TaskBar from "../components/Taskbar";
 import { useNavigate } from "react-router-dom";
 import Hamburgericon from "../icons/Hamburgericon";
 import Hamburgercloseicon from "../icons/Hamburgerclose";
