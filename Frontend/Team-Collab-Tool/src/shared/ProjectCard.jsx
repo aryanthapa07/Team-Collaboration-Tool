@@ -9,6 +9,7 @@ const ProjectCard = ({ project, onActionComplete }) => {
   const handleEdit = () => {
     setShowForm(true);
   };
+
   const handleDelete = async () => {
     if (window.confirm("Are you sure you want to delete this project?")) {
       const res = await deleteProject(project.id);
@@ -22,15 +23,18 @@ const ProjectCard = ({ project, onActionComplete }) => {
     setShowForm(false);
     onActionComplete();
   };
+
   return (
     <div className="cardStyle ">
       <h3 className="cardName">{project.name}</h3>
       <p className="cardFields">Project ID:{project.id}</p>
       <p className="cardFields">Workspace ID: {project.workspace}</p>
+
       <div className="flex justify-end space-x-2">
         <button className="cardBlueButton" onClick={handleEdit}>
           Edit
         </button>
+
         <button className="cardRedButton" onClick={handleDelete}>
           Delete
         </button>

@@ -11,6 +11,7 @@ import ProgressBar from "../shared/ProgressBar";
 const LoginPage = () => {
   const [serverError, setServerError] = useState({});
   const [showPassword, setShowPassword] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -20,18 +21,25 @@ const LoginPage = () => {
   const togglepassword = () => {
     setShowPassword(!showPassword);
   };
+
   const navigate = useNavigate();
   const [LoginUser] = useLoginUserMutation();
+
   const registernavigate = () => {
     navigate("/signup");
   };
+
+  // fetching data from form onsubmit
   const onSubmit = async (data) => {
     console.log("data from frontend", data);
     const actualData = {
       email: data.Email,
       password: data.password,
     };
+
+    // data sent to backend and backend response stored in res
     const res = await LoginUser(actualData);
+
     if (res.error) {
       console.log("inside res.error", res);
       setServerError(res.error.data.errors);
@@ -42,6 +50,7 @@ const LoginPage = () => {
       }
       console.log(res.error);
     }
+
     if (res.data) {
       console.log("inside res.data", res.data);
       toast.success(res.data.msg, {
@@ -53,10 +62,12 @@ const LoginPage = () => {
       }, 2000);
     }
   };
+
   return (
     <div className="authFormContainer">
       <Toaster position="top-center" reverseOrder={false} />
       <h1 className="authpageHeading">Login</h1>
+
       <form onSubmit={handleSubmit(onSubmit)} className="authForm">
         <InputField
           label="Email"
@@ -78,6 +89,7 @@ const LoginPage = () => {
           showPassword={showPassword}
           togglePassword={togglepassword}
         />
+
         <div className="flex flex-col justify-between gap-2">
           <div className="flex justify-between">
             <button
@@ -91,6 +103,7 @@ const LoginPage = () => {
               Forgot Password?
             </Link>
           </div>
+
           <button className="bluebutton" type="submit" disabled={isSubmitting}>
             Login
           </button>

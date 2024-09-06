@@ -20,22 +20,28 @@ function Loggedinhamburger() {
   const [toggleMenu, setToggleMenu] = useState(false);
   //state for showing taskbar on clicking create+ button in sidebar
   const [showTaskBar, setShowTaskBar] = useState(false);
+
   const handleToggleMenu = () => {
     setToggleMenu((prev) => !prev);
   };
+
   const handleTaskbar = () => {
     setShowTaskBar(!showTaskBar);
   };
+
   const handleLogout = () => {
     removeToken();
     navigate("/login");
   };
+
   const navigate = useNavigate();
+
   return (
     <>
       <button className="md:hidden mr-4" onClick={handleToggleMenu}>
         {toggleMenu ? <Hamburgercloseicon /> : <Hamburgericon />}
       </button>
+
       {toggleMenu && (
         <div className="hamburgerStyle">
           <Greetings />
@@ -44,12 +50,14 @@ function Loggedinhamburger() {
           <HamburgerButton Icon={GoGoal} label="Goals" />
           <HamburgerButton Icon={RiTeamLine} label="My Workspace" />
           <HamburgerButton Icon={LuFileCode2} label="My Projects" />
+
           <CreatebuttonHamburger
             isActive={showTaskBar}
             onClick={handleTaskbar}
             text="Create"
             Icon={Createplusicon}
           />
+
           {showTaskBar && <TaskBar />}
 
           <div className="logoutButtonContainer">
@@ -57,6 +65,7 @@ function Loggedinhamburger() {
           </div>
         </div>
       )}
+
       <div className="greetingsContainer">
         <Greetings />
       </div>

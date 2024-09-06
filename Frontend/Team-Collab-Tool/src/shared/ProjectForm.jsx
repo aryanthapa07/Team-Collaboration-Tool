@@ -35,6 +35,7 @@ const ProjectForm = ({ onClose, initialData }) => {
     };
 
     let res;
+    // if initial data is present then update project will be called else create project
     if (initialData) {
       res = await updateProject({ id: initialData.id, ...actualData });
     } else {
@@ -45,6 +46,7 @@ const ProjectForm = ({ onClose, initialData }) => {
       console.log("inside res.error", res);
       setServerError(res.error.data);
     }
+
     if (res.data) {
       console.log("inside res.data", res);
       toast.success("Project " + (initialData ? "Updated" : "Created"));
@@ -57,10 +59,12 @@ const ProjectForm = ({ onClose, initialData }) => {
   return (
     <div className="dropDownFormPosition">
       <Toaster position="top-center" reverseOrder={false} />
+
       <div className="dropDownFormStyling">
         <h2 className="dropDownFormHeading">
           {initialData ? "Edit Project" : "Add New Project"}
         </h2>
+
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <section>
             {projectFields.map((projectfield, index) => (
@@ -105,10 +109,12 @@ const ProjectForm = ({ onClose, initialData }) => {
               </div>
             ))}
           </section>
+
           <div className="dropDownFormButtons">
             <button type="button" onClick={onClose} className="graybutton">
               Close
             </button>
+
             <button type="submit" className="bluebutton">
               Save
             </button>

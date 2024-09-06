@@ -9,6 +9,7 @@ const ProjectsManager = () => {
   const { access_token } = getToken();
   const { data: projects, error, isLoading, refetch } = useFetchProjectsQuery();
   const [showForm, setShowForm] = useState(false);
+
   useEffect(() => {
     if (access_token) {
       refetch(); // Refetch projects when access_token changes
@@ -28,12 +29,15 @@ const ProjectsManager = () => {
       <div>
         <h2 className="headingStyle">Your Projects</h2>
       </div>
+
       <div className="mb-4">
         <button className="bluebutton" onClick={() => setShowForm(true)}>
           Create Project
         </button>
       </div>
+
       {showForm && <ProjectForm onClose={handleCloseForm} />}
+
       <div className="cardGrid">
         {projects.map((project) => (
           <ProjectCard

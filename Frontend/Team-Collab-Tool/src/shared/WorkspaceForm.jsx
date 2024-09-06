@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 import { Tooltip } from "react-tooltip";
 import { toast, Toaster } from "react-hot-toast";
 import { inputFields } from "../constants/InputField";
+
 const WorkspaceForm = ({ onClose, initialData }) => {
   const { register, handleSubmit, setValue } = useForm({
     defaultValues: initialData || {},
@@ -42,6 +43,7 @@ const WorkspaceForm = ({ onClose, initialData }) => {
     if (res.error) {
       setServerError(res.error.data);
     }
+
     if (res.data) {
       toast.success("Workspace " + (initialData ? "Updated" : "Created"));
       setTimeout(() => {
@@ -57,6 +59,7 @@ const WorkspaceForm = ({ onClose, initialData }) => {
         <h2 className="dropDownFormHeading">
           {initialData ? "Edit Workspace" : "Add New Workspace"}
         </h2>
+
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <section>
             {inputFields.map((field, index) => (
@@ -102,6 +105,7 @@ const WorkspaceForm = ({ onClose, initialData }) => {
             <button type="button" onClick={onClose} className="graybutton">
               Close
             </button>
+
             <button type="submit" className="bluebutton">
               Save
             </button>

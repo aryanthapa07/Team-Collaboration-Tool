@@ -13,6 +13,7 @@ const SignupPage = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [registerUser] = useRegisterUserMutation();
   const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -29,8 +30,8 @@ const SignupPage = () => {
   const loginnavigate = () => {
     navigate("/login");
   };
+  // fetching and sending data from frontend onsubmit
   const onSubmit = async (data) => {
-    console.log("data sent from frontend", data);
     const actualData = {
       name: data.name,
       email: data.email,
@@ -38,8 +39,10 @@ const SignupPage = () => {
       password2: data.password2,
       tc: data.tc ? data.tc : undefined,
     };
+
+    // storing backend response
     const res = await registerUser(actualData);
-    console.log("response from backend", res);
+
     if (res.error) {
       setServerError(res.error.data.errors);
       if (res.error.data.errors.non_field_errors) {
@@ -55,6 +58,7 @@ const SignupPage = () => {
         });
       }
     }
+
     if (res.data) {
       toast.success(res.data.msg, {
         duration: 2000, // Toast will be visible for 2 seconds
@@ -119,15 +123,18 @@ const SignupPage = () => {
           linkText="Terms and Conditions"
           linkUrl="/terms-and-conditions"
         />
+
         <div className="flex items-center justify-between">
           <button onClick={loginnavigate} className="authFormText">
             Already have an account? Login
           </button>
+
           <button className="bluebutton" type="submit" disabled={isSubmitting}>
             Register
           </button>
         </div>
       </form>
+
       {isSubmitting && (
         <div className="text-center font-semibold">
           <CircularProgress variant="solid" />

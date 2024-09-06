@@ -12,25 +12,32 @@ function Resetpass() {
   const { id, token } = useParams();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
   const togglepasswordview = () => {
     setShowPassword(!showPassword);
   };
   const toggleconfirmpassword = () => {
     setShowConfirmPassword(!showConfirmPassword);
   };
+
   const {
     register,
     handleSubmit,
     formState: { isSubmitting },
   } = useForm();
+
   const navigate = useNavigate();
+  // fetching data from form onsubmit
   const onSubmit = async (data) => {
     console.log("data fromfrontend", data);
     const actualdata = {
       password: data.password,
       password2: data.password2,
     };
+
+    // data sent to backend and backend response stored in res
     const res = await resetUserPassword({ actualdata, id, token });
+
     if (res.error) {
       console.log("inside res.error", res);
       if (res.error.data.errors.non_field_errors) {
@@ -40,6 +47,7 @@ function Resetpass() {
       }
       setServerError(res.error.data.errors);
     }
+
     if (res.data) {
       console.log("inside res.data", res);
       toast.success(res.data.msg, {
@@ -83,6 +91,7 @@ function Resetpass() {
           showPassword={showConfirmPassword}
           togglePassword={toggleconfirmpassword}
         />
+
         <div className="flex items-center justify-between">
           <button className="bluebutton" type="submit" disabled={isSubmitting}>
             Reset

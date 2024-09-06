@@ -17,6 +17,7 @@ function Hamburger() {
   // state for toggling hamburger menu
   const [toggleMenu, setToggleMenu] = useState(false);
   const navigate = useNavigate();
+
   const handleToggleMenu = () => {
     setToggleMenu((prev) => !prev);
   };
@@ -28,6 +29,7 @@ function Hamburger() {
       <button className="md:hidden mr-4" onClick={handleToggleMenu}>
         {toggleMenu ? <Hamburgercloseicon /> : <Hamburgericon />}
       </button>
+
       {toggleMenu && (
         <div className="hamburgerStyle">
           <HamburgerButton
@@ -60,6 +62,7 @@ function Hamburger() {
             text="Create"
             Icon={Createplusicon}
           />
+
           <div className="authButtonsContainer">
             <Authbuttons />
           </div>

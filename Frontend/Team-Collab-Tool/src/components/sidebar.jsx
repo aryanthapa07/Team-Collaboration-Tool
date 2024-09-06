@@ -13,13 +13,18 @@ import CreateButton from "../buttons/CreateButton";
 import { useNavigate } from "react-router-dom";
 const Sidebar = () => {
   const [collapseSidebar, setCollapseSidebar] = useState(true);
+
+  // statemanagement for the collapsesidebar
   const handleCollapse = () => {
     setCollapseSidebar((prev) => !prev);
   };
+
   const navigate = useNavigate();
+
   const handleOnclick = () => {
     navigate("/login");
   };
+
   return (
     <div
       className={`bg-white relative left-0 top-0 flex h-screen flex-col justify-start gap-5 p-6 pt-24 w-full max-md:hidden ${

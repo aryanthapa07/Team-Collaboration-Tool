@@ -30,14 +30,17 @@ const WorkspaceCard = ({ workspace, onActionComplete }) => {
       <p className="cardFields">Workspace ID:{workspace.id}</p>
       <p className="cardFields">Owner ID: {workspace.owner}</p>
       <p className="cardFields">Members ID: {workspace.members.join(", ")}</p>
+
       <div className="flex justify-end space-x-2">
         <button className="cardBlueButton" onClick={handleEdit}>
           Edit
         </button>
+
         <button className="cardRedButton" onClick={handleDelete}>
           Delete
         </button>
       </div>
+
       {showForm && (
         <WorkspaceForm initialData={workspace} onClose={handleCloseForm} />
       )}

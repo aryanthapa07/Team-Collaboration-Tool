@@ -9,17 +9,23 @@ import ProgressBar from "../shared/ProgressBar";
 function Forgetpass() {
   const [server_error, setServerError] = useState({});
   const [sendPasswordResetEmail] = useSendPasswordResetEmailMutation();
+
   const {
     register,
     handleSubmit,
     formState: { isSubmitting },
   } = useForm();
+
+  // fetching data from form onsubmit
   const onSubmit = async (data) => {
     console.log("data from frontend", data);
     const actualData = {
       email: data.Email,
     };
+
+    // data sent to backend and backend response stored in res
     const res = await sendPasswordResetEmail(actualData);
+
     if (res.error) {
       console.log("inside res.error", res);
       setServerError(res.error.data.errors);
@@ -30,6 +36,7 @@ function Forgetpass() {
       }
       console.log(res.error);
     }
+
     if (res.data) {
       console.log("inside res.data", res);
       toast.success(res.data.msg, {
@@ -39,6 +46,7 @@ function Forgetpass() {
       document.getElementById("password-reset-form").reset();
     }
   };
+
   return (
     <div className="authFormContainer">
       <Toaster position="top-center" reverseOrder={false} />

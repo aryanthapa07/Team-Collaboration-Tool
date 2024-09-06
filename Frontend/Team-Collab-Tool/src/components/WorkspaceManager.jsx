@@ -18,6 +18,7 @@ const WorkspaceManager = () => {
       refetch(); // Refetch workspaces when access_token changes
     }
   }, [access_token, refetch]);
+
   const handleCloseForm = () => {
     setShowForm(false);
     refetch(); // Re-fetch workspaces when the form is closed after an action
