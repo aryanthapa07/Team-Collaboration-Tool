@@ -31,7 +31,7 @@ const ProjectForm = ({ onClose, initialData }) => {
     const actualData = {
       name: data.name,
       description: data.description,
-      workspace: data.workspace, // Ensure workspace ID is an integer
+      workspace: data.workspace,
     };
 
     let res;
@@ -55,24 +55,23 @@ const ProjectForm = ({ onClose, initialData }) => {
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
+    <div className="dropDownFormPosition">
       <Toaster position="top-center" reverseOrder={false} />
-      <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full">
-        <h2 className="text-2xl font-bold mb-4">
+      <div className="dropDownFormStyling">
+        <h2 className="dropDownFormHeading">
           {initialData ? "Edit Project" : "Add New Project"}
         </h2>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <section>
             {projectFields.map((projectfield, index) => (
               <div key={index}>
-                <span className="block text-sm font-medium text-gray-700">
-                  {projectfield.title}
-                </span>
+                <span className="formLabel">{projectfield.title}</span>
                 {projectfield.id === "description" ? (
                   <textarea
+                    maxLength="80"
                     id={`${projectfield.id}`}
                     {...register(`${projectfield.id}`)}
-                    className={`mt-1 block w-full border ${
+                    className={`mt-1 block w-full border resize-none ${
                       server_error[projectfield.id]
                         ? "border-red-500"
                         : "border-gray-300"
@@ -106,7 +105,7 @@ const ProjectForm = ({ onClose, initialData }) => {
               </div>
             ))}
           </section>
-          <div className="flex justify-end space-x-4">
+          <div className="dropDownFormButtons">
             <button type="button" onClick={onClose} className="graybutton">
               Close
             </button>

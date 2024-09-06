@@ -40,14 +40,12 @@ function Forgetpass() {
     }
   };
   return (
-    <div className="container mx-auto mt-10">
+    <div className="authFormContainer">
       <Toaster position="top-center" reverseOrder={false} />
-      <h1 className="text-center font-bold text-3xl mb-4">
-        Send Reset Password Link
-      </h1>
+      <h1 className="authpageHeading">Send Reset Password Link</h1>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="w-full max-w-md mx-auto"
+        className="authForm"
         id="password-reset-form"
       >
         <InputField
@@ -60,11 +58,7 @@ function Forgetpass() {
           placeholder="Email"
         />
         <div className="flex items-center justify-between">
-          <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            type="submit"
-            disabled={isSubmitting}
-          >
+          <button className="bluebutton" type="submit" disabled={isSubmitting}>
             Send
           </button>
         </div>

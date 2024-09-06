@@ -7,7 +7,7 @@ const HomePage = () => {
     navigate("/login");
   };
   return (
-    <div className="flex size-full flex-col items-center justify-center gap-2 px-4">
+    <div className="flex size-full flex-col gap-2 px-4 justify-center items-center">
       <HomepageTexts />
       <div className="buttons flex justify-center gap-4">
         <Bluebutton text="My Workspace" onClick={HandleOnClick} />

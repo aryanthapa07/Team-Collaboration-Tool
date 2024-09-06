@@ -51,22 +51,23 @@ const WorkspaceForm = ({ onClose, initialData }) => {
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
+    <div className="dropDownFormPosition">
       <Toaster position="top-center" reverseOrder={false} />
-      <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full">
-        <h2 className="text-2xl font-bold mb-4">
+      <div className="dropDownFormStyling">
+        <h2 className="dropDownFormHeading">
           {initialData ? "Edit Workspace" : "Add New Workspace"}
         </h2>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <section>
             {inputFields.map((field, index) => (
               <div key={index}>
-                <span className="workspaceformLabel">{field.title}</span>
+                <span className="formLabel">{field.title}</span>
                 {field.id === "description" ? (
                   <textarea
+                    maxLength="80"
                     id={`${field.id}`}
                     {...register(`${field.id}`)}
-                    className={`mt-1 block w-full border ${
+                    className={`mt-1 block w-full border resize-none ${
                       server_error[field.id]
                         ? "border-red-500"
                         : "border-gray-300"
@@ -97,7 +98,7 @@ const WorkspaceForm = ({ onClose, initialData }) => {
             ))}
           </section>
 
-          <div className="flex justify-end space-x-4">
+          <div className="dropDownFormButtons">
             <button type="button" onClick={onClose} className="graybutton">
               Close
             </button>

@@ -29,7 +29,7 @@ function Hamburger() {
         {toggleMenu ? <Hamburgercloseicon /> : <Hamburgericon />}
       </button>
       {toggleMenu && (
-        <div className="md:hidden absolute border border-gray-300 top-8 right-6 bg-white flex flex-col items-start justify-start w-[264px] px-4 py-6 rounded-lg">
+        <div className="hamburgerStyle">
           <HamburgerButton
             Icon={IoHomeOutline}
             label="Home"
@@ -60,7 +60,7 @@ function Hamburger() {
             text="Create"
             Icon={Createplusicon}
           />
-          <div className="flex items-center justify-center gap-2 mt-4 w-full">
+          <div className="authButtonsContainer">
             <Authbuttons />
           </div>
         </div>

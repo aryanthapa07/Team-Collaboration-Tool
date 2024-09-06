@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 @layer utilities {
-    .workspaceformLabel{
+    .formLabel{
         @apply block text-sm font-medium text-gray-700;
     }
     .bluebutton{
@@ -15,4 +15,78 @@
     .workspacetextarea{
         @apply mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2
     }
+    .headingStyle{
+       @apply text-3xl font-bold text-center mb-4 text-gray-600 pt-3 
+    }
+    .cardGrid{
+        @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4
+    }
+    .dropDownFormPosition{
+        @apply fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50
+    }
+    .dropDownFormStyling{
+       @apply bg-white p-6 rounded-lg shadow-lg max-w-lg w-full 
+    }
+    .dropDownFormButtons{
+        @apply flex justify-end space-x-4
+    }
+    .dropDownFormHeading{
+        @apply text-2xl font-bold mb-4
+    }
+    .authpageHeading{
+        @apply text-center font-bold text-3xl mb-4
+    }
+    .authFormContainer{
+        @apply container mx-auto mt-10
+    }
+    .authForm{
+        @apply w-full max-w-md mx-auto
+    }
+    .authFormText{
+        @apply inline-block align-baseline text-sm font-semibold text-[#12aef5] hover:opacity-80
+    }
+    .hamburgerStyle{
+        @apply md:hidden absolute border border-gray-300 top-8 right-6 bg-white flex flex-col items-start justify-start w-[264px] px-4 py-6 rounded-lg
+    }
+    .authButtonsContainer{
+        @apply flex items-center justify-center gap-2 mt-4 w-full
+    }
+    .headingText{
+        @apply text-3xl font-bold text-center mb-4
+    }
+    .paraText{
+        @apply text-lg mb-2 font-semibold text-center
+    }
+    .homePageContainer{
+        @apply container flex flex-wrap items-center justify-center md:-mt-14
+    }
+    .logoutButtonContainer{
+        @apply flex items-center justify-center gap-2 mt-4 w-full
+    }
+    .greetingsContainer{
+        @apply hidden md:flex gap-4 px-7
+    }
+    .cardStyle{
+        @apply bg-white shadow-md rounded-lg p-3 mb-3 hover:cursor-pointer
+    }
+    .cardName{
+        @apply text-xl font-bold mb-2
+    }
+    .cardFields{
+        @apply text-gray-600 mb-2
+    }
+    .cardBlueButton{
+        @apply bg-[#12aef5] hover:opacity-80 text-white px-4 py-2 rounded
+    }
+    .cardRedButton{
+        @apply bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded
+    }
+
+}
+
+.slick-slide>div{
+    margin: 0 10px;
+}
+.slick-prev:before, .slick-next:before {
+    color: #12aef5;
 }

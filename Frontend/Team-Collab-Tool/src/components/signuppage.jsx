@@ -4,13 +4,15 @@ import { useRegisterUserMutation } from "../services/userAuthApi";
 import { useState } from "react";
 import { storeToken } from "../services/LocalStorageService";
 import CircularProgress from "@mui/joy/CircularProgress";
-import { toast,Toaster } from "react-hot-toast";
+import { toast, Toaster } from "react-hot-toast";
 import InputField from "../shared/InputField";
 import CheckboxField from "../shared/CheckBoxField";
 const SignupPage = () => {
   const [server_error, setServerError] = useState({});
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [registerUser] = useRegisterUserMutation();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -24,9 +26,6 @@ const SignupPage = () => {
     setShowConfirmPassword(!showConfirmPassword);
   };
 
-  const navigate = useNavigate();
-
-  const [registerUser] = useRegisterUserMutation();
   const loginnavigate = () => {
     navigate("/login");
   };
@@ -68,13 +67,10 @@ const SignupPage = () => {
   };
 
   return (
-    <div className="container mx-auto mt-10">
+    <div className="authFormContainer">
       <Toaster position="top-center" reverseOrder={false} />
-      <h1 className="text-3xl font-bold text-center mb-4">Register</h1>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="w-full max-w-md mx-auto"
-      >
+      <h1 className="authpageHeading">Register</h1>
+      <form onSubmit={handleSubmit(onSubmit)} className="authForm">
         <InputField
           label="Email"
           type="email"
@@ -124,17 +120,10 @@ const SignupPage = () => {
           linkUrl="/terms-and-conditions"
         />
         <div className="flex items-center justify-between">
-          <button
-            onClick={loginnavigate}
-            className="inline-block align-baseline text-sm font-semibold text-[#12aef5] hover:opacity-80"
-          >
+          <button onClick={loginnavigate} className="authFormText">
             Already have an account? Login
           </button>
-          <button
-            className="bg-[#12aef5] hover:opacity-80 text-white font-bold py-2 px-4 rounded"
-            type="submit"
-            disabled={isSubmitting}
-          >
+          <button className="bluebutton" type="submit" disabled={isSubmitting}>
             Register
           </button>
         </div>

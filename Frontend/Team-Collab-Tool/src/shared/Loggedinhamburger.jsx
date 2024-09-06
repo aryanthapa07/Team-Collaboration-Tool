@@ -37,7 +37,7 @@ function Loggedinhamburger() {
         {toggleMenu ? <Hamburgercloseicon /> : <Hamburgericon />}
       </button>
       {toggleMenu && (
-        <div className="md:hidden absolute border border-gray-300 top-8 right-6 bg-white flex flex-col items-start justify-start w-[264px] px-4 py-6 rounded-lg">
+        <div className="hamburgerStyle">
           <Greetings />
           <HamburgerButton Icon={IoHomeOutline} label="Home" />
           <HamburgerButton Icon={MdOutlineTaskAlt} label="My Tasks" />
@@ -52,12 +52,12 @@ function Loggedinhamburger() {
           />
           {showTaskBar && <TaskBar />}
 
-          <div className="flex items-center justify-center gap-2 mt-4 w-full">
+          <div className="logoutButtonContainer">
             <AuthButton text="Logout" onClick={handleLogout} />
           </div>
         </div>
       )}
-      <div className="hidden md:flex gap-4 px-7">
+      <div className="greetingsContainer">
         <Greetings />
       </div>
     </>

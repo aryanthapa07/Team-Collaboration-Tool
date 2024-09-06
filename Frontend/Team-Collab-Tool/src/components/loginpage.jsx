@@ -54,13 +54,10 @@ const LoginPage = () => {
     }
   };
   return (
-    <div className="container mx-auto mt-10">
+    <div className="authFormContainer">
       <Toaster position="top-center" reverseOrder={false} />
-      <h1 className="text-3xl font-bold text-center mb-4">Login</h1>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="w-full max-w-md mx-auto"
-      >
+      <h1 className="authpageHeading">Login</h1>
+      <form onSubmit={handleSubmit(onSubmit)} className="authForm">
         <InputField
           label="Email"
           type="email"
@@ -86,22 +83,15 @@ const LoginPage = () => {
             <button
               onClick={registernavigate}
               type="button"
-              className="inline-block align-baseline text-sm font-semibold text-indigo-500 hover:text-indigo-800"
+              className="authFormText"
             >
               New to CollabSpace? Register
             </button>
-            <Link
-              className="inline-block align-baseline text-sm font-semibold text-indigo-500 hover:text-indigo-800"
-              to="/reset-password-email"
-            >
+            <Link className="authFormText" to="/reset-password-email">
               Forgot Password?
             </Link>
           </div>
-          <button
-            className="bg-[#12aef5] hover:opacity-80 text-white font-bold py-2 px-4 rounded"
-            type="submit"
-            disabled={isSubmitting}
-          >
+          <button className="bluebutton" type="submit" disabled={isSubmitting}>
             Login
           </button>
         </div>

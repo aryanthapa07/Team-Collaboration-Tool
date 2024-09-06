@@ -29,20 +29,15 @@ const WorkspaceManager = () => {
   return (
     <div className="size-full gap-2 px-4">
       <div>
-        <h2 className="text-3xl font-bold text-center mb-4 text-gray-600 pt-3">
-          Your Workspace
-        </h2>
+        <h2 className="headingStyle">Your Workspace</h2>
       </div>
       <div className="mb-4">
-        <button
-          className="bg-[#12aef5] hover:opacity-80 text-white px-4 py-2 font-bold rounded"
-          onClick={() => setShowForm(true)}
-        >
+        <button className="bluebutton" onClick={() => setShowForm(true)}>
           Create Workspace
         </button>
       </div>
       {showForm && <WorkspaceForm onClose={handleCloseForm} />}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+      <div className="cardGrid">
         {workspaces.map((workspace) => (
           <WorkspaceCard
             key={workspace.id}
