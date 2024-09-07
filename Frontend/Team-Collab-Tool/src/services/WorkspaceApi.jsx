@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { getToken } from "./LocalStorageService"; 
+import { getToken } from "./LocalStorageService";
 
 export const workspaceApi = createApi({
   reducerPath: "workspaceApi",
@@ -40,6 +40,12 @@ export const workspaceApi = createApi({
         method: "DELETE",
       }),
     }),
+    fetchWorkspaceDropdown: builder.query({
+      query: () => ({
+        url: "dropdown/",
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -48,4 +54,5 @@ export const {
   useFetchWorkspacesQuery,
   useUpdateWorkspaceMutation,
   useDeleteWorkspaceMutation,
+  useFetchWorkspaceDropdownQuery,
 } = workspaceApi;

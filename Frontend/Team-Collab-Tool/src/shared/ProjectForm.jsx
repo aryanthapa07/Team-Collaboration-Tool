@@ -8,14 +8,22 @@ import { useState, useEffect } from "react";
 import { Tooltip } from "react-tooltip";
 import { toast, Toaster } from "react-hot-toast";
 import { projectFields } from "../constants/InputField";
+import { useFetchWorkspaceDropdownQuery } from "../services/WorkspaceApi";
+import { getToken } from "../services/LocalStorageService";
 
 const ProjectForm = ({ onClose, initialData }) => {
   const { register, handleSubmit, setValue } = useForm({
     defaultValues: initialData || {},
   });
 
+  const { access_token } = getToken();
   const [createProject] = useCreateProjectMutation();
   const [updateProject] = useUpdateProjectMutation();
+  const {
+    data: workspaces,
+    isLoading,
+    refetch,
+  } = useFetchWorkspaceDropdownQuery();
   const [server_error, setServerError] = useState({});
 
   useEffect(() => {
@@ -25,6 +33,12 @@ const ProjectForm = ({ onClose, initialData }) => {
       setValue("workspace", initialData.workspace);
     }
   }, [initialData, setValue]);
+
+  useEffect(() => {
+    if (access_token) {
+      refetch(); // Refetch workspace dropdown when access_token changes
+    }
+  }, [access_token, refetch]);
 
   const onSubmit = async (data) => {
     console.log(data);
@@ -108,6 +122,29 @@ const ProjectForm = ({ onClose, initialData }) => {
                 <Tooltip id={`${projectfield.id}-tooltip`} />
               </div>
             ))}
+
+            
+            {/* Workspace Dropdown */}
+            <div>
+              <label className="formLabel">Workspace</label>
+              <select
+                {...register("workspace")}
+                className={`mt-1 block w-full border ${
+                  server_error.workspace ? "border-red-500" : "border-gray-300"
+                } rounded-md shadow-sm p-2`}
+                disabled={isLoading || !workspaces?.length} // Disable dropdown if loading or no workspaces
+              >
+                {workspaces?.length > 0 ? (
+                  workspaces.map((workspace) => (
+                    <option key={workspace.id} value={workspace.id}>
+                      {workspace.name}
+                    </option>
+                  ))
+                ) : (
+                  <option value="">No workspace created yet</option> // Fallback when no workspaces
+                )}
+              </select>
+            </div>
           </section>
 
           <div className="dropDownFormButtons">

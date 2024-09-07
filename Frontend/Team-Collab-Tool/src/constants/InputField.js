@@ -26,8 +26,4 @@ export const projectFields = [
     title: "Description",
     id: "description",
   },
-  {
-    title: "Workspace ID",
-    id: "workspace",
-  },
 ];

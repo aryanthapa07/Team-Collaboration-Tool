@@ -11,3 +11,9 @@ class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
         fields ='__all__'
+        
+# serializer for workspace dropdown
+class WorkspaceDropdownSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Workspace
+        fields = ['id', 'name']

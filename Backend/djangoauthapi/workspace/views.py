@@ -1,13 +1,23 @@
 from rest_framework import viewsets
 from workspace.models import Workspace,Project
-from workspace.serializers import WorkspaceSerializer, ProjectSerializer
+from workspace.serializers import WorkspaceSerializer, ProjectSerializer, WorkspaceDropdownSerializer
 from rest_framework.permissions import IsAuthenticated,AllowAny
 from account.models import User
+from rest_framework.response import Response
+from rest_framework.decorators import action
 
 class WorkspaceViewSet(viewsets.ModelViewSet):
     queryset = Workspace.objects.all()
     serializer_class = WorkspaceSerializer
     permission_classes = [IsAuthenticated]
+    
+    # Adding a custom action to fetch workspace names for the dropdown
+    @action(detail=False, methods=['get'])
+    def dropdown(self, request):
+        user = self.request.user
+        workspaces = Workspace.objects.filter(owner=user)
+        serializer = WorkspaceDropdownSerializer(workspaces, many=True)
+        return Response(serializer.data)
     
     def get_queryset(self):
         # only returns workspace that belongs to the authenticated user
