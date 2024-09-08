@@ -1,4 +1,3 @@
-// projectform.jsx
 import { useForm } from "react-hook-form";
 import {
   useCreateProjectMutation,
@@ -10,6 +9,7 @@ import { toast, Toaster } from "react-hot-toast";
 import { projectFields } from "../constants/InputField";
 import { useFetchWorkspaceDropdownQuery } from "../services/WorkspaceApi";
 import { getToken } from "../services/LocalStorageService";
+import Select from "react-select";
 
 const ProjectForm = ({ onClose, initialData }) => {
   const { register, handleSubmit, setValue } = useForm({
@@ -66,9 +66,16 @@ const ProjectForm = ({ onClose, initialData }) => {
       toast.success("Project " + (initialData ? "Updated" : "Created"));
       setTimeout(() => {
         onClose();
-      }, 1000);
+      }, 750);
     }
   };
+
+  // Convert workspaces to react-select format
+  const workspaceOptions =
+    workspaces?.map((workspace) => ({
+      value: workspace.id,
+      label: workspace.name,
+    })) || [];
 
   return (
     <div className="dropDownFormPosition">
@@ -123,27 +130,21 @@ const ProjectForm = ({ onClose, initialData }) => {
               </div>
             ))}
 
-            
             {/* Workspace Dropdown */}
             <div>
               <label className="formLabel">Workspace</label>
-              <select
-                {...register("workspace")}
-                className={`mt-1 block w-full border ${
+              <Select
+                {...register("workspace")} // Bind to react-hook-form
+                value={workspaceOptions.find(
+                  (option) => option.value === initialData?.workspace
+                )} // Set selected value
+                onChange={(option) => setValue("workspace", option?.value)} // Update form value on change
+                options={workspaceOptions} // Set options
+                isDisabled={isLoading || !workspaces?.length} // Disable if loading or no options
+                className={`mt-1 block w-full ${
                   server_error.workspace ? "border-red-500" : "border-gray-300"
-                } rounded-md shadow-sm p-2`}
-                disabled={isLoading || !workspaces?.length} // Disable dropdown if loading or no workspaces
-              >
-                {workspaces?.length > 0 ? (
-                  workspaces.map((workspace) => (
-                    <option key={workspace.id} value={workspace.id}>
-                      {workspace.name}
-                    </option>
-                  ))
-                ) : (
-                  <option value="">No workspace created yet</option> // Fallback when no workspaces
-                )}
-              </select>
+                } rounded-md shadow-sm`}
+              />
             </div>
           </section>
 

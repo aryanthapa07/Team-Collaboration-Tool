@@ -1,8 +1,17 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-
+import { getToken } from "./LocalStorageService";
 export const userAuthApi = createApi({
   reducerPath: "userAuthApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://127.0.0.1:8000/api/user/" }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: "http://127.0.0.1:8000/api/user/",
+    prepareHeaders: (headers) => {
+      const { access_token } = getToken();
+      if (access_token) {
+        headers.set("authorization", `Bearer ${access_token}`);
+      }
+      return headers;
+    },
+  }),
   endpoints: (builder) => ({
     registerUser: builder.mutation({
       query: (user) => {
@@ -63,6 +72,14 @@ export const userAuthApi = createApi({
         };
       },
     }),
+    fetchUsers: builder.query({
+      query: () => {
+        return {
+          url: "/all-users/",
+          method: "GET",
+        };
+      },
+    }),
   }),
 });
 
@@ -72,4 +89,5 @@ export const {
   useGetLoggedUserQuery,
   useSendPasswordResetEmailMutation,
   useResetUserPasswordMutation,
+  useFetchUsersQuery,
 } = userAuthApi;

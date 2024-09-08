@@ -90,3 +90,18 @@
 .slick-prev:before, .slick-next:before {
     color: #12aef5;
 }
+
+.selected-member-chip {
+    display: inline-flex;
+    align-items: center;
+    background-color: #e5e7eb; /* light gray */
+    padding: 5px 10px;
+    margin-right: 5px;
+    border-radius: 5px;
+  }
+  
+  .remove-btn {
+    margin-left: 10px;
+    cursor: pointer;
+    color: red;
+  }

@@ -1,54 +1,72 @@
-import { useForm } from "react-hook-form";
+import { useForm } from "react-hook-form"; 
 import {
   useCreateWorkspaceMutation,
   useUpdateWorkspaceMutation,
-} from "../services/WorkspaceApi";
-import { useState, useEffect } from "react";
-import { Tooltip } from "react-tooltip";
-import { toast, Toaster } from "react-hot-toast";
-import { inputFields } from "../constants/InputField";
+} from "../services/WorkspaceApi"; 
+import { useFetchUsersQuery } from "../services/UserAuthApi"; 
+import { useState, useEffect } from "react"; 
+import { Tooltip } from "react-tooltip"; 
+import { toast, Toaster } from "react-hot-toast"; 
+import { inputFields } from "../constants/InputField"; 
+import Select from "react-select"; 
 
 const WorkspaceForm = ({ onClose, initialData }) => {
-  const { register, handleSubmit, setValue } = useForm({
-    defaultValues: initialData || {},
+  // Setting up form management with react-hook-form
+  const { register, handleSubmit } = useForm({
+    defaultValues: initialData || {}, // Setting default values if editing
   });
 
+  // Hooks for creating and updating workspaces
   const [createWorkspace] = useCreateWorkspaceMutation();
   const [updateWorkspace] = useUpdateWorkspaceMutation();
-  const [server_error, setServerError] = useState({});
 
+  // Hook for fetching users
+  const { data: users } = useFetchUsersQuery();
+  
+  // Local state for handling server errors and selected members
+  const [server_error, setServerError] = useState({});
+  const [selectedMembers, setSelectedMembers] = useState([]);
+
+  // Effect to set selected members when initialData changes
   useEffect(() => {
     if (initialData && initialData.members) {
-      setValue("members", initialData.members.join(", "));
+      setSelectedMembers(
+        initialData.members.map((memberId) => ({
+          value: memberId,
+          label: users.find((user) => user.id === memberId)?.name || "",
+        }))
+      );
     }
-  }, [initialData, setValue]);
+  }, [initialData, users]);
 
+  // Form submission handler
   const onSubmit = async (data) => {
+    const memberIds = selectedMembers.map((member) => member.value);
     const actualData = {
       name: data.name,
       description: data.description,
-      members:
-        typeof data.members === "string"
-          ? data.members.split(",").map(Number)
-          : [],
+      members: memberIds,
     };
 
     let res;
+    // Decide whether to create or update based on initialData presence
     if (initialData) {
       res = await updateWorkspace({ id: initialData.id, ...actualData });
     } else {
       res = await createWorkspace(actualData);
     }
 
+    // Handle server errors
     if (res.error) {
       setServerError(res.error.data);
     }
 
+    // Display success message and close form on success
     if (res.data) {
       toast.success("Workspace " + (initialData ? "Updated" : "Created"));
       setTimeout(() => {
         onClose();
-      }, 1000);
+      }, 750);
     }
   };
 
@@ -62,6 +80,7 @@ const WorkspaceForm = ({ onClose, initialData }) => {
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <section>
+            {/* Rendering input fields based on inputFields array */}
             {inputFields.map((field, index) => (
               <div key={index}>
                 <span className="formLabel">{field.title}</span>
@@ -99,8 +118,23 @@ const WorkspaceForm = ({ onClose, initialData }) => {
                 <Tooltip id={`${field.id}-tooltip`} />
               </div>
             ))}
+
+            {/* Select component for choosing members */}
+            <div>
+              <label>Members</label>
+              <Select
+                isMulti
+                options={users?.map((user) => ({
+                  value: user.id,
+                  label: user.name,
+                }))}
+                value={selectedMembers}
+                onChange={setSelectedMembers}
+              />
+            </div>
           </section>
 
+          {/* Buttons for closing the form and submitting */}
           <div className="dropDownFormButtons">
             <button type="button" onClick={onClose} className="graybutton">
               Close

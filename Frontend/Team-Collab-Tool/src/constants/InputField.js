@@ -9,10 +9,6 @@ export const inputFields = [
     title: "Description",
     id: "description",
   },
-  {
-    title: "Members",
-    id: "members",
-  },
 ];
 
 // Project Form Fields
