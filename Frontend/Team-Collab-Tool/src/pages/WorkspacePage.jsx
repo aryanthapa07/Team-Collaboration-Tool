@@ -1,7 +1,7 @@
 import WorkspaceManager from "../components/WorkspaceManager";
 import Sidebar from "../components/Sidebar";
 import { getToken } from "../services/LocalStorageService";
-import Dashboardheader from "../components/DashboardHeader";
+import Header from "../components/Header";
 
 const WorkspacePage = () => {
   const { access_token } = getToken();
@@ -9,7 +9,7 @@ const WorkspacePage = () => {
 
   return (
     <main className="relative bg-gray-100 ">
-      <Dashboardheader />
+      <Header />
       <div className="flex">
         <Sidebar isLoggedIn={isLoggedIn} />
         <section className="flex min-h-screen flex-1 flex-col pt-20">
