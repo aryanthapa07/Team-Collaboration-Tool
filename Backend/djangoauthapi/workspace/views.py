@@ -1,12 +1,13 @@
 from rest_framework import viewsets
-from workspace.models import Workspace,Project
-from workspace.serializers import WorkspaceSerializer, ProjectSerializer, WorkspaceDropdownSerializer
+from workspace.models import Workspace,Project,Task
+from workspace.serializers import WorkspaceSerializer, ProjectSerializer, WorkspaceDropdownSerializer, TaskSerializer
 from rest_framework.permissions import IsAuthenticated,AllowAny
 from account.models import User
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from rest_framework.exceptions import PermissionDenied
 
+# View for workspace management
 class WorkspaceViewSet(viewsets.ModelViewSet):
     queryset = Workspace.objects.all()
     serializer_class = WorkspaceSerializer
@@ -29,6 +30,7 @@ class WorkspaceViewSet(viewsets.ModelViewSet):
         # Automatically set the owner to the current user when creating a workspace
         serializer.save(owner=self.request.user)
 
+# View for Project Management
 class ProjectViewSet(viewsets.ModelViewSet):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
@@ -46,4 +48,26 @@ class ProjectViewSet(viewsets.ModelViewSet):
             raise PermissionDenied("You are not the owner of this workspace.")
         
         # Save the project with the workspace if the user is the owner
+        serializer.save()
+        
+
+# View for Task Management
+class TaskViewSet(viewsets.ModelViewSet):
+    queryset = Task.objects.all()
+    serializer_class = TaskSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        user = self.request.user
+        # Return tasks within the projects of the workspaces owned by the user
+        return Task.objects.filter(project__workspace__owner=user)
+
+    def perform_create(self, serializer):
+        user = self.request.user
+        project = serializer.validated_data['project']
+        
+        # Ensure that the user is the owner of the workspace associated with the project
+        if project.workspace.owner != user:
+            raise PermissionDenied("You are not authorized to create tasks in this project.")
+        
         serializer.save()

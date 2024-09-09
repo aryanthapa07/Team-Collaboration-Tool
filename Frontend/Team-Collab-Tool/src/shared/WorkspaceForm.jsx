@@ -29,13 +29,16 @@ const WorkspaceForm = ({ onClose, initialData }) => {
 
   // Effect to set selected members when initialData changes
   useEffect(() => {
-    if (initialData && initialData.members) {
-      setSelectedMembers(
-        initialData.members.map((memberId) => ({
-          value: memberId,
-          label: users.find((user) => user.id === memberId)?.name || "",
-        }))
-      );
+    if (initialData && initialData.members && Array.isArray(initialData.members)) {
+      // Ensure users is defined and has a value before using it
+      if (users) {
+        setSelectedMembers(
+          initialData.members.map((memberId) => ({
+            value: memberId,
+            label: users.find((user) => user.id === memberId)?.name || "",
+          }))
+        );
+      }
     }
   }, [initialData, users]);
 

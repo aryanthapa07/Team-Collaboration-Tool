@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from workspace.models import Workspace,Project
+from workspace.models import Workspace,Project,Task
 
 class WorkspaceSerializer(serializers.ModelSerializer):
     class Meta:
@@ -17,3 +17,21 @@ class WorkspaceDropdownSerializer(serializers.ModelSerializer):
     class Meta:
         model = Workspace
         fields = ['id', 'name']
+  
+
+class TaskSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Task
+        fields = '__all__'
+    
+    def validate(self, data):
+        # Ensure the assigned user is a member of the workspace associated with the project
+        project = data.get('project')
+        assigned_user = data.get('assigned_user')
+
+        if assigned_user and project:
+            workspace = project.workspace
+            if assigned_user not in workspace.members.all():
+                raise serializers.ValidationError("Assigned user must be a member of the workspace.")
+
+        return data   
