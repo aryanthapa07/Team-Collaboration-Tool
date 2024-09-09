@@ -90,7 +90,16 @@ const ProjectForm = ({ onClose, initialData }) => {
           <section>
             {projectFields.map((projectfield, index) => (
               <div key={index}>
-                <span className="formLabel">{projectfield.title}</span>
+                <span className="formLabel">
+                  {projectfield.title}
+
+                  {projectfield.id === "description" ? (
+                    <span></span>
+                  ) : (
+                    <span className="text-red-700">*</span>
+                  )}
+                </span>
+
                 {projectfield.id === "description" ? (
                   <textarea
                     maxLength="80"
@@ -132,7 +141,7 @@ const ProjectForm = ({ onClose, initialData }) => {
 
             {/* Workspace Dropdown */}
             <div>
-              <label className="formLabel">Workspace</label>
+              <label className="formLabel">Workspace<span className="text-red-700">*</span></label>
               <Select
                 {...register("workspace")} // Bind to react-hook-form
                 value={workspaceOptions.find(

@@ -1,14 +1,14 @@
-import { useForm } from "react-hook-form"; 
+import { useForm } from "react-hook-form";
 import {
   useCreateWorkspaceMutation,
   useUpdateWorkspaceMutation,
-} from "../services/WorkspaceApi"; 
-import { useFetchUsersQuery } from "../services/UserAuthApi"; 
-import { useState, useEffect } from "react"; 
-import { Tooltip } from "react-tooltip"; 
-import { toast, Toaster } from "react-hot-toast"; 
-import { inputFields } from "../constants/InputField"; 
-import Select from "react-select"; 
+} from "../services/WorkspaceApi";
+import { useFetchUsersQuery } from "../services/UserAuthApi";
+import { useState, useEffect } from "react";
+import { Tooltip } from "react-tooltip";
+import { toast, Toaster } from "react-hot-toast";
+import { inputFields } from "../constants/InputField";
+import Select from "react-select";
 
 const WorkspaceForm = ({ onClose, initialData }) => {
   // Setting up form management with react-hook-form
@@ -22,7 +22,7 @@ const WorkspaceForm = ({ onClose, initialData }) => {
 
   // Hook for fetching users
   const { data: users } = useFetchUsersQuery();
-  
+
   // Local state for handling server errors and selected members
   const [server_error, setServerError] = useState({});
   const [selectedMembers, setSelectedMembers] = useState([]);
@@ -83,7 +83,16 @@ const WorkspaceForm = ({ onClose, initialData }) => {
             {/* Rendering input fields based on inputFields array */}
             {inputFields.map((field, index) => (
               <div key={index}>
-                <span className="formLabel">{field.title}</span>
+                <span className="formLabel">
+                  {field.title}
+
+                  {field.id === "description" ? (
+                    <span></span>
+                  ) : (
+                    <span className="text-red-700">*</span>
+                  )}
+                </span>
+
                 {field.id === "description" ? (
                   <textarea
                     maxLength="80"
@@ -121,7 +130,9 @@ const WorkspaceForm = ({ onClose, initialData }) => {
 
             {/* Select component for choosing members */}
             <div>
-              <label>Members</label>
+              <label className="formLabel">
+                Members<span className="text-red-700">*</span>
+              </label>
               <Select
                 isMulti
                 options={users?.map((user) => ({
