@@ -141,7 +141,9 @@ const ProjectForm = ({ onClose, initialData }) => {
 
             {/* Workspace Dropdown */}
             <div>
-              <label className="formLabel">Workspace<span className="text-red-700">*</span></label>
+              <label className="formLabel">
+                Workspace<span className="text-red-700">*</span>
+              </label>
               <Select
                 {...register("workspace")} // Bind to react-hook-form
                 value={workspaceOptions.find(

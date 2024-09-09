@@ -2,8 +2,8 @@ const ConfirmationDialog = ({ message, onConfirm, onCancel }) => {
   return (
     <div className="dropDownFormPosition">
       <div className="dropDownFormStyling">
-        <p>{message}</p>
-        <div className="dropDownFormButtons">
+        <p className="font-semibold text-xl">{message}</p>
+        <div className="dropDownFormButtons mt-7">
           <button className="cardRedButton" onClick={onConfirm}>
             Yes
           </button>

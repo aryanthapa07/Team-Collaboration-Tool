@@ -59,7 +59,7 @@ const LoginPage = () => {
       setTimeout(() => {
         storeToken(res.data.token);
         navigate("/dashboard");
-      }, 2000);
+      }, 750);
     }
   };
 

@@ -5,6 +5,7 @@ from rest_framework.permissions import IsAuthenticated,AllowAny
 from account.models import User
 from rest_framework.response import Response
 from rest_framework.decorators import action
+from rest_framework.exceptions import PermissionDenied
 
 class WorkspaceViewSet(viewsets.ModelViewSet):
     queryset = Workspace.objects.all()
@@ -38,3 +39,11 @@ class ProjectViewSet(viewsets.ModelViewSet):
         user = self.request.user
         return Project.objects.filter(workspace__owner=user)
 
+    def perform_create(self, serializer):
+        # Check if the current user is the owner of the workspace
+        workspace = serializer.validated_data['workspace']
+        if workspace.owner != self.request.user:
+            raise PermissionDenied("You are not the owner of this workspace.")
+        
+        # Save the project with the workspace if the user is the owner
+        serializer.save()
