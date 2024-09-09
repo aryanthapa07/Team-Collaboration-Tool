@@ -1,22 +1,34 @@
 import { useState } from "react";
 import { useDeleteWorkspaceMutation } from "../services/WorkspaceApi";
 import WorkspaceForm from "./WorkspaceForm";
+import ConfirmationDialog from "./ConfirmationDialog";
 
 const WorkspaceCard = ({ workspace, onActionComplete }) => {
   const [showForm, setShowForm] = useState(false);
   const [deleteWorkspace] = useDeleteWorkspaceMutation();
-
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const handleEdit = () => {
     setShowForm(true);
   };
 
   const handleDelete = async () => {
-    if (window.confirm("Are you sure you want to delete this workspace?")) {
-      const res = await deleteWorkspace(workspace.id);
-      if (!res.error) {
-        onActionComplete(); // Refetch after deletion
-      }
+    const res = await deleteWorkspace(workspace.id);
+    if (!res.error) {
+      onActionComplete(); // Refetch after deletion
     }
+  };
+
+  const openConfirmDialog = () => {
+    setShowConfirmDialog(true);
+  };
+
+  const closeConfirmDialog = () => {
+    setShowConfirmDialog(false);
+  };
+
+  const confirmDelete = () => {
+    handleDelete();
+    closeConfirmDialog();
   };
 
   const handleCloseForm = () => {
@@ -36,13 +48,21 @@ const WorkspaceCard = ({ workspace, onActionComplete }) => {
           Edit
         </button>
 
-        <button className="cardRedButton" onClick={handleDelete}>
+        <button className="cardRedButton" onClick={openConfirmDialog}>
           Delete
         </button>
       </div>
 
       {showForm && (
         <WorkspaceForm initialData={workspace} onClose={handleCloseForm} />
+      )}
+
+      {showConfirmDialog && (
+        <ConfirmationDialog
+          message={"Are you sure you want to delete this workspace?"}
+          onConfirm={confirmDelete}
+          onCancel={closeConfirmDialog}
+        />
       )}
     </div>
   );
