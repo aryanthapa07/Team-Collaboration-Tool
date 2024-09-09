@@ -2,32 +2,55 @@ import { IoHomeOutline } from "react-icons/io5";
 import { MdOutlineTaskAlt } from "react-icons/md";
 import { GoGoal } from "react-icons/go";
 import { RiTeamLine } from "react-icons/ri";
-import { useState } from "react";
 import { LuFileCode2 } from "react-icons/lu";
+import { removeToken } from "../services/LocalStorageService";
+import { useNavigate } from "react-router-dom";
+import Logoutbutton from "../buttons/Logoutbutton";
 import Opensidebar from "../icons/Opensidebar";
 import Closesidebar from "../icons/Closesidebar";
 import Createplusicon from "../icons/createplusicon";
-import ToggleSidebarButton from "../buttons/ToggleSidebarButton";
+import { useState } from "react";
 import Sidebarbutton from "../buttons/Sidebarbutton";
+import ToggleSidebarButton from "../buttons/ToggleSidebarButton";
 import CreateButton from "../buttons/CreateButton";
-import { useNavigate } from "react-router-dom";
-const Sidebar = () => {
-  const [collapseSidebar, setCollapseSidebar] = useState(true);
 
-  // statemanagement for the collapsesidebar
+const Sidebar = ({ isLoggedIn }) => {
+  const [collapseSidebar, setCollapseSidebar] = useState(true);
+  const [showTaskBar, setShowTaskBar] = useState(false);
+  const navigate = useNavigate();
+
   const handleCollapse = () => {
     setCollapseSidebar((prev) => !prev);
   };
 
-  const navigate = useNavigate();
+  const handleLogout = () => {
+    removeToken();
+    navigate("/login");
+  };
+
+  const handleTaskbar = () => {
+    setShowTaskBar(!showTaskBar);
+  };
 
   const handleOnclick = () => {
     navigate("/login");
   };
 
+  const homepagenavigate = () => {
+    navigate("/dashboard");
+  };
+
+  const workspaceNavigate = () => {
+    navigate("/workspaces");
+  };
+
+  const projectNavigate = () => {
+    navigate("/projects");
+  };
+
   return (
     <div
-      className={`bg-white relative left-0 top-0 flex h-screen flex-col justify-start gap-5 p-6 pt-24 w-full max-md:hidden ${
+      className={`relative bg-white left-0 top-0 flex h-screen flex-col justify-start gap-5 p-6 pt-24 w-full max-md:hidden ${
         collapseSidebar ? "max-w-fit" : "max-w-[264px]"
       } shadow-md`}
     >
@@ -38,42 +61,61 @@ const Sidebar = () => {
         CloseIcon={Closesidebar}
       />
 
+      {/* Common Sidebar Buttons */}
       <Sidebarbutton
         icon={IoHomeOutline}
         label="Home"
         collapseSidebar={collapseSidebar}
-        onClick={handleOnclick}
+        onClick={isLoggedIn ? homepagenavigate : handleOnclick}
       />
       <Sidebarbutton
         icon={MdOutlineTaskAlt}
         label="My Tasks"
         collapseSidebar={collapseSidebar}
-        onClick={handleOnclick}
+        onClick={isLoggedIn ? null : handleOnclick}
       />
       <Sidebarbutton
         icon={GoGoal}
         label="Goals"
         collapseSidebar={collapseSidebar}
-        onClick={handleOnclick}
+        onClick={isLoggedIn ? null : handleOnclick}
       />
       <Sidebarbutton
         icon={RiTeamLine}
         label="My Workspace"
         collapseSidebar={collapseSidebar}
-        onClick={handleOnclick}
+        onClick={isLoggedIn ? workspaceNavigate : handleOnclick}
       />
       <Sidebarbutton
         icon={LuFileCode2}
         label="My Projects"
         collapseSidebar={collapseSidebar}
-        onClick={handleOnclick}
+        onClick={isLoggedIn ? projectNavigate : handleOnclick}
       />
-      <CreateButton
-        onClick={handleOnclick}
-        collapseSidebar={collapseSidebar}
-        Icon={Createplusicon}
-        label="Create"
-      />
+
+      {/* Conditional rendering based on login status */}
+      {isLoggedIn ? (
+        <>
+          <Logoutbutton
+            onClick={handleLogout}
+            collapseSidebar={collapseSidebar}
+          />
+          <CreateButton
+            onClick={handleTaskbar}
+            collapseSidebar={collapseSidebar}
+            showTaskBar={showTaskBar}
+            Icon={Createplusicon}
+            label="Create"
+          />
+        </>
+      ) : (
+        <CreateButton
+          onClick={handleOnclick}
+          collapseSidebar={collapseSidebar}
+          Icon={Createplusicon}
+          label="Create"
+        />
+      )}
     </div>
   );
 };
