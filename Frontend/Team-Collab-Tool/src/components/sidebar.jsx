@@ -48,6 +48,10 @@ const Sidebar = ({ isLoggedIn }) => {
     navigate("/projects");
   };
 
+  const taskNavigate = () => {
+    navigate("/tasks");
+  };
+
   return (
     <div
       className={`relative bg-white left-0 top-0 flex h-screen flex-col justify-start gap-5 p-6 pt-24 w-full max-md:hidden ${
@@ -72,7 +76,7 @@ const Sidebar = ({ isLoggedIn }) => {
         icon={MdOutlineTaskAlt}
         label="My Tasks"
         collapseSidebar={collapseSidebar}
-        onClick={isLoggedIn ? null : handleOnclick}
+        onClick={isLoggedIn ? taskNavigate : handleOnclick}
       />
       <Sidebarbutton
         icon={GoGoal}

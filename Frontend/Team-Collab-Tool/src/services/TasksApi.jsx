@@ -48,7 +48,7 @@ export const TaskApi = createApi({
     }),
     fetchWorkspaceMembers: builder.query({
       query: (projectId) => ({
-        url: `/${projectId}/workspace-members/`,
+        url: `workspace-members/${projectId}/`,
         method: "GET",
       }),
     }),

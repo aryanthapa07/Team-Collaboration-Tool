@@ -9,6 +9,7 @@ import WorkspacePage from "./pages/WorkspacePage";
 import ProjectsPage from "./pages/ProjectsPage";
 import PrivateRoute from "./pages/PrivateRoute";
 import TermsandCondition from "./pages/TermsandCondition";
+import TasksPage from "./pages/TasksPage";
 function App() {
   const router = createBrowserRouter([
     {
@@ -42,6 +43,10 @@ function App() {
     {
       path: "/projects",
       element: <PrivateRoute element={<ProjectsPage />} />,
+    },
+    {
+      path: "/tasks",
+      element: <PrivateRoute element={<TasksPage />} />,
     },
     {
       path: "/terms-and-conditions",

@@ -6,6 +6,7 @@ from account.models import User
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from rest_framework.exceptions import PermissionDenied
+from django.db.models import Q
 
 # View for workspace management
 class WorkspaceViewSet(viewsets.ModelViewSet):
@@ -60,7 +61,7 @@ class TaskViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         user = self.request.user
         # Return tasks within the projects of the workspaces owned by the user
-        return Task.objects.filter(project__workspace__owner=user)
+        return Task.objects.filter(Q(project__workspace__owner=user) | Q(assigned_user=user))
 
     def perform_create(self, serializer):
         user = self.request.user
@@ -72,13 +73,16 @@ class TaskViewSet(viewsets.ModelViewSet):
         
         serializer.save()
         
-    @action(detail=True, methods=['get'], url_path='workspace-members')
-    def get_workspace_members(self, request, pk=None):
-        project = self.get_object()
-        workspace = project.workspace
-        members = workspace.members.all()
-        member_data = [{'id': member.id, 'name': member.username} for member in members]  # Assuming 'username' is the field for user names
-        return Response(member_data)
+    @action(detail=False, methods=['get'], url_path='workspace-members/(?P<project_id>[^/.]+)')
+    def get_workspace_members(self, request, project_id=None):
+        try:
+            project = Project.objects.get(id=project_id)
+            workspace = project.workspace
+            members = workspace.members.all()
+            member_data = [{'id': member.id, 'name': member.name} for member in members]  # Assuming 'username' is the field for user names
+            return Response(member_data)
+        except Project.DoesNotExist:
+            return Response({"error": "Project not found"}, status=404)
 
     @action(detail=False, methods=['get'], url_path='my-projects')
     def get_user_projects(self, request):
