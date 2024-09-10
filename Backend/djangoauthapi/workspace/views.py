@@ -72,9 +72,17 @@ class TaskViewSet(viewsets.ModelViewSet):
         
         serializer.save()
         
-    @action(detail=True, methods=['get'], url_path='members')
+    @action(detail=True, methods=['get'], url_path='workspace-members')
     def get_workspace_members(self, request, pk=None):
-        workspace = self.get_object()
+        project = self.get_object()
+        workspace = project.workspace
         members = workspace.members.all()
-        member_data = [{'id': member.id, 'name': member.name} for member in members]
+        member_data = [{'id': member.id, 'name': member.username} for member in members]  # Assuming 'username' is the field for user names
         return Response(member_data)
+
+    @action(detail=False, methods=['get'], url_path='my-projects')
+    def get_user_projects(self, request):
+        user = request.user
+        projects = Project.objects.filter(workspace__owner=user)
+        project_data = [{'id': project.id, 'name': project.name} for project in projects]
+        return Response(project_data)
