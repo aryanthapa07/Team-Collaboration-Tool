@@ -71,3 +71,10 @@ class TaskViewSet(viewsets.ModelViewSet):
             raise PermissionDenied("You are not authorized to create tasks in this project.")
         
         serializer.save()
+        
+    @action(detail=True, methods=['get'], url_path='members')
+    def get_workspace_members(self, request, pk=None):
+        workspace = self.get_object()
+        members = workspace.members.all()
+        member_data = [{'id': member.id, 'name': member.name} for member in members]
+        return Response(member_data)
