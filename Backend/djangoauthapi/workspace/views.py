@@ -54,7 +54,7 @@ class ProjectViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         # Only return projects within the workspaces owned by the authenticated user
         user = self.request.user
-        return Project.objects.filter(Q(workspace__owner=user) | Q(workspace__members=user))
+        return Project.objects.filter(Q(workspace__owner=user) | Q(workspace__members=user)).distinct()
 
     def perform_create(self, serializer):
         # Check if the current user is the owner of the workspace
