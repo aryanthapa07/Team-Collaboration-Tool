@@ -5,7 +5,7 @@ export const userAuthApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "http://127.0.0.1:8000/api/user/",
     prepareHeaders: (headers, { endpoint }) => {
-      if (endpoint === 'fetchUsers') {
+      if (endpoint === "fetchUsers") {
         const { access_token } = getToken();
         if (access_token) {
           headers.set("authorization", `Bearer ${access_token}`);

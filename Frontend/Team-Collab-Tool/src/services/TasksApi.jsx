@@ -52,6 +52,12 @@ export const TaskApi = createApi({
         method: "GET",
       }),
     }),
+    fetchTaskReport: builder.query({
+      query: () => ({
+        url: "/report/",
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -62,4 +68,5 @@ export const {
   useDeleteTaskMutation,
   useFetchProjectsQuery,
   useFetchWorkspaceMembersQuery,
+  useFetchTaskReportQuery,
 } = TaskApi;

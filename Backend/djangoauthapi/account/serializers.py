@@ -70,7 +70,7 @@ class UserLoginSerializer(serializers.ModelSerializer):
 class UserProfileSerializer(serializers.ModelSerializer):
   class Meta:
     model = User
-    fields = ['id', 'email', 'name']
+    fields = ['id', 'email', 'name','is_admin']
 
 # change password serializer
 class UserChangePasswordSerializer(serializers.Serializer):
