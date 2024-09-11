@@ -25,11 +25,25 @@ class WorkspaceViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         # only returns workspace that belongs to the authenticated user
         user=self.request.user
-        return Workspace.objects.filter(owner=user)
+        # Return workspaces the user owns or is a member of
+        return Workspace.objects.filter(Q(owner=user) | Q(members=user)).distinct()
     
     def perform_create(self,serializer):\
         # Automatically set the owner to the current user when creating a workspace
         serializer.save(owner=self.request.user)
+        
+    def perform_update(self, serializer):
+        # Allow only the owner to update
+        workspace = self.get_object()
+        if workspace.owner != self.request.user:
+            raise PermissionDenied("You are not allowed to edit this workspace.")
+        serializer.save()
+    
+    def perform_destroy(self, instance):
+        # Allow only the owner to delete
+        if instance.owner != self.request.user:
+            raise PermissionDenied("You are not allowed to delete this workspace.")
+        instance.delete()
 
 # View for Project Management
 class ProjectViewSet(viewsets.ModelViewSet):
@@ -40,16 +54,26 @@ class ProjectViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         # Only return projects within the workspaces owned by the authenticated user
         user = self.request.user
-        return Project.objects.filter(workspace__owner=user)
+        return Project.objects.filter(Q(workspace__owner=user) | Q(workspace__members=user))
 
     def perform_create(self, serializer):
         # Check if the current user is the owner of the workspace
         workspace = serializer.validated_data['workspace']
         if workspace.owner != self.request.user:
             raise PermissionDenied("You are not the owner of this workspace.")
-        
         # Save the project with the workspace if the user is the owner
         serializer.save()
+    
+    def perform_update(self, serializer):
+        project = self.get_object()
+        if project.workspace.owner != self.request.user:
+            raise PermissionDenied("You are not allowed to edit this project.")
+        serializer.save()
+
+    def perform_destroy(self, instance):
+        if instance.workspace.owner != self.request.user:
+            raise PermissionDenied("You are not allowed to delete this project.")
+        instance.delete()
         
 
 # View for Task Management
