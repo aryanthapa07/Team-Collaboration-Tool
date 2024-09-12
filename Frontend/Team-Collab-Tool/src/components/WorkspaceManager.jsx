@@ -3,8 +3,10 @@ import { useFetchWorkspacesQuery } from "../services/WorkspaceApi";
 import WorkspaceCard from "../shared/WorkspaceCard";
 import WorkspaceForm from "../shared/WorkspaceForm";
 import { getToken } from "../services/LocalStorageService";
+import { useGetLoggedUserQuery } from "../services/UserAuthApi";
 const WorkspaceManager = () => {
   const { access_token } = getToken();
+  const {data:userData}=useGetLoggedUserQuery(access_token);
   const [showForm, setShowForm] = useState(false);
   const {
     data: workspaces,
@@ -30,7 +32,7 @@ const WorkspaceManager = () => {
   return (
     <div className="size-full gap-2 px-4">
       <div>
-        <h2 className="headingStyle">Your Workspace</h2>
+        <h2 className="headingStyle">{userData?.is_admin?"Workspace":"Your Workspace"}</h2>
       </div>
       <div className="mb-4">
         <button className="bluebutton" onClick={() => setShowForm(true)}>

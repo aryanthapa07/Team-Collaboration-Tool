@@ -4,7 +4,7 @@ import { GoGoal } from "react-icons/go";
 import { LuFileCode2 } from "react-icons/lu";
 import { GrUserSettings } from "react-icons/gr";
 import { BsPersonWorkspace } from "react-icons/bs";
-import { removeToken } from "../services/LocalStorageService";
+import { removeToken,getToken } from "../services/LocalStorageService";
 import { useNavigate } from "react-router-dom";
 import Logoutbutton from "../buttons/Logoutbutton";
 import Opensidebar from "../icons/Opensidebar";
@@ -14,7 +14,6 @@ import { useState } from "react";
 import Sidebarbutton from "../buttons/Sidebarbutton";
 import ToggleSidebarButton from "../buttons/ToggleSidebarButton";
 import CreateButton from "../buttons/CreateButton";
-import { getToken } from "../services/LocalStorageService";
 import { useGetLoggedUserQuery } from "../services/UserAuthApi";
 import { HiOutlineDocumentReport } from "react-icons/hi";
 

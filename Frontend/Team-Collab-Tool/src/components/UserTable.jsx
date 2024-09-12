@@ -1,6 +1,7 @@
 import { useFetchUsersQuery, useUpdateUserMutation, useDeleteUserMutation } from "../services/UserViewApi";
 import { useState } from "react";
 import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
+import ConfirmationDialog from "../shared/ConfirmationDialog";
 
 const UserTable = () => {
   const { data: users, error, isLoading, refetch } = useFetchUsersQuery();
@@ -8,6 +9,8 @@ const UserTable = () => {
   const [deleteUser] = useDeleteUserMutation();
   const [editingUser, setEditingUser] = useState(null);
   const [newData, setNewData] = useState({ email: '', name: '', is_admin: false });
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+  const [userToDelete, setUserToDelete] = useState(null); // Track which user to delete
 
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Error loading users.</p>;
@@ -27,14 +30,24 @@ const UserTable = () => {
     }
   };
 
-  const handleDelete = async (id) => {
-    if (window.confirm("Are you sure you want to delete this user?")) {
-      try {
-        await deleteUser(id);
-        refetch();  // Refetch the user data to reflect changes
-      } catch (err) {
-        console.error("Error deleting user", err);
-      }
+  const openConfirmDialog = (user) => {
+    setUserToDelete(user); // Set the user to delete
+    setShowConfirmDialog(true); // Show the confirmation dialog
+  };
+
+  const closeConfirmDialog = () => {
+    setShowConfirmDialog(false); // Close the confirmation dialog
+    setUserToDelete(null); // Reset user to delete
+  };
+
+  const confirmDelete = async () => {
+    try {
+      await deleteUser(userToDelete.id);
+      refetch(); // Refetch the user data to reflect changes
+    } catch (err) {
+      console.error("Error deleting user", err);
+    } finally {
+      closeConfirmDialog(); // Close the confirmation dialog after deletion
     }
   };
 
@@ -103,7 +116,7 @@ const UserTable = () => {
                     <button onClick={() => handleEdit(user)} className="text-blue-500">
                       <AiOutlineEdit />
                     </button>
-                    <button onClick={() => handleDelete(user.id)} className="text-red-500">
+                    <button onClick={() => openConfirmDialog(user)} className="text-red-500">
                       <AiOutlineDelete />
                     </button>
                   </div>
@@ -113,6 +126,14 @@ const UserTable = () => {
           ))}
         </tbody>
       </table>
+
+      {showConfirmDialog && (
+        <ConfirmationDialog
+          message={`Are you sure you want to delete user ${userToDelete?.name}?`}
+          onConfirm={confirmDelete}
+          onCancel={closeConfirmDialog}
+        />
+      )}
     </div>
   );
 };

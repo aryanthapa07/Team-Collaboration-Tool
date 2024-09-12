@@ -4,9 +4,11 @@ import { useFetchProjectsQuery } from "../services/ProjectsApi";
 import ProjectCard from "../shared/ProjectCard";
 import ProjectForm from "../shared/ProjectForm";
 import { getToken } from "../services/LocalStorageService";
+import { useGetLoggedUserQuery } from "../services/UserAuthApi";
 
 const ProjectsManager = () => {
   const { access_token } = getToken();
+  const {data:userData}=useGetLoggedUserQuery(access_token);
   const { data: projects, error, isLoading, refetch } = useFetchProjectsQuery();
   const [showForm, setShowForm] = useState(false);
 
@@ -27,7 +29,7 @@ const ProjectsManager = () => {
   return (
     <div className="size-full gap-2 px-4">
       <div>
-        <h2 className="headingStyle">Your Projects</h2>
+        <h2 className="headingStyle">{userData?.is_admin?"Projects":"Your Projects"}</h2>
       </div>
 
       <div className="mb-4">
