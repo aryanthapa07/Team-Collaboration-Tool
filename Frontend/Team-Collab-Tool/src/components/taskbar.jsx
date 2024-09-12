@@ -1,12 +1,47 @@
+import { useNavigate } from "react-router-dom";
+import WorkspaceForm from "../shared/WorkspaceForm";
+import ProjectForm from "../shared/ProjectForm";
+import { useState } from "react";
+import { useFetchWorkspacesQuery } from "../services/WorkspaceApi";
 const TaskBar = () => {
+  const [showWorkspaceForm, setShowWorkspaceForm] = useState(false);
+  const [showProjectForm, setShowProjectForm] = useState(false);
+  const navigate = useNavigate();
+
+  const { refetch } = useFetchWorkspacesQuery();
+
+  const handleCloseWorkspaceForm = () => {
+    navigate("/workspaces");
+    setShowWorkspaceForm(false);
+    refetch();
+  };
+
+  const handleCloseProjectForm = () => {
+    navigate("/projects");
+    setShowWorkspaceForm(false);
+    refetch();
+  };
   return (
-    <div className="w-full border border-gray-400 p-3 rounded-lg flex flex-col items-center gap-2">
-      <button className="hover:opacity-80 bg-[#12aef5] text-white px-4 py-2 rounded-md w-full">
+    <div className="taskBarContainer">
+      <button
+        className="taskBarButton"
+        onClick={() => setShowWorkspaceForm(true)}
+      >
         Create Workspace
       </button>
-      <button className="hover:opacity-80 bg-[#12aef5] text-white px-4 py-2 rounded-md w-full">
+
+      {showWorkspaceForm && (
+        <WorkspaceForm onClose={handleCloseWorkspaceForm} />
+      )}
+
+      <button
+        className="taskBarButton"
+        onClick={() => setShowProjectForm(true)}
+      >
         Create Project
       </button>
+
+      {showProjectForm && <ProjectForm onClose={handleCloseProjectForm} />}
     </div>
   );
 };
