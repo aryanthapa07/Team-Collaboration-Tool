@@ -61,16 +61,27 @@ const TaskCard = ({ task, onActionComplete }) => {
     icon: null,
   };
 
+    // Format deadline to a readable format
+    const formattedDeadline = new Date(task.deadline).toLocaleString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+      hour24: true,
+      timeZone: 'UTC',
+    });
+
   return (
     <div className="cardStyle flex flex-col">
       <div>
         <h3 className="cardName">{task.title}</h3>
       </div>
       <div>
-        <p className="cardFields">{task.description}</p>
-        <p className="cardFields">Assigned To: {task.assigned_user}</p>
-        <p className="cardFields">Deadline: {task.deadline}</p>
-        <p className="cardFields">Project: {task.project}</p>
+        {/* <p className="cardFields">{task.description}</p> */}
+        <p className="cardFields">Assigned To: {task.assigned_user_name}</p>
+        <p className="cardFields">Deadline: {formattedDeadline}</p>
+        <p className="cardFields">Project: {task.project_name}</p>
       </div>
 
       <div className="flex justify-between space-x-2">
@@ -78,7 +89,6 @@ const TaskCard = ({ task, onActionComplete }) => {
           className={`px-4 py-2 rounded ${statusClass} text-white flex items-center gap-1`}
         >
           {icon}
-          {task.status}
         </span>
         <div className="flex gap-2">
           <button className="cardBlueButton" onClick={handleEdit}>

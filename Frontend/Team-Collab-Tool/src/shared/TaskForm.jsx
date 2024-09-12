@@ -69,7 +69,7 @@ const TaskForm = ({ onClose, initialData }) => {
       description: data.description,
       assigned_user: data.assigned_user,
       status: data.status,
-      deadline: data.deadline,
+      deadline: new Date(data.deadline).toISOString(),
       project: data.project,
     };
     let res;
@@ -182,7 +182,7 @@ const TaskForm = ({ onClose, initialData }) => {
                 Close
               </button>
               <button type="submit" className="bluebutton">
-                Create Task
+                Save
               </button>
             </div>
           </section>

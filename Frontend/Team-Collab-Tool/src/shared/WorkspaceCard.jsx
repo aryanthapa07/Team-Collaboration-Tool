@@ -1,3 +1,5 @@
+// WorkspaceCard.jsx
+
 import { useState } from "react";
 import { useDeleteWorkspaceMutation } from "../services/WorkspaceApi";
 import WorkspaceForm from "./WorkspaceForm";
@@ -7,6 +9,7 @@ const WorkspaceCard = ({ workspace, onActionComplete }) => {
   const [showForm, setShowForm] = useState(false);
   const [deleteWorkspace] = useDeleteWorkspaceMutation();
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+
   const handleEdit = () => {
     setShowForm(true);
   };
@@ -39,9 +42,11 @@ const WorkspaceCard = ({ workspace, onActionComplete }) => {
   return (
     <div className="cardStyle ">
       <h3 className="cardName">{workspace.name}</h3>
-      <p className="cardFields">Workspace ID:{workspace.id}</p>
-      <p className="cardFields">Owner ID: {workspace.owner}</p>
-      <p className="cardFields">Members ID: {workspace.members.join(", ")}</p>
+      <p className="cardFields">Workspace ID: {workspace.id}</p>
+      <p className="cardFields">Owner: {workspace.owner_name}</p> {/* Show owner's name */}
+      <p className="cardFields">
+        Members: {workspace.members_names.join(", ")} {/* Show members' names */}
+      </p>
 
       <div className="flex justify-end space-x-2">
         <button className="cardBlueButton" onClick={handleEdit}>

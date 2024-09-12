@@ -41,7 +41,7 @@ const ProjectCard = ({ project, onActionComplete }) => {
     <div className="cardStyle ">
       <h3 className="cardName">{project.name}</h3>
       <p className="cardFields">Project ID: {project.id}</p>
-      <p className="cardFields">Workspace ID: {project.workspace}</p>
+      <p className="cardFields">Workspace: {project.workspace_name}</p>
 
       <div className="flex justify-end space-x-2">
         <button className="cardBlueButton" onClick={handleEdit}>

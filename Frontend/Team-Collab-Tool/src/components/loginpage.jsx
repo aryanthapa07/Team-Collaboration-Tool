@@ -33,8 +33,8 @@ const LoginPage = () => {
   const onSubmit = async (data) => {
     console.log("data from frontend", data);
     const actualData = {
-      email: data.Email,
-      password: data.password,
+      email: data?.Email,
+      password: data?.password,
     };
 
     // data sent to backend and backend response stored in res
@@ -74,7 +74,7 @@ const LoginPage = () => {
           type="email"
           name="Email"
           register={register}
-          error={serverError.email}
+          error={serverError?.email}
           tooltipId="email-tooltip"
           placeholder="Email"
         />
@@ -83,7 +83,7 @@ const LoginPage = () => {
           type="password"
           name="password"
           register={register}
-          error={serverError.password}
+          error={serverError?.password}
           tooltipId="password-tooltip"
           placeholder="Password"
           showPassword={showPassword}

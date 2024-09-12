@@ -54,6 +54,38 @@ const TaskReport = () => {
     },
     responsive: true,
     maintainAspectRatio: false,
+    scales: {
+      x: {
+        title: {
+          display: true,
+          text: "Projects", // X-axis label
+          font: {
+            size: 16,    // Font size
+            weight: "bold", // Font weight
+          },
+        },
+      },
+      y: {
+        beginAtZero: true,
+        ticks: {
+          stepSize: 1,
+          callback: function(value) {
+            if (Number.isInteger(value)) {
+              return value; // Show only whole numbers
+            }
+            return null;
+          },
+        },
+        title: {
+          display: true,
+          text: "Number of Tasks", // Y-axis label
+          font: {
+            size: 16,    // Font size
+            weight: "bold", // Font weight
+          },
+        },
+      },
+    },
   };
 
   return (
