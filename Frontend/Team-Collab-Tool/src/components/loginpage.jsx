@@ -31,7 +31,7 @@ const LoginPage = () => {
 
   // fetching data from form onsubmit
   const onSubmit = async (data) => {
-    console.log("data from frontend", data);
+    // console.log("data from frontend", data);
     const actualData = {
       email: data?.Email,
       password: data?.password,
@@ -41,18 +41,16 @@ const LoginPage = () => {
     const res = await LoginUser(actualData);
 
     if (res.error) {
-      console.log("inside res.error", res);
+      //console.log("inside res.error", res);
       setServerError(res.error.data.errors);
       if (res.error.data.errors.non_field_errors) {
         toast.error(res.error.data.errors.non_field_errors[0], {
           duration: 3000, // Toast will be visible for 3 seconds
         });
       }
-      console.log(res.error);
     }
 
     if (res.data) {
-      console.log("inside res.data", res.data);
       toast.success(res.data.msg, {
         duration: 2000, // Toast will be visible for 2 seconds
       });

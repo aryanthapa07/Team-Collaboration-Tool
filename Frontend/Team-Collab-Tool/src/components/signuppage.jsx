@@ -33,10 +33,10 @@ const SignupPage = () => {
   // fetching and sending data from frontend onsubmit
   const onSubmit = async (data) => {
     const actualData = {
-      name: data.name,
-      email: data.email,
-      password: data.password,
-      password2: data.password2,
+      name: data?.name,
+      email: data?.email,
+      password: data?.password,
+      password2: data?.password2,
       tc: data.tc ? data.tc : undefined,
     };
 
@@ -80,7 +80,7 @@ const SignupPage = () => {
           type="email"
           name="email"
           register={register}
-          error={server_error.email}
+          error={server_error?.email}
           tooltipId="email-tooltip"
           placeholder="Email"
         />
@@ -89,7 +89,7 @@ const SignupPage = () => {
           type="text"
           name="name"
           register={register}
-          error={server_error.name}
+          error={server_error?.name}
           tooltipId="name-tooltip"
           placeholder="Name"
         />
@@ -98,7 +98,7 @@ const SignupPage = () => {
           type="password"
           name="password"
           register={register}
-          error={server_error.password}
+          error={server_error?.password}
           tooltipId="password-tooltip"
           placeholder="Password"
           showPassword={showPassword}
@@ -109,7 +109,7 @@ const SignupPage = () => {
           type="password"
           name="password2"
           register={register}
-          error={server_error.password2}
+          error={server_error?.password2}
           tooltipId="password2-tooltip"
           placeholder="Confirm Password"
           showPassword={showConfirmPassword}
@@ -118,7 +118,7 @@ const SignupPage = () => {
         <CheckboxField
           id="tc"
           register={register}
-          serverError={server_error.tc}
+          serverError={server_error?.tc}
           label="I agree to the"
           linkText="Terms and Conditions"
           linkUrl="/terms-and-conditions"

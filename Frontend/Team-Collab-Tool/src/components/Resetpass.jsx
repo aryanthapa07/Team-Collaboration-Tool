@@ -31,8 +31,8 @@ function Resetpass() {
   const onSubmit = async (data) => {
     console.log("data fromfrontend", data);
     const actualdata = {
-      password: data.password,
-      password2: data.password2,
+      password: data?.password,
+      password2: data?.password2,
     };
 
     // data sent to backend and backend response stored in res
@@ -56,8 +56,8 @@ function Resetpass() {
       setServerError({});
       document.getElementById("password-reset-form").reset();
       setTimeout(() => {
-        navigate("/dashboard");
-      }, 2000);
+        navigate("/login");
+      }, 750);
     }
   };
   return (
@@ -74,7 +74,7 @@ function Resetpass() {
           type="password"
           name="password"
           register={register}
-          error={server_error.password}
+          error={server_error?.password}
           tooltipId="password-tooltip"
           placeholder="New Password"
           showPassword={showPassword}
@@ -85,7 +85,7 @@ function Resetpass() {
           type="password"
           name="password2"
           register={register}
-          error={server_error.password2}
+          error={server_error?.password2}
           tooltipId="password2-tooltip"
           placeholder="Confirm Password"
           showPassword={showConfirmPassword}
