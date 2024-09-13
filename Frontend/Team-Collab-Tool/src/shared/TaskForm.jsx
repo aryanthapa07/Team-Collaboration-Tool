@@ -15,9 +15,9 @@ const TaskForm = ({ onClose, initialData }) => {
   });
   const [createTask] = useCreateTaskMutation();
   const [updateTask] = useUpdateTaskMutation();
-  const {access_token}=getToken();
+  const { access_token } = getToken();
 
-  const { data: projects,refetch } = useFetchProjectsQuery();
+  const { data: projects, refetch } = useFetchProjectsQuery();
   const [selectedProject, setSelectedProject] = useState(null);
   const { data: members, refetch: fetchMembers } =
     useFetchWorkspaceMembersQuery(selectedProject?.id, {
@@ -26,11 +26,11 @@ const TaskForm = ({ onClose, initialData }) => {
 
   const projectId = watch("project");
 
-  useEffect(()=>{
-    if(access_token){
+  useEffect(() => {
+    if (access_token) {
       refetch();
     }
-  },[access_token,refetch])
+  }, [access_token, refetch]);
 
   useEffect(() => {
     if (projectId) {
@@ -56,7 +56,9 @@ const TaskForm = ({ onClose, initialData }) => {
       setValue("status", initialData.status);
       setValue("project", initialData.project);
       if (initialData.deadline) {
-        const formattedDeadline = new Date(initialData.deadline).toISOString().slice(0, 16);
+        const formattedDeadline = new Date(initialData.deadline)
+          .toISOString()
+          .slice(0, 16);
         setValue("deadline", formattedDeadline);
       }
     }
@@ -98,7 +100,9 @@ const TaskForm = ({ onClose, initialData }) => {
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <section className="flex flex-col gap-2">
             <div>
-              <span className="formLabel">Title</span>
+              <span className="formLabel">
+                Title<span className="text-red-700">*</span>
+              </span>
               <input
                 type="text"
                 placeholder="Title"
@@ -118,7 +122,9 @@ const TaskForm = ({ onClose, initialData }) => {
 
             {/* Project Dropdown */}
             <div>
-              <span className="formlabel">Project</span>
+              <span className="formlabel">
+                Project<span className="text-red-700">*</span>
+              </span>
               <select
                 {...register("project")}
                 defaultValue=""
@@ -138,7 +144,9 @@ const TaskForm = ({ onClose, initialData }) => {
 
             {/* Assigned User Dropdown */}
             <div>
-              <span className="formlabel">Assigned User</span>
+              <span className="formlabel">
+                Assigned User<span className="text-red-700">*</span>
+              </span>
               <select
                 {...register("assigned_user")}
                 defaultValue=""
@@ -158,7 +166,9 @@ const TaskForm = ({ onClose, initialData }) => {
 
             {/* Status */}
             <div>
-              <span className="formlabel">Status</span>
+              <span className="formlabel">
+                Status<span className="text-red-700">*</span>
+              </span>
               <select
                 {...register("status")}
                 defaultValue="pending"
@@ -170,7 +180,9 @@ const TaskForm = ({ onClose, initialData }) => {
               </select>
             </div>
 
-            <span className="formlabel">Deadline</span>
+            <span className="formlabel">
+              Deadline<span className="text-red-700">*</span>
+            </span>
             <input
               type="datetime-local"
               {...register("deadline")}
