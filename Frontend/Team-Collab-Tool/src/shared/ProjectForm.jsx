@@ -59,14 +59,13 @@ const ProjectForm = ({ onClose, initialData }) => {
     if (res.error) {
       console.log("inside res.error", res);
       setServerError(res.error.data);
+      toast.error(res.error.data.detail)
     }
 
     if (res.data) {
       console.log("inside res.data", res);
       toast.success("Project " + (initialData ? "Updated" : "Created"));
-      setTimeout(() => {
-        onClose();
-      }, 750);
+      onClose();
     }
   };
 

@@ -62,14 +62,13 @@ const WorkspaceForm = ({ onClose, initialData }) => {
     // Handle server errors
     if (res.error) {
       setServerError(res.error.data);
+      toast.error(res.error.data.detail)
     }
 
     // Display success message and close form on success
     if (res.data) {
       toast.success("Workspace " + (initialData ? "Updated" : "Created"));
-      setTimeout(() => {
-        onClose();
-      }, 750);
+      onClose();
     }
   };
 

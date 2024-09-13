@@ -5,6 +5,7 @@ import ConfirmationDialog from "./ConfirmationDialog"; // optional for delete co
 import { GrInProgress } from "react-icons/gr";
 import { FaClockRotateLeft } from "react-icons/fa6";
 import { MdDoneOutline } from "react-icons/md";
+import { toast, Toaster } from "react-hot-toast";
 
 const TaskCard = ({ task, onActionComplete }) => {
   const [showForm, setShowForm] = useState(false);
@@ -17,8 +18,14 @@ const TaskCard = ({ task, onActionComplete }) => {
 
   const handleDelete = async () => {
     const res = await deleteTask(task.id);
+    if (res.error) {
+      toast.error(
+        res.error.data.detail ? "You are not allowed to delete this Task" : null
+      );
+    }
     if (!res.error) {
       onActionComplete();
+      toast.success("Task Deleted");
     }
   };
 
@@ -61,19 +68,20 @@ const TaskCard = ({ task, onActionComplete }) => {
     icon: null,
   };
 
-    // Format deadline to a readable format
-    const formattedDeadline = new Date(task.deadline).toLocaleString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric',
-      hour24: true,
-      timeZone: 'UTC',
-    });
+  // Format deadline to a readable format
+  const formattedDeadline = new Date(task.deadline).toLocaleString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    hour24: true,
+    timeZone: "UTC",
+  });
 
   return (
     <div className="cardStyle flex flex-col">
+      <Toaster position="top-center" reverseOrder={false} />
       <div>
         <h3 className="cardName">{task.title}</h3>
       </div>

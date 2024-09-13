@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useDeleteProjectMutation } from "../services/ProjectsApi";
 import ProjectForm from "./ProjectForm";
 import ConfirmationDialog from "./ConfirmationDialog";
+import { toast, Toaster } from "react-hot-toast";
 
 const ProjectCard = ({ project, onActionComplete }) => {
   const [showForm, setShowForm] = useState(false);
@@ -14,8 +15,12 @@ const ProjectCard = ({ project, onActionComplete }) => {
 
   const handleDelete = async () => {
     const res = await deleteProject(project.id);
+    if (res.error) {
+      toast.error(res.error.data.detail);
+    }
     if (!res.error) {
       onActionComplete();
+      toast.success("Project Deleted")
     }
   };
 
@@ -39,6 +44,7 @@ const ProjectCard = ({ project, onActionComplete }) => {
 
   return (
     <div className="cardStyle ">
+      <Toaster position="top-center" reverseOrder={false} />
       <h3 className="cardName">{project.name}</h3>
       <p className="cardFields">Project ID: {project.id}</p>
       <p className="cardFields">Workspace: {project.workspace_name}</p>
