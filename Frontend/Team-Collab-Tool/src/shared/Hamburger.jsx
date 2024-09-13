@@ -1,25 +1,25 @@
 import { useState } from "react";
 import { IoHomeOutline } from "react-icons/io5";
 import { MdOutlineTaskAlt } from "react-icons/md";
-import { GoGoal } from "react-icons/go";
 import { RiTeamLine } from "react-icons/ri";
 import { LuFileCode2 } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
 import Hamburgercloseicon from "../icons/Hamburgerclose";
 import Hamburgericon from "../icons/Hamburgericon";
-import Createplusicon from "../icons/createplusicon";
 import HamburgerButton from "../buttons/HamburgerButton";
-import CreatebuttonHamburger from "../buttons/CreatebuttonHamburger";
 import Authbuttons from "./Authbuttons";
 import AuthButton from "../buttons/AuthButton";
 import Greetings from "./Greetings";
-import TaskBar from "../components/Taskbar";
 import { removeToken } from "../services/LocalStorageService";
+import { getToken } from "../services/LocalStorageService";
+import { useGetLoggedUserQuery } from "../services/UserAuthApi";
+import { GrUserSettings } from "react-icons/gr";
 
 function Hamburger({ isLoggedIn }) {
   const [toggleMenu, setToggleMenu] = useState(false);
-  const [showTaskBar, setShowTaskBar] = useState(false);
   const navigate = useNavigate();
+  const { access_token } = getToken();
+  const { data: userData } = useGetLoggedUserQuery(access_token);
 
   const handleToggleMenu = () => {
     setToggleMenu((prev) => !prev);
@@ -29,13 +29,33 @@ function Hamburger({ isLoggedIn }) {
     navigate("/login");
   };
 
-  const handleTaskbar = () => {
-    setShowTaskBar(!showTaskBar);
-  };
-
   const handleLogout = () => {
     removeToken();
     navigate("/login");
+  };
+
+  const homeNavigate = () => {
+    navigate("/dashboard");
+  };
+
+  const taskNavigate = () => {
+    navigate("/tasks");
+  };
+
+  const usersnavigate = () => {
+    navigate("/users");
+  };
+
+  const workspaceNavigate = () => {
+    navigate("/workspaces");
+  };
+
+  const projectNavigate = () => {
+    navigate("/projects");
+  };
+
+  const reportnavigate = () => {
+    navigate("/report");
   };
 
   return (
@@ -51,39 +71,45 @@ function Hamburger({ isLoggedIn }) {
           <HamburgerButton
             Icon={IoHomeOutline}
             label="Home"
-            onClick={!isLoggedIn ? handleOnclick : undefined}
+            onClick={!isLoggedIn ? handleOnclick : homeNavigate}
           />
           <HamburgerButton
             Icon={MdOutlineTaskAlt}
-            label="My Tasks"
-            onClick={!isLoggedIn ? handleOnclick : undefined}
+            label={userData?.is_admin ? "Tasks" : "My Tasks"}
+            onClick={!isLoggedIn ? handleOnclick : taskNavigate}
           />
-          <HamburgerButton
-            Icon={GoGoal}
-            label="Goals"
-            onClick={!isLoggedIn ? handleOnclick : undefined}
-          />
+          {userData?.is_admin && (
+            <HamburgerButton
+              Icon={GrUserSettings}
+              label="Users"
+              onClick={usersnavigate}
+            />
+          )}
+
           <HamburgerButton
             Icon={RiTeamLine}
-            label="My Workspace"
-            onClick={!isLoggedIn ? handleOnclick : undefined}
+            label={userData?.is_admin ? "Workspace" : "My Workspace"}
+            onClick={!isLoggedIn ? handleOnclick : workspaceNavigate}
           />
           <HamburgerButton
             Icon={LuFileCode2}
-            label="My Projects"
-            onClick={!isLoggedIn ? handleOnclick : undefined}
+            label={userData?.is_admin ? "Projects" : "My Projects"}
+            onClick={!isLoggedIn ? handleOnclick : projectNavigate}
           />
 
-          <CreatebuttonHamburger
-            isActive={showTaskBar}
-            onClick={isLoggedIn ? handleTaskbar : handleOnclick}
-            text="Create"
-            Icon={Createplusicon}
-          />
+          {userData?.is_admin && (
+            <HamburgerButton
+              Icon={LuFileCode2}
+              label="Task Report"
+              onClick={reportnavigate}
+            />
+          )}
 
-          {isLoggedIn && showTaskBar && <TaskBar />}
-
-          <div className={isLoggedIn ? "logoutButtonContainer" : "authButtonsContainer"}>
+          <div
+            className={
+              isLoggedIn ? "logoutButtonContainer" : "authButtonsContainer"
+            }
+          >
             {isLoggedIn ? (
               <AuthButton text="Logout" onClick={handleLogout} />
             ) : (

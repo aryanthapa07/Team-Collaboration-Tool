@@ -47,7 +47,7 @@ const WorkspaceCard = ({ workspace, onActionComplete }) => {
     <div className="cardStyle ">
       <Toaster position="top-center" reverseOrder={false} />
       <h3 className="cardName">{workspace.name}</h3>
-      <p className="cardFields">Workspace ID: {workspace.id}</p>
+      {/* <p className="cardFields">Workspace ID: {workspace.id}</p> */}
       <p className="cardFields">Owner: {workspace.owner_name}</p>{" "}
       {/* Show owner's name */}
       <p className="cardFields">

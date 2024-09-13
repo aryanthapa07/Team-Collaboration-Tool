@@ -93,11 +93,7 @@ const TaskCard = ({ task, onActionComplete }) => {
       </div>
 
       <div className="flex justify-between space-x-2">
-        <span
-          className={`px-4 py-2 rounded ${statusClass} text-white flex items-center gap-1`}
-        >
-          {icon}
-        </span>
+        <span className={`taskicon ${statusClass} `}>{icon}</span>
         <div className="flex gap-2">
           <button className="cardBlueButton" onClick={handleEdit}>
             Edit

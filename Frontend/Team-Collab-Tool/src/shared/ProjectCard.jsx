@@ -46,7 +46,7 @@ const ProjectCard = ({ project, onActionComplete }) => {
     <div className="cardStyle ">
       <Toaster position="top-center" reverseOrder={false} />
       <h3 className="cardName">{project.name}</h3>
-      <p className="cardFields">Project ID: {project.id}</p>
+      {/* <p className="cardFields">Project ID: {project.id}</p> */}
       <p className="cardFields">Workspace: {project.workspace_name}</p>
 
       <div className="flex justify-end space-x-2">

@@ -1,10 +1,9 @@
 import { IoHomeOutline } from "react-icons/io5";
 import { MdOutlineTaskAlt } from "react-icons/md";
-import { GoGoal } from "react-icons/go";
 import { LuFileCode2 } from "react-icons/lu";
 import { GrUserSettings } from "react-icons/gr";
 import { BsPersonWorkspace } from "react-icons/bs";
-import { removeToken,getToken } from "../services/LocalStorageService";
+import { removeToken, getToken } from "../services/LocalStorageService";
 import { useNavigate } from "react-router-dom";
 import Logoutbutton from "../buttons/Logoutbutton";
 import Opensidebar from "../icons/Opensidebar";
@@ -92,19 +91,12 @@ const Sidebar = ({ isLoggedIn }) => {
         onClick={isLoggedIn ? taskNavigate : handleOnclick}
       />
       {/* Conditionally render Users or Goals based on admin status */}
-      {userData?.is_admin ? (
+      {userData?.is_admin && (
         <Sidebarbutton
           icon={GrUserSettings}
           label="Users"
           collapseSidebar={collapseSidebar}
           onClick={usersnavigate}
-        />
-      ) : (
-        <Sidebarbutton
-          icon={GoGoal}
-          label="Goals"
-          collapseSidebar={collapseSidebar}
-          onClick={isLoggedIn ? null : handleOnclick}
         />
       )}
       <Sidebarbutton
@@ -130,29 +122,20 @@ const Sidebar = ({ isLoggedIn }) => {
       )}
 
       {/* Conditional rendering based on login status */}
-      {isLoggedIn && !userData?.is_admin && (
-        <>
-          <Logoutbutton
-            onClick={handleLogout}
-            collapseSidebar={collapseSidebar}
-          />
 
-          <CreateButton
-            onClick={handleTaskbar}
-            collapseSidebar={collapseSidebar}
-            showTaskBar={showTaskBar}
-            Icon={Createplusicon}
-            label="Create"
-          />
-        </>
-      )}
-
-      {isLoggedIn && userData?.is_admin && (
+      {isLoggedIn && (
         <Logoutbutton
           onClick={handleLogout}
           collapseSidebar={collapseSidebar}
         />
       )}
+      <CreateButton
+        onClick={isLoggedIn ? handleTaskbar : handleOnclick}
+        collapseSidebar={collapseSidebar}
+        showTaskBar={showTaskBar}
+        Icon={Createplusicon}
+        label="Create"
+      />
     </div>
   );
 };

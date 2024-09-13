@@ -107,7 +107,7 @@ const TaskForm = ({ onClose, initialData }) => {
                 type="text"
                 placeholder="Title"
                 {...register("title")}
-                className=" block w-full border  rounded-md shadow-sm p-2 border-gray-300"
+                className="taskinputField"
               />
             </div>
 
@@ -116,7 +116,7 @@ const TaskForm = ({ onClose, initialData }) => {
               <textarea
                 placeholder="Description"
                 {...register("description")}
-                className=" block w-full border resize-none rounded-md shadow-sm p-2"
+                className=" taskinputField"
               />
             </div>
 
@@ -128,7 +128,7 @@ const TaskForm = ({ onClose, initialData }) => {
               <select
                 {...register("project")}
                 defaultValue=""
-                className="block w-full border resize-none rounded-md shadow-sm p-2"
+                className="taskinputField"
               >
                 <option value="" disabled>
                   Select Project
@@ -150,7 +150,7 @@ const TaskForm = ({ onClose, initialData }) => {
               <select
                 {...register("assigned_user")}
                 defaultValue=""
-                className="block w-full border resize-none rounded-md shadow-sm p-2"
+                className="taskinputField"
               >
                 <option value="" disabled>
                   Select Assigned User
@@ -172,7 +172,7 @@ const TaskForm = ({ onClose, initialData }) => {
               <select
                 {...register("status")}
                 defaultValue="pending"
-                className="block w-full border resize-none rounded-md shadow-sm p-2"
+                className="taskinputField"
               >
                 <option value="pending">Pending</option>
                 <option value="in_progress">In Progress</option>
@@ -186,7 +186,7 @@ const TaskForm = ({ onClose, initialData }) => {
             <input
               type="datetime-local"
               {...register("deadline")}
-              className="block w-full border resize-none rounded-md shadow-sm p-2"
+              className="taskinputField"
             />
 
             <div className="dropDownFormButtons mt-3">
