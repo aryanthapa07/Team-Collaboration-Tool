@@ -12,7 +12,7 @@ import { getToken } from "../services/LocalStorageService";
 import Select from "react-select";
 
 const ProjectForm = ({ onClose, initialData }) => {
-  const { register, handleSubmit, setValue } = useForm({
+  const { register, handleSubmit, setValue, watch } = useForm({
     defaultValues: initialData || {},
   });
 
@@ -30,7 +30,7 @@ const ProjectForm = ({ onClose, initialData }) => {
     if (initialData) {
       setValue("name", initialData.name);
       setValue("description", initialData.description);
-      setValue("workspace", initialData.workspace);
+      setValue("workspace", initialData.workspace); // Ensure workspace is set during edit mode
     }
   }, [initialData, setValue]);
 
@@ -41,7 +41,6 @@ const ProjectForm = ({ onClose, initialData }) => {
   }, [access_token, refetch]);
 
   const onSubmit = async (data) => {
-    console.log(data);
     const actualData = {
       name: data.name,
       description: data.description,
@@ -49,7 +48,6 @@ const ProjectForm = ({ onClose, initialData }) => {
     };
 
     let res;
-    // if initial data is present then update project will be called else create project
     if (initialData) {
       res = await updateProject({ id: initialData.id, ...actualData });
     } else {
@@ -57,13 +55,11 @@ const ProjectForm = ({ onClose, initialData }) => {
     }
 
     if (res.error) {
-      console.log("inside res.error", res);
       setServerError(res.error.data);
-      toast.error(res.error.data.detail)
+      toast.error(res.error.data.detail);
     }
 
     if (res.data) {
-      console.log("inside res.data", res);
       toast.success("Project " + (initialData ? "Updated" : "Created"));
       onClose();
     }
@@ -75,6 +71,11 @@ const ProjectForm = ({ onClose, initialData }) => {
       value: workspace.id,
       label: workspace.name,
     })) || [];
+
+  // Get the currently selected workspace value (for initialData when editing)
+  const selectedWorkspace = workspaceOptions.find(
+    (option) => option.value === watch("workspace")
+  );
 
   return (
     <div className="dropDownFormPosition">
@@ -140,14 +141,12 @@ const ProjectForm = ({ onClose, initialData }) => {
 
             {/* Workspace Dropdown */}
             <div>
-              <label className="formLabel">
+              <label className="formLabel" htmlFor="workspace">
                 Workspace<span className="text-red-700">*</span>
               </label>
               <Select
                 {...register("workspace")} // Bind to react-hook-form
-                value={workspaceOptions.find(
-                  (option) => option.value === initialData?.workspace
-                )} // Set selected value
+                value={selectedWorkspace} // Set selected value for editing
                 onChange={(option) => setValue("workspace", option?.value)} // Update form value on change
                 options={workspaceOptions} // Set options
                 isDisabled={isLoading || !workspaces?.length} // Disable if loading or no options

@@ -22,7 +22,11 @@ class WorkspaceViewSet(viewsets.ModelViewSet):
     @action(detail=False, methods=['get'])
     def dropdown(self, request):
         user = self.request.user
-        workspaces = Workspace.objects.filter(owner=user)
+        if user.is_admin:
+            # Admins see all workspaces
+            workspaces = Workspace.objects.all()
+        else:
+            workspaces = Workspace.objects.filter(owner=user)
         serializer = WorkspaceDropdownSerializer(workspaces, many=True)
         return Response(serializer.data)
     
