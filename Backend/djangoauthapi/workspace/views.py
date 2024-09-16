@@ -136,7 +136,11 @@ class TaskViewSet(viewsets.ModelViewSet):
     @action(detail=False, methods=['get'], url_path='my-projects')
     def get_user_projects(self, request):
         user = request.user
-        projects = Project.objects.filter(workspace__owner=user)
+        if user.is_admin:
+            # Admins see all projects
+            projects = Project.objects.all()
+        else:
+            projects = Project.objects.filter(workspace__owner=user)
         project_data = [{'id': project.id, 'name': project.name} for project in projects]
         return Response(project_data)
     
