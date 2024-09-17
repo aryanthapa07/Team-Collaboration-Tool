@@ -1,4 +1,8 @@
-FROM node:18-alpine
+FROM node:18-alpine as build
+
+# Set environment variable for React app during build
+ARG VITE_AUTH_BASE_URL
+ENV VITE_AUTH_BASE_URL=http://15.207.253.220:8000
 
 WORKDIR /app
 
@@ -10,6 +14,10 @@ COPY . .
 
 RUN npm run build
 
-EXPOSE 5173
+FROM nginx:alpine
 
-CMD ["npm","run","dev"]
+COPY --from=build /app/dist /usr/share/nginx/html
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]

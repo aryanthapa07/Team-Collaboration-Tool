@@ -4,7 +4,7 @@ import { getToken } from "./LocalStorageService"; // assuming you have a service
 export const projectApi = createApi({
   reducerPath: "projectApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://127.0.0.1:8000/projects/",
+    baseUrl: `${import.meta.env.VITE_AUTH_BASE_URL}/projects/`,
     prepareHeaders: (headers) => {
       const { access_token } = getToken();
       if (access_token) {

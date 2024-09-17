@@ -4,7 +4,7 @@ import { getToken } from "./LocalStorageService";
 export const TaskApi = createApi({
   reducerPath: "taskApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://127.0.0.1:8000/tasks/",
+    baseUrl: `${import.meta.env.VITE_AUTH_BASE_URL}/tasks/`,
     prepareHeaders: (headers) => {
       const { access_token } = getToken();
       if (access_token) {

@@ -4,7 +4,7 @@ import { getToken } from "./LocalStorageService";
 export const workspaceApi = createApi({
   reducerPath: "workspaceApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://127.0.0.1:8000/workspaces/",
+    baseUrl: `${import.meta.env.VITE_AUTH_BASE_URL}/workspaces/`,
     prepareHeaders: (headers) => {
       const { access_token } = getToken();
       if (access_token) {

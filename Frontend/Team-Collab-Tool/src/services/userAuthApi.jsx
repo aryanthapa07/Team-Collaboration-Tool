@@ -3,7 +3,7 @@ import { getToken } from "./LocalStorageService";
 export const userAuthApi = createApi({
   reducerPath: "userAuthApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://127.0.0.1:8000/api/user/",
+    baseUrl: `${import.meta.env.VITE_AUTH_BASE_URL}/api/user`,
     prepareHeaders: (headers, { endpoint }) => {
       if (endpoint === "fetchUsers") {
         const { access_token } = getToken();
