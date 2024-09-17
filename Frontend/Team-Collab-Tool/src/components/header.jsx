@@ -1,6 +1,6 @@
 import Hamburger from "../shared/Hamburger";
 import Authbuttons from "../shared/Authbuttons";
-import Logo from "../shared/logo";
+import Logo from "../shared/Logo";
 import { getToken } from "../services/LocalStorageService";
 
 const Header = () => {

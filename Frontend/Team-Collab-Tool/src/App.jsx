@@ -10,7 +10,7 @@ import ProjectsPage from "./pages/ProjectsPage";
 import PrivateRoute from "./pages/PrivateRoute";
 import TermsandCondition from "./pages/TermsandCondition";
 import TasksPage from "./pages/TasksPage";
-import UsersPage from "./pages/Userspage";
+import UsersPage from "./pages/UsersPage";
 import ReportsPage from "./pages/ReportsPage";
 function App() {
   const router = createBrowserRouter([
