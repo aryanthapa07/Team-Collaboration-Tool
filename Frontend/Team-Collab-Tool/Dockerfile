@@ -2,7 +2,7 @@ FROM node:18-alpine AS build
 
 # Set environment variable for React app during build
 ARG VITE_AUTH_BASE_URL
-ENV VITE_AUTH_BASE_URL=http://15.207.253.220:8000
+ENV VITE_AUTH_BASE_URL=http://collabspace-lb-1027424875.ap-south-1.elb.amazonaws.com
 
 WORKDIR /app
 
