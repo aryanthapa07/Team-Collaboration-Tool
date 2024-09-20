@@ -7,7 +7,7 @@ const HomepageTexts = () => {
     <div className="homePageContainer ">
       <div className="my-10" id="Texts" >
         <h1 className="headingText">
-          Welcome to <span className="text-[#12aef5]">CollabSpace Test</span>{" "}
+          Welcome to <span className="text-[#12aef5]">CollabSpace</span>{" "}
         </h1>
         <p className="paraText">{userData?.is_admin?"Manage Users":"The platform for better cooperation"}</p>
         <p className="paraText">{userData?.is_admin?"Customize Workspaces":"Crafted with care & creativity."}</p>
