@@ -9,7 +9,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install dependencies
-RUN npm install
+RUN NODE_ENV=development npm i
 
 # Copy the rest of the application code
 COPY . .
