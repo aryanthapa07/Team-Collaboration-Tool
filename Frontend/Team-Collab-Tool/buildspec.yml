@@ -3,6 +3,8 @@ version: 0.2
 phases:
   pre_build:
     commands:
+      - echo "Logging in to Docker Hub"
+      - docker login --username aryanthapa19 --password Docker@passw0rd
       - echo Logging in to Amazon ECR...
       - aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 961341539878.dkr.ecr.ap-south-1.amazonaws.com
   build:
@@ -15,6 +17,8 @@ phases:
     commands:
       - echo Pushing the Docker image to ECR...
       - docker push 961341539878.dkr.ecr.ap-south-1.amazonaws.com/collabspace-prod:latest
+      - echo "Writing image definitions"
+      - printf '[{"name":"frontend-image","imageUri":"961341539878.dkr.ecr.ap-south-1.amazonaws.com/collabspace-prod:latest"}]' 961341539878.dkr.ecr.ap-south-1.amazonaws.com/collabspace-prod:latest > imagedefinitions.json
 artifacts:
   files:
-    - "**/*"
+    - imagedefinitions.json
