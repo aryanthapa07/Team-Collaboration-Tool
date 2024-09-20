@@ -13,10 +13,11 @@ export default defineConfig({
       output: {
         manualChunks(id) {
           if (id.includes("node_modules")) {
-            return "vendor";
+            return "vendor"; // Split vendor chunk for node_modules
           }
         },
       },
     },
+    chunkSizeWarningLimit: 1000, // Increase the warning limit to 1000kB
   },
 });
