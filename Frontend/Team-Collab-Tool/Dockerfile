@@ -1,4 +1,4 @@
-FROM node:21-alpine AS build
+FROM node:18-alpine AS build
 
 ARG VITE_AUTH_BASE_URL
 ENV VITE_AUTH_BASE_URL=http://collabspace-lb-1027424875.ap-south-1.elb.amazonaws.com
