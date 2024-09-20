@@ -1,12 +1,9 @@
 FROM node:18-alpine AS build
 
-ARG VITE_AUTH_BASE_URL
-ENV VITE_AUTH_BASE_URL=http://collabspace-lb-1027424875.ap-south-1.elb.amazonaws.com
-
 WORKDIR /app
 
 # Copy package.json and package-lock.json first to take advantage of Docker cache
-COPY package*.json ./
+COPY package.json package-lock.json ./
 
 # Install dependencies
 RUN NODE_ENV=development npm i
