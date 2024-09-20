@@ -1,6 +1,6 @@
 from django.db import models
 from account.models import User
-# Create your models here.
+# workspace model
 class Workspace(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True,null=True)
@@ -10,7 +10,7 @@ class Workspace(models.Model):
 
     def __str__(self):
         return self.name
-    
+# projects model  
 class Project(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True,null=True)
@@ -19,7 +19,8 @@ class Project(models.Model):
 
     def __str__(self):
         return self.name
-    
+
+# tasks model
 class Task(models.Model):
     STATUS_CHOICES = [
         ('pending', 'Pending'),
