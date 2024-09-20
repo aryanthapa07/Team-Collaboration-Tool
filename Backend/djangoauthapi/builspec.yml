@@ -1,11 +1,6 @@
 version: 0.2
 
 phases:
-  install:
-    commands:
-      - echo Installing dependencies...
-      - yum install -y docker
-      - service docker start
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
@@ -13,7 +8,7 @@ phases:
   build:
     commands:
       - echo Building the Docker image for backend...
-      - docker build -t collabspace-backprod .
+      - docker build -t collabspace-backprod ./Backend/djangoauthapi
       - echo Tagging the Docker image...
       - docker tag collabspace-backprod:latest 961341539878.dkr.ecr.ap-south-1.amazonaws.com/collabspace-backprod:latest
   post_build:
