@@ -1,11 +1,6 @@
 version: 0.2
 
 phases:
-  install:
-    commands:
-      - echo Installing dependencies...
-      - yum install -y docker
-      - service docker start
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
@@ -22,4 +17,4 @@ phases:
       - docker push 961341539878.dkr.ecr.ap-south-1.amazonaws.com/collabspace-prod:latest
 artifacts:
   files:
-    - '**/*'
+    - "**/*"
