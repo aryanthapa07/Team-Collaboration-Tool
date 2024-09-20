@@ -10,10 +10,13 @@ RUN npm install
  
 COPY . .
  
+# Print file structure for debugging
+RUN ls -R /app
+ 
 # Run the build
 RUN npm run build
  
-FROM nginx:1-alpine-slim
+FROM nginx:alpine
  
 COPY --from=build /app/dist /usr/share/nginx/html
  
