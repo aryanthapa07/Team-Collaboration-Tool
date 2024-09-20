@@ -17,6 +17,11 @@ phases:
     commands:
       - echo Pushing the Docker image to ECR...
       - docker push 961341539878.dkr.ecr.ap-south-1.amazonaws.com/collabspace-backprod:latest
+      - echo "Writing image definitions"
+      - printf '[{"name":"backend-image","imageUri":"961341539878.dkr.ecr.ap-south-1.amazonaws.com/collabspace-backprod:latest"}]' 961341539878.dkr.ecr.ap-south-1.amazonaws.com/collabspace-backprod:latest > imagedefinitions.json
 artifacts:
   files:
-    - '**/*'
+    - imagedefinitions.json
+
+      
+ 
