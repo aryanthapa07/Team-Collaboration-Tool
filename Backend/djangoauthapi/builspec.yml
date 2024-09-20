@@ -1,0 +1,25 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - echo Installing dependencies...
+      - yum install -y docker
+      - service docker start
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 961341539878.dkr.ecr.ap-south-1.amazonaws.com
+  build:
+    commands:
+      - echo Building the Docker image for backend...
+      - docker build -t collabspace-backprod .
+      - echo Tagging the Docker image...
+      - docker tag collabspace-backprod:latest 961341539878.dkr.ecr.ap-south-1.amazonaws.com/collabspace-backprod:latest
+  post_build:
+    commands:
+      - echo Pushing the Docker image to ECR...
+      - docker push 961341539878.dkr.ecr.ap-south-1.amazonaws.com/collabspace-backprod:latest
+artifacts:
+  files:
+    - '**/*'
