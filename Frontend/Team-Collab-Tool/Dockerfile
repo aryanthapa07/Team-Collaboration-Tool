@@ -11,6 +11,9 @@ RUN NODE_ENV=development npm i
 # Copy the rest of the application code
 COPY . .
 
+ARG VITE_AUTH_BASE_URL
+ENV VITE_AUTH_BASE_URL=http://collabspace-lb-1027424875.ap-south-1.elb.amazonaws.com
+
 # Run the build
 RUN npm run build
 
