@@ -7,7 +7,7 @@ COPY package.json package-lock.json ./
 
 
 # Install dependencies
-RUN NODE_ENV=development npm i
+RUN NODE_ENV=development npm ci
 
 # Copy the rest of the application code
 COPY . .
