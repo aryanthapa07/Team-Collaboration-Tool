@@ -1,4 +1,4 @@
-FROM node:18-alpine AS build
+FROM node:21-alpine AS build
 
 # Set environment variable for React app during build
 ARG VITE_AUTH_BASE_URL
