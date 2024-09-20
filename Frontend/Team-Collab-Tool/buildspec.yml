@@ -8,7 +8,7 @@ phases:
   build:
     commands:
       - echo Building the Docker image for frontend...
-      - docker build -t collabspace-prod .
+      - docker build -t collabspace-prod ./Frontend/Team-Collab-Tool
       - echo Tagging the Docker image...
       - docker tag collabspace-prod:latest 961341539878.dkr.ecr.ap-south-1.amazonaws.com/collabspace-prod:latest
   post_build:
