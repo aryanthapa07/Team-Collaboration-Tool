@@ -14,9 +14,6 @@ RUN npm install
 # Copy the rest of the application code
 COPY . .
 
-# Clean npm cache before build
-RUN npm cache clean --force
-
 # Run the build
 RUN npm run build
 
