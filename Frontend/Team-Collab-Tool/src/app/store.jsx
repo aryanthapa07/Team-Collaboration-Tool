@@ -1,10 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
-import userAuthApi from "../services/UserAuthApi";
-import workspaceApi from "../services/WorkspaceApi";
-import projectApi from "../services/ProjectsApi";
-import TaskApi from "../services/TasksApi";
-import userApi from "../services/UserViewApi";
+import { userAuthApi } from "../services/UserAuthApi";
+import { workspaceApi } from "../services/WorkspaceApi";
+import { projectApi } from "../services/ProjectsApi";
+import { TaskApi } from "../services/TasksApi";
+import { userApi } from "../services/UserViewApi";
 export const store = configureStore({
   reducer: {
     [userAuthApi.reducerPath]: userAuthApi.reducer,
