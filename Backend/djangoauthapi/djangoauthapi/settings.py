@@ -87,8 +87,12 @@ WSGI_APPLICATION = 'djangoauthapi.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',  # Or 'django.db.backends.mysql' if using MySQL
+        'NAME': 'collabspace_db',  # The name you specified during RDS creation
+        'USER': 'aryan',  # The RDS master username
+        'PASSWORD': get_parameter('/backend/PASSWORD'),  # The RDS master password
+        'HOST': get_parameter('/backend/DB_HOST'),  # Example: 'your-db-instance.rds.amazonaws.com'
+        'PORT': '5432',  # For PostgreSQL or '3306' for MySQL
     }
 }
 
