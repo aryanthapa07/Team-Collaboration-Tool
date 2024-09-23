@@ -1,9 +1,6 @@
 # Using python runtime as the base image
 FROM python:3.9.0-slim-buster
 
-# install postgre
-RUN apt-get update && apt-get install -y libpq-dev gcc
-
 WORKDIR /app
 
 COPY requirements.txt requirements.txt
