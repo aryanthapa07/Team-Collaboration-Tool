@@ -3,16 +3,9 @@ import os
 import base64
 from botocore.exceptions import ClientError
 
-AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
-AWS_REGION = os.getenv('AWS_REGION')
 
 # Create a session using the credentials and region
-session = boto3.Session(
-    aws_access_key_id=AWS_ACCESS_KEY_ID,
-    aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
-    region_name=AWS_REGION
-)
+session = boto3.Session(region_name="ap-south-1")
 
 def get_secret(secret_name):
     client = session.client('secretsmanager')
@@ -36,7 +29,7 @@ def get_secret(secret_name):
 
 def get_parameter(parameter_name):
     # Create an SSM client
-    client = boto3.client('ssm', region_name=os.getenv('AWS_REGION'))
+    client = boto3.client('ssm', region_name="ap-south-1")
 
     try:
         # Fetch the parameter value
