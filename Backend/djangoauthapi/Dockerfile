@@ -2,7 +2,7 @@
 FROM python:3.9.0-slim-buster
 
 # install postgre
-# RUN apt-get update && apt-get install -y libpq-dev gcc
+RUN apt-get update && apt-get install -y libpq-dev gcc
 
 WORKDIR /app
 
