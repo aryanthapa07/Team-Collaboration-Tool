@@ -23,7 +23,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: getting the secret key from parameter store
-SECRET_KEY = get_parameter('/backend/SECRET_KEY')
+# SECRET_KEY = get_parameter('/backend/SECRET_KEY')
+SECRET_KEY = 'django-insecure-wntujdoz)th$caxp=9u=68fnsh((w3z6kduzq&n6=eehco(#4_'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -85,14 +86,21 @@ WSGI_APPLICATION = 'djangoauthapi.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',  # Or 'django.db.backends.mysql' if using MySQL
+#         'NAME': 'collabspace_db',  # The name you specified during RDS creation
+#         'USER': 'aryan',  # The RDS master username
+#         'PASSWORD': get_parameter('/backend/PASSWORD'),  # The RDS master password
+#         'HOST': get_parameter('/backend/DB_HOST'),  # Example: 'your-db-instance.rds.amazonaws.com'
+#         'PORT': '5432',  # For PostgreSQL or '3306' for MySQL
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',  # Or 'django.db.backends.mysql' if using MySQL
-        'NAME': 'collabspace_db',  # The name you specified during RDS creation
-        'USER': 'aryan',  # The RDS master username
-        'PASSWORD': get_parameter('/backend/PASSWORD'),  # The RDS master password
-        'HOST': get_parameter('/backend/DB_HOST'),  # Example: 'your-db-instance.rds.amazonaws.com'
-        'PORT': '5432',  # For PostgreSQL or '3306' for MySQL
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
